@@ -1,0 +1,548 @@
+
+@charset "utf-8";
+html,
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  font-size: 1.48vh;
+}
+#app{
+  width: 100%;
+  height: 100vh;
+}
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  font-family: sc-semibold;
+}
+input:focus{
+  outline:none;
+}
+/* 去掉列表前的标识，li 会继承 */
+
+ol,
+ul {
+  list-style: none;
+  outline: none;
+}
+
+img,
+button,
+input,
+select,
+textarea {
+  border: none;
+  outline: none;
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+
+a {
+  /* color: #2D8CF0!important; */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/*滚动条的宽度*/
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/*外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果*/
+
+::-webkit-scrollbar-track {
+  width: 7px;
+  background-color: #e8e8e8;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+
+/*滚动条的设置*/
+
+::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3;
+  /* background-clip: padding-box; */
+  min-height: 28px;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+
+/*滚动条移上去的背景*/
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #b3b3b3;
+}
+
+
+.pointer{
+  cursor: pointer;
+}
+
+
+
+div,span, input, ul, li{
+  font-size: 14px;
+  color: #fff;
+  font-family: sc-semibold;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.h100 {
+  height: 100%;
+}
+
+/* ==============
+  flex 弹性布局
+================*/
+
+.flex {
+  display: flex;
+}
+
+.basis-xs {
+  flex-basis: 20%;
+}
+
+.basis-sm {
+  flex-basis: 40%;
+}
+
+.basis-df {
+  flex-basis: 50%;
+}
+
+.basis-lg {
+  flex-basis: 60%;
+}
+
+.basis-xl {
+  flex-basis: 80%;
+}
+
+.flex-sub {
+  flex: 1;
+}
+
+.flex-twice {
+  flex: 2;
+}
+
+.flex-treble {
+  flex: 3;
+}
+
+.flex-direction {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+.self-start {
+  align-self: flex-start;
+}
+
+.self-center {
+  align-self: flex-center;
+}
+
+.self-end {
+  align-self: flex-end;
+}
+
+.self-stretch {
+  align-self: stretch;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+/* ==========
+    内边距
+============*/
+
+.padding-10 {
+  padding: 10px;
+}
+
+.padding-5 {
+  padding: 5px;
+}
+
+.padding-20 {
+  padding: 20px;
+}
+
+.padding-top-10 {
+  padding-top: 10px;
+}
+
+.padding-top-15 {
+  padding-top: 15px;
+}
+
+.padding-top-20 {
+  padding-top: 20px;
+}
+
+.padding-right-5 {
+  padding-right: 5px;
+}
+
+.padding-right-10 {
+  padding-right: 10px;
+}
+
+.padding-right-15 {
+  padding-right: 15px;
+}
+
+.padding-right-20 {
+  padding-right: 20px;
+}
+
+.padding-left-10 {
+  padding-left: 15px;
+}
+
+.padding-left-15 {
+  padding-left: 15px;
+}
+.padding-left-20 {
+  padding-left: 20px;
+}
+
+.padding-bottom-10 {
+  padding-bottom: 15px;
+}
+
+.padding-bottom-15 {
+  padding-bottom: 15px;
+}
+.padding-bottom-20 {
+  padding-bottom: 20px;
+}
+
+/* ==========
+    外边距
+============*/
+
+.margin-0 {
+  margin: 0;
+}
+.margin-10 {
+  margin: 10px;
+}
+.margin-15 {
+  margin: 15px;
+}
+
+.margin-20 {
+  margin: 20px;
+}
+
+
+.margin-top-5 {
+    margin-top: 5px;
+  }
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.margin-top-15 {
+  margin-top: 15px;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+.margin-left-5 {
+    margin-left: 5px;
+  }
+.margin-left-10 {
+  margin-left: 10px;
+}
+
+.margin-left-15 {
+  margin-left: 15px;
+}
+
+.margin-left-20 {
+  margin-left: 20px;
+}
+.margin-right-5 {
+    margin-right: 5px;
+  }
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+.margin-right-15 {
+  margin-right: 15px;
+}
+
+.margin-right-20 {
+  margin-right: 20px;
+}
+.margin-bottom-5 {
+    margin-bottom: 5px;
+  }
+.margin-bottom-3 {
+    margin-bottom: 3px;
+  }
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 15px;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+.flex-1{
+  flex: 1;
+}
+
+
+.bold {
+  font-weight: bold;
+}
+.normal{
+  font-weight: normal;
+}
+.font500{
+  font-weight: 500;
+}
+
+
+/* 圆角 */
+
+.radius2 {
+  border-radius: 2px;
+}
+.radius4 {
+  border-radius: 4px;
+}
+
+
+
+/* 鼠标样式 */
+
+.pointer {
+  cursor: pointer;
+}
+
+/* 字体颜色 */
+.color333{
+  color: #333333;
+}
+.color666{
+  color: #666666;
+}
+.color999{
+  color: #999999;
+}
+.colorFFF{
+    color: #fff;
+}
+
+
+/* 字体大小 */
+.fontsize12{
+  font-size: 12px;
+}
+.fontsize14{
+  font-size: 14px;
+}
+.fontsize16{
+  font-size: 16px;
+}
+.fontsize18{
+  font-size: 18px;
+}
+.fontsize20{
+  font-size: 20px;
+}
+.fontsize22{
+  font-size: 22px;
+}
+.fontsize24{
+  font-size: 24px;
+}
+
+/* 对齐方式 */
+.text-left{
+    text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+
+body {
+  .el-cascader__dropdown {
+    background-color: transparent;
+  }
+}
+
+
+
+.scrollbar-abnormal-nobar{
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display:none;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0);
+    background: rgba(0,0,0,0);
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0);
+    border-radius: 0;
+    background: rgba(0,0,0,0);
+  }
+}
+
+
+
+
+.fz-073{
+  font-size: 1.3vh;
+}
+.fz-vh11{
+  font-size: 1.11vh;
+}
+.fz-vh148{
+  font-size: 1.48vh;
+}
+.fz-vh2{
+  font-size: 2vh;
+}
+.fz-vh1{
+  font-size: 1vh;
+}
+
+
+.font-24{
+  font-size: 2.22vh;
+}
+.font-22{
+  font-size: 2.04vh
+}
+.font-20{
+  font-size: 1.85vh
+}
+.font-18{
+  font-size: 1.67vh;
+}
+.font-16{
+  font-size: 1.48vh;
+}
+.font-14{
+  font-size: 1.3vh;
+}
+.font-12{
+  font-size: 1.11vh;
+}
+
+.hui{
+  color: rgba(202, 246, 255, 0.50);
+}

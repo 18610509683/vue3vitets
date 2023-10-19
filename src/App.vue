@@ -1,35 +1,39 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import { tv_device_list } from '@/api'
-tv_device_list().then()
+
 </script>
 
 <template>
-  <el-button type="primary">测试</el-button>
-  <HelloWorld msg="" />
+  <router-link to="task">task</router-link>
+  <router-link to="remote">remote</router-link>
+  <router-view v-slot="{ Component, route }">
+    <transition name="fade">
+      <div>
+        <keep-alive max="15">
+          <component :is="Component" v-if="route.meta.keepalive" :key="route.path" />
+        </keep-alive>
+        <component :is="Component" v-if="!route.meta.keepalive" :key="route.path" />
+      </div>
+    </transition>
+  </router-view>
 </template>
-<style lang="scss">
-div {
-  border-radius: 50%;
-  transition: all;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-</style>
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style lang="scss"></style>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
 }
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+#app{
+  padding-top: 9.4444vh;
+  background: url("../src/assets/img/bg.jpg") no-repeat;
+  background-position: 0 0;
+  background-size: 100% 100%;  
 }
 </style>
