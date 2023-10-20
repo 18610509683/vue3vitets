@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <router-link to="task">task</router-link>
   <router-link to="remote">remote</router-link>
@@ -16,12 +12,15 @@
     </transition>
   </router-view>
 </template>
-<style lang="scss"></style>
+<script setup lang="ts">
+
+</script>
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #fff;
 }
 
 html,
@@ -30,10 +29,19 @@ body,
   width: 100%;
   height: 100%;
 }
-#app{
+
+#app {
   padding-top: 9.4444vh;
   background: url("../src/assets/img/bg.jpg") no-repeat;
   background-position: 0 0;
-  background-size: 100% 100%;  
+  background-size: 100% 100%;
+}
+</style>
+<style lang="scss">
+#app {
+  a {
+    display: inline-block;
+    padding: 0 10px;
+  }
 }
 </style>

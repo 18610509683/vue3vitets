@@ -14,6 +14,15 @@ const router = createRouter({
       },
     },
     {
+      path: "/ademo",
+      name: "ademo",
+      title: "vue+ts文件demo",
+      meta: {
+        keepalive: true,
+      },
+      component: async () => await import("@/views/ademo/index.vue")
+    },    
+    {
       path: "/",
       name: "index",
       title: "远程遥控",
