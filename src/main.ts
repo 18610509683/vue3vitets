@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from "./router";
-import ElementPlus from 'element-plus'
+// import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import axios, { Axios } from "axios"; // 引入axios
 console.log(Axios)
@@ -35,4 +35,4 @@ window.getTokens = () => {
   });
 }
 // window.getTokens()
-createApp(App).use(router).use(ElementPlus).mount('#app')
+createApp(App).use(router).mount('#app')

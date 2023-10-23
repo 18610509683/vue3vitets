@@ -64,7 +64,7 @@ const createData = () => {
 }
 const DATA = reactive(createData());
 const checkedList = ref([]);
-const activeNames = reactive(['1'])
+const activeNames = ref(['1'])
 const handleChange = (val: number[]) => {
   console.log(val)
   console.log(checkedList)
