@@ -1,10 +1,12 @@
 <template>
-  <router-link to="task">task</router-link>
-  <router-link to="remote">remote</router-link>
-  <router-link to="test">test</router-link>
+  <div class="pos_abs">
+    <router-link to="task">task</router-link>
+    <router-link to="remote">remote</router-link>
+    <router-link to="test">test</router-link>
+  </div>
   <router-view v-slot="{ Component, route }">
     <transition name="fade">
-      <div>
+      <div class="full_wh">
         <keep-alive max="15">
           <component :is="Component" v-if="route.meta.keepalive" :key="route.path" />
         </keep-alive>
@@ -40,9 +42,19 @@ body,
 </style>
 <style lang="scss">
 #app {
+  overflow: hidden;
+
   a {
     display: inline-block;
     padding: 0 10px;
   }
+}
+.pos_abs{
+  position: absolute;
+  top:5vh;
+}
+.full_wh {
+  width: 100%;
+  height: 100%;
 }
 </style>
