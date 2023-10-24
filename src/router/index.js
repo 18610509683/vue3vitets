@@ -21,7 +21,16 @@ const router = createRouter({
         keepalive: true,
       },
       component: async () => await import("@/views/ademo/index.vue")
-    },    
+    },
+    {
+      path: "/test",
+      name: "test",
+      title: "fabric测试",
+      meta: {
+        keepalive: true,
+      },
+      component: async () => await import("@/views/test/index.vue")
+    },        
     {
       path: "/",
       name: "index",

@@ -1,6 +1,7 @@
 <template>
   <router-link to="task">task</router-link>
   <router-link to="remote">remote</router-link>
+  <router-link to="test">test</router-link>
   <router-view v-slot="{ Component, route }">
     <transition name="fade">
       <div>
