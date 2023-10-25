@@ -13,6 +13,7 @@ declare module 'vue' {
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
     ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    LightCornerBox: typeof import('./src/components/LightCornerBox.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
