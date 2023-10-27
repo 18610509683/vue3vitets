@@ -16,8 +16,8 @@ const router = createRouter({
     {
       path: "/ademo",
       name: "ademo",
-      title: "vue+ts文件demo",
       meta: {
+        title: "vue+ts文件demo",
         keepalive: true,
       },
       component: async () => await import("@/views/ademo/index.vue")
@@ -25,17 +25,17 @@ const router = createRouter({
     {
       path: "/test",
       name: "test",
-      title: "fabric测试",
       meta: {
+        title: "fabric测试",
         keepalive: true,
       },
       component: async () => await import("@/views/test/index.vue")
-    },        
+    },
     {
       path: "/",
       name: "index",
-      title: "远程遥控",
       meta: {
+        title: "远程遥控",
         keepalive: false,
       },
       component: async () => await import("@/views/remote/index.vue")
@@ -43,8 +43,8 @@ const router = createRouter({
     {
       path: "/task",
       name: "task",
-      title: "巡检任务",
       meta: {
+        title: "巡检任务",
         keepalive: true,
       },
       component: async () => await import("@/views/task/index.vue")
@@ -52,6 +52,10 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
+  console.log(to)
+  if (to.meta.title) {
+    document.title = '机器人巡检__'+to.meta.title
+  }
   const loadingInstance = ElLoading.service({
     lock: true,
     text: "加载中……",
