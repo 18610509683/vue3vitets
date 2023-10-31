@@ -1,4 +1,4 @@
-const hostIP = window.realIP || '10.30.1.101'
+const hostIP = window.realIP || '10.30.1.101'||'10.20.1.29'
 // // //打包部署
 // const hostIP = window.realIP || window.location.hostname;
 const baseApiUrl = 'http://' + hostIP + ':21086/photovoltaic'
