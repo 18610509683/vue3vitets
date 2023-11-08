@@ -55,9 +55,11 @@
 
 <script setup lang="ts">
 import LightCornerBox from '@/components/LightCornerBox.vue';
+import testC from '@/components/CanvasDragZoom.vue'
 const searchValue = ref('')
 import data from './data.js'
 console.log(data)
+console.log(testC)
 </script>
 
 <style lang="scss" scoped>
