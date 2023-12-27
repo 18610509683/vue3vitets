@@ -5,6 +5,9 @@ import router from "./router";
 import 'element-plus/dist/index.css'
 import "@/assets/font/iconfont.css";
 import axios, { Axios } from "axios"; // 引入axios
+import 'keystar-ui/dist/style.css';
+import keystarUI from 'keystar-ui'
+console.log(keystarUI)
 // // import log from 'loglevel';
 // // log.setLevel(1)
 // // console.log(log)
@@ -82,4 +85,4 @@ window.getTokens = () => {
   });
 }
 // window.getTokens()
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(keystarUI).mount('#app')
