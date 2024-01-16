@@ -9,18 +9,15 @@ declare module 'vue' {
   export interface GlobalComponents {
     CanvasDragZoom: typeof import('./src/components/CanvasDragZoom.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
-    ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
-    ElCollapse: typeof import('element-plus/es')['ElCollapse']
-    ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
+    ElDrawer: typeof import('element-plus/es')['ElDrawer']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
     EmptyResult: typeof import('./src/components/emptyResult.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     ImgCanvas: typeof import('./src/components/imgCanvas.vue')['default']
-    LightCornerBox: typeof import('./src/components/LightCornerBox.vue')['default']
+    LightCornerBox: typeof import('./src/components/LightCornerBox/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SwiperGroup: typeof import('./src/components/swiperGroup.vue')['default']
-    TestSwiper: typeof import('./src/components/testSwiper.vue')['default']
   }
 }

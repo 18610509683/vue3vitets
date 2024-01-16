@@ -13,7 +13,7 @@
     "dotenv": "^16.3.1",
     "element-plus": "^2.4.0",
     "fabric": "^5.3.0",
-    "keystar-ui": "^1.0.47",
+    "keystar-ui": "^1.0.68",
     "loglevel": "^1.8.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"

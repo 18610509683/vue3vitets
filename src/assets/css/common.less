@@ -1,0 +1,42 @@
+@import "./variable.less";
+.block-fill-10{
+  background: rgba(0,255,243, 0.1);
+}
+
+// el-input样式
+.el-input{
+  height: 100%;  
+  background-color: transparent;
+  border-radius: 0;
+  border-width: 0;
+  outline:none;
+  .el-input__wrapper{
+    background-color: transparent;
+    border: 1px solid @primary;
+    box-shadow: 0 0 0 0;
+    border-radius: 0;
+    outline:none;
+    &:hover, &:focus, &:visited, &:active, &.is-focus{
+      box-shadow: 0 0 0 0!important;
+      outline:none;
+    }
+  }
+  .el-input__inner{
+    color: #fff;
+  }
+  &.is-disabled {
+    .el-input__inner {
+      cursor: pointer;
+      border-width: 0;
+      background:#0C3643;
+    }
+  }
+}
+
+.el-icon{
+  color: @primary!important;
+}
+.el-icon svg{
+  color: @primary!important;
+}
+

@@ -4,10 +4,14 @@ import router from "./router";
 // import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import "@/assets/font/iconfont.css";
+import "@/assets/css/base.hh.less";
+import "@/assets/css/variable.less";
+import "@/assets/css/common.less";
 import axios, { Axios } from "axios"; // 引入axios
 import 'keystar-ui/dist/style.css';
 import keystarUI from 'keystar-ui'
-console.log(keystarUI)
+
+
 // // import log from 'loglevel';
 // // log.setLevel(1)
 // // console.log(log)
@@ -85,4 +89,14 @@ window.getTokens = () => {
   });
 }
 // window.getTokens()
-createApp(App).use(router).use(keystarUI).mount('#app')
+
+
+const app = createApp(App);
+app.use(keystarUI)
+
+
+
+
+
+app.use(router)
+app.mount("#app");

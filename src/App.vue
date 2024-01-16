@@ -1,9 +1,9 @@
 <template>
-  <div class="pos_abs">
+  <!-- <div class="pos_abs">
     <router-link to="task">task</router-link>
     <router-link to="remote">remote</router-link>
     <router-link to="test">test</router-link>
-  </div>
+  </div> -->
   <router-view v-slot="{ Component, route }">
     <transition name="fade">
       <div class="full_wh">
@@ -23,7 +23,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #fff;
+  /* color: #fff; */
 }
 
 html,

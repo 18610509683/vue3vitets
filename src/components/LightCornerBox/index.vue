@@ -22,7 +22,7 @@ export default {
   props: {
     width: {
       type: String,
-      default: "15px",
+      default: "10px",
     },
     borderWidth: {
       type: String,
@@ -37,8 +37,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+@import "../../assets/css/variable.less";
 .corner-box {
+  height: 100%;
   position: relative;
+  // display: flex;
+  border: 1px solid @primary09;
   .corner {
     display: block;
     position: absolute;
