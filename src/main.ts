@@ -1,15 +1,18 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from "./router";
+
+import 'keystar-ui/dist/style.css';
+import keystarUI from 'keystar-ui'
+
 // import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import "@/assets/font/iconfont.css";
+import "@/assets/css/font/iconfont.css";
 import "@/assets/css/base.hh.less";
 import "@/assets/css/variable.less";
 import "@/assets/css/common.less";
 import axios, { Axios } from "axios"; // 引入axios
-import 'keystar-ui/dist/style.css';
-import keystarUI from 'keystar-ui'
+
 
 
 // // import log from 'loglevel';
@@ -95,7 +98,8 @@ const app = createApp(App);
 app.use(keystarUI)
 
 
-
+import { CloseBold }  from "@element-plus/icons-vue";
+app.component('CloseBold', CloseBold)
 
 
 app.use(router)

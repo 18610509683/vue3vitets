@@ -18,9 +18,18 @@
         </LightCornerBox>
       </div>
       <div class="Con-Right h100">
-        <RightSide></RightSide>  
+        <RightSide @addPointEmits="addPointEmits"></RightSide>  
       </div>
     </div>
+
+
+
+    <!-- 采集巡检点弹框 -->
+    <div >  
+      <AddPatrolPoint v-if="addPointDrawer"></AddPatrolPoint>
+    </div>
+
+    
     
   </div>
 </template>
@@ -28,6 +37,7 @@
 <script setup>
 import axios from "axios";
 import RightSide from '@/views/remote/components/RightSide.vue'
+import AddPatrolPoint from './dialog/AddPatrolPoint'
 let sensorsArr = ref([
   {name: '氧气', value: 20, unit: "m"},
   {name: '氧气', value: 20, unit: "m"},
@@ -38,6 +48,12 @@ let sensorsArr = ref([
   {name: '氧气', value: 20, unit: "m"},
   {name: '氧气', value: 20, unit: "m"},
 ])
+let addPointDrawer = ref(true)
+
+// 采集巡检点 -弹框
+const addPointEmits = () => {
+  addPointDrawer.value =  true
+}
 
 </script>
 
