@@ -95,86 +95,86 @@
             </div>
             <div class="title">位姿参数</div>
             <div>
-              <el-form :model="form" label-width="120px" label-position="left">
-                <el-form-item label="巡检设备">
-                  <el-select v-model="form.equitname" placeholder="请选择巡检设备">
-                    <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->                                
-                    <el-option  v-for="item in ActionTypeOptions"  :key="item.value"  :label="item.name" :value="item.value" >
-                      <span style="float: left;">
-                        <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 10px;"></i>
-                      </span>
-                      <span style="float: left; color: #8492a6; font-size: 13px">{{
-                        item.name}}</span>
-                    </el-option>
-                    
-                  </el-select>
+              <el-form :model="form" label-width="120px" label-position="left">                
+                <el-form-item label="行走位置">
+                  <div class="flex align-center w100">
+                    <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入行走位置" >
+                    </el-input>
+                    <div class="flex align-center right-btn-opera">
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                    </div>
+                  </div>                 
                 </el-form-item>
-                <el-form-item label="点位名称">
-                  <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入巡检点名称" maxlength="20"  show-word-limit>
-                    <template #prefix>
-                      <span class="primary font-12">新增 </span><span class="font-12" style="color: #4D7B8E;margin-left: 6px;"> | </span>
-                    </template>
-                  </el-input>
+                <el-form-item label="水平角度">
+                  <div class="flex align-center w100">
+                    <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入行走位置" >
+                    </el-input>
+                    <div class="flex align-center right-btn-opera">
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                    </div>
+                  </div>                 
                 </el-form-item>
-                <el-form-item label="所在场景">
-                  <el-select v-model="form.env" placeholder="please select your zone" disabled >
-                    <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->                                
-                    <el-option  v-for="item in ActionTypeOptions"  :key="item.value"  :label="item.name" :value="item.value" >
-                      <span style="float: left;">
-                        <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 10px;"></i>
-                      </span>
-                      <span style="float: left; color: #8492a6; font-size: 13px">{{
-                        item.name}}</span>
-                    </el-option>
-                    
-                  </el-select>
+                <el-form-item label="垂直角度">
+                  <div class="flex align-center w100">
+                    <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入行走位置" >
+                    </el-input>
+                    <div class="flex align-center right-btn-opera">
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                    </div>
+                  </div>                 
                 </el-form-item>
-                <el-form-item label="所在区域">
-                  <el-select v-model="form.area" placeholder="please select your zone" disabled >
-                    <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->                                
-                    <el-option  v-for="item in ActionTypeOptions"  :key="item.value"  :label="item.name" :value="item.value" >
-                      <span style="float: left;">
-                        <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 10px;"></i>
-                      </span>
-                      <span style="float: left; color: #8492a6; font-size: 13px">{{
-                        item.name}}</span>
-                    </el-option>
-                  </el-select>
+                <el-form-item label="变焦值">
+                  <div class="flex align-center w100">
+                    <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入行走位置" >
+                    </el-input>
+                    <div class="flex align-center right-btn-opera">
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                    </div>
+                  </div>                 
                 </el-form-item>
-                <el-form-item label="动作类型">
-                  <el-select v-model="form.ActionType" placeholder="please select your zone">
-                    <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->
-                                  
-                    <el-option  v-for="item in ActionTypeOptions"  :key="item.value"  :label="item.name" :value="item.value" >
-                      <span style="float: left;">
-                        <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 10px;"></i>
-                      </span>
-                      <span style="float: left; color: #8492a6; font-size: 13px">{{
-                        item.name}}</span>
-                    </el-option>
-                    
-                  </el-select>
+                <el-form-item label="变倍值">
+                  <div class="flex align-center w100">
+                    <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入行走位置" >
+                    </el-input>
+                    <div class="flex align-center right-btn-opera">
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                      <i class="iconfont iconfont-kejianguangshibie pointer" ></i>
+                    </div>
+                  </div>                 
+                </el-form-item>
+                <el-form-item label="画面区域">
+                  <el-input v-model="form.name" class="w-50 m-2" placeholder="请输入行走位置" >
+                    </el-input>                 
+                </el-form-item>
+              </el-form>
+            </div>
+            <div class="title">告警设置</div>
+            <div>
+              <el-form :model="form" label-width="120px" label-position="left">                
+                <el-form-item label="行走位置">
+                  <!-- <div class="flex align-center w100"> -->
+                    <el-radio-group v-model="size" label="size control">
+                      <el-radio-button label="large">正常</el-radio-button>
+                      <el-radio-button label="default">告警</el-radio-button>
+                      <el-radio-button label="small">严重</el-radio-button>
+                    </el-radio-group>
+                  <!-- </div>                  -->
                 </el-form-item>
                 
               </el-form>
             </div>
           </div> 
 
-
+          <div class="model-btn-sty">
+            <el-button class="el-btn-cancel" @click="cancelClick">取 消</el-button>
+            <el-button type="primary" @click="confirmClick">保 存</el-button>
+          </div>
         </div>
       </div>
-
-      
-
-
     </LightCornerBox>
   </div>
 </template>
@@ -228,6 +228,20 @@ let ActionTypeOptions = ref([
         line-height: 3.7vh;
         border-bottom: 1px solid rgba(0, 143, 153, 0.25);
         padding: 0 5px;
+      }
+      .right-btn-opera{
+        width: 3.54vw;
+        height: 3.15vh;
+        border: 1px solid @primary--light-50;
+        border-left: 0;
+        i{
+          width: 50%;
+          text-align: center;
+          color: @primary--light-50;
+          &:hover{
+            color: @primary;
+          }
+        }
       }
 
     }  
