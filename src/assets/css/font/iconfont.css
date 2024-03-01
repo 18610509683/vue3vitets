@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4411586 */
-  src: url('iconfont.woff2?t=1705473282145') format('woff2'),
-       url('iconfont.woff?t=1705473282145') format('woff'),
-       url('iconfont.ttf?t=1705473282145') format('truetype');
+  src: url('iconfont.woff2?t=1709278323774') format('woff2'),
+       url('iconfont.woff?t=1709278323774') format('woff'),
+       url('iconfont.ttf?t=1709278323774') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,186 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.iconfont-auxbox-off:before {
+  content: "\e625";
+}
+
+.iconfont-P1gui:before {
+  content: "\e654";
+}
+
+.iconfont-shouwang:before {
+  content: "\e655";
+}
+
+.iconfont-tuogun-110:before {
+  content: "\e656";
+}
+
+.iconfont-pidaibiaomian:before {
+  content: "\e657";
+}
+
+.iconfont-shexiangtou:before {
+  content: "\e658";
+}
+
+.iconfont-zongxianglianpai:before {
+  content: "\e659";
+}
+
+.iconfont-a-35KVkaiguanshi:before {
+  content: "\e65a";
+}
+
+.iconfont-hengxianglianpai:before {
+  content: "\e65b";
+}
+
+.iconfont-ronghemoshi:before {
+  content: "\e65c";
+}
+
+.iconfont-jinkanhongwai:before {
+  content: "\e65d";
+}
+
+.iconfont-fenlimoshi:before {
+  content: "\e65e";
+}
+
+.iconfont-tubiao_fangdianjiance:before {
+  content: "\e676";
+}
+
+.iconfont-tubiao_huanjingjiance:before {
+  content: "\e682";
+}
+
+.iconfont-tubiao_hengxianglianpai-40:before {
+  content: "\e688";
+}
+
+.iconfont-tubiao_kejianguangzhuapai-42:before {
+  content: "\e694";
+}
+
+.iconfont-shang:before {
+  content: "\e652";
+}
+
+.iconfont-xia:before {
+  content: "\e653";
+}
+
+.iconfont-shang-copy:before {
+  content: "\e82a";
+}
+
+.iconfont-xia-copy:before {
+  content: "\e82b";
+}
+
+.iconfont-bianji-01:before {
+  content: "\e6da";
+}
+
+.iconfont-shanchu-01:before {
+  content: "\e6df";
+}
+
+.iconfont-fullscreen:before {
+  content: "\e607";
+}
+
+.iconfont-auxbox-on:before {
+  content: "\e624";
+}
+
+.iconfont-a-fanhuishangyibu-01:before {
+  content: "\e6eb";
+}
+
+.iconfont-add-rectangle:before {
+  content: "\e62c";
+}
+
+.iconfont-minus-rectangle:before {
+  content: "\e686";
+}
+
+.iconfont-caijixunjiandian:before {
+  content: "\e64f";
+}
+
+.iconfont-qianwang:before {
+  content: "\e650";
+}
+
+.iconfont-shaixuan-yishaixuan:before {
+  content: "\e651";
+}
+
+.iconfont-yuntaideng:before {
+  content: "\e63f";
+}
+
+.iconfont-shibie:before {
+  content: "\e640";
+}
+
+.iconfont-qianwangchongdianzhong:before {
+  content: "\e63e";
+}
+
+.iconfont-xiangzuo:before {
+  content: "\e641";
+}
+
+.iconfont-zhongzhi:before {
+  content: "\e642";
+}
+
+.iconfont-tonghua-weijietong:before {
+  content: "\e643";
+}
+
+.iconfont-qianzhaodeng:before {
+  content: "\e644";
+}
+
+.iconfont-houzhaodeng:before {
+  content: "\e645";
+}
+
+.iconfont-dianliang:before {
+  content: "\e647";
+}
+
+.iconfont-chongdian:before {
+  content: "\e648";
+}
+
+.iconfont-xiangyou:before {
+  content: "\e64a";
+}
+
+.iconfont-guaduan:before {
+  content: "\e64b";
+}
+
+.iconfont-shaixuan-moren:before {
+  content: "\e64c";
+}
+
+.iconfont-tiaosu:before {
+  content: "\e64d";
+}
+
+.iconfont-dianlanjietou:before {
+  content: "\e64e";
 }
 
 .iconfont-kejianguangshibie:before {
