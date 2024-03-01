@@ -10,7 +10,7 @@ const router = createRouter({
     {
       path: "/:pathMatch(.*)",
       redirect: {
-        path: "/",
+        path: "/remote",
       },
     },
     {
@@ -32,13 +32,22 @@ const router = createRouter({
       component: async () => await import("@/views/test/index.vue")
     },
     {
-      path: "/",
+      path: "/remote",
       name: "remote",
       meta: {
         title: "远程遥控",
         keepalive: false,
       },
-      component: async () => await import("@/views/remote/remote.vue")
+      component: async () => await import("@/views/remote/remote.vue"),
+    },
+    {
+      path: "/remote/addpatrolpoint",
+      name: "addpatrolpoint",
+      meta: {
+        title: "采集巡检点",
+        keepalive: false,
+      },
+      component: async () => await import("@/views/remote/AddPatrolPoint.vue"),
     },
     {
       path: "/task",

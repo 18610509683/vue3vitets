@@ -1,9 +1,9 @@
 <template>
-  <div class="w100 h100 pad-10">
-    <div class="w100 h100 flex align-center">
+<div class="w100 h100 p10-vw">
+  <div class="w100 h100 flex align-center">
       <div class="Con-Left  h100 flex flex-direction">
         <div class="event-Box flex align-center justify-between">
-          <LightCornerBox  width="10px" border-width="1px"  class="flex event-line block-fill-10" v-for="{ name, value, unit } in sensorsArr">
+          <LightCornerBox  width="10px" border-width="1px"  class="flex event-line primary10-Bg" v-for="{ name, value, unit } in sensorsArr">
             <p class="name">{{ name }}</p>
             <p class="value PMZD scrollbar-abnormal-nobar">
               {{ value }}<span class="unit SR">{{ unit }}</span>
@@ -18,26 +18,18 @@
         </LightCornerBox>
       </div>
       <div class="Con-Right h100">
-        <RightSide @addPointEmits="addPointEmits"></RightSide>  
+        <RightSide @openAddPoint="openAddPoint"></RightSide>  
       </div>
-    </div>
-
-
-
-    <!-- 采集巡检点弹框 -->
-    <div >  
-      <AddPatrolPoint v-if="addPointDrawer"></AddPatrolPoint>
-    </div>
-
-    
-    
   </div>
+</div>
 </template>
 
 <script setup>
 import axios from "axios";
 import RightSide from '@/views/remote/components/RightSide.vue'
-import AddPatrolPoint from './dialog/AddPatrolPoint'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 let sensorsArr = ref([
   {name: '氧气', value: 20, unit: "m"},
   {name: '氧气', value: 20, unit: "m"},
@@ -48,13 +40,10 @@ let sensorsArr = ref([
   {name: '氧气', value: 20, unit: "m"},
   {name: '氧气', value: 20, unit: "m"},
 ])
-let addPointDrawer = ref(true)
 
-// 采集巡检点 -弹框
-const addPointEmits = () => {
-  addPointDrawer.value =  true
+const openAddPoint = () => {
+  router.push('/remote/addpatrolpoint')
 }
-
 </script>
 
 <style scoped lang="less">

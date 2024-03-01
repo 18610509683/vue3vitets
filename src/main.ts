@@ -10,6 +10,7 @@ import 'element-plus/dist/index.css'
 import "@/assets/css/font/iconfont.css";
 import "@/assets/css/base.hh.less";
 import "@/assets/css/variable.less";
+import "@/assets/css/elestyle.less";
 import "@/assets/css/common.less";
 import axios, { Axios } from "axios"; // 引入axios
 
@@ -98,9 +99,8 @@ const app = createApp(App);
 app.use(keystarUI)
 
 
-import { CloseBold }  from "@element-plus/icons-vue";
-app.component('CloseBold', CloseBold)
-
+import { Close }  from "@element-plus/icons-vue";
+app.component('Close', Close)
 
 app.use(router)
 app.mount("#app");

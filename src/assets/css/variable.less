@@ -1,12 +1,19 @@
 
 @primary: #00FFF3;
 
-@primary09: #094E5B;
-
-
 @primary--light-10:fadeout(@primary, 90%);
 @primary--light-20:fadeout(@primary, 80%);
 @primary--light-50:fadeout(@primary, 50%);
+
+@border: #094E5B;
+@border--light-05:fadeout(@primary, 95%);
+@border--light-10:fadeout(@primary, 90%);
+
+@lignt:#fff;
+@light-80:fadeout(@lignt, 20%);
+@light-50:fadeout(@lignt, 50%);
+
+@disabled: #4D7B8E;
 
 .primary{
   color: @primary;
@@ -14,6 +21,26 @@
 
 .primaryBg{
   background: @primary;
+}
+
+.primary10-Bg{
+  background: @primary--light-10;
+}
+
+.light{
+  color: @lignt;
+}
+
+.light80{
+  color: @light-80;
+}
+
+.light50{
+  color: @light-50;
+}
+
+.disabled{
+  color: @disabled;
 }
 
 

@@ -42,7 +42,7 @@ export default {
   height: 100%;
   position: relative;
   // display: flex;
-  border: 1px solid @primary09;
+  border: 1px solid @border;
   .corner {
     display: block;
     position: absolute;
