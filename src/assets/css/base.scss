@@ -1,0 +1,41 @@
+@for $i from 1 through 100 {
+  .p-#{$i}px {
+    padding: 1px * $i;
+  }
+  .p-#{$i}vw {
+    padding: 1vw * $i;
+  }
+  .p-#{$i}vh {
+    padding: 1vh * $i;
+  }
+  .m-#{$i}px {
+    margin: 1px * $i;
+  }
+  .m-#{$i}vw {
+    margin: 1vw * $i;
+  }
+  .m-#{$i}vh {
+    margin: 1vh * $i;
+  }
+  .w-#{$i}px {
+    width: 1px * $i;
+  }
+  .w-#{$i}vw {
+    width: 1vw * $i;
+  }
+  .w-#{$i}vh {
+    width: 1vh * $i;
+  }
+  .h-#{$i}px {
+    height: 1px * $i;
+  }
+  .h-#{$i}vw {
+    height: 1vw * $i;
+  }
+  .h-#{$i}vh {
+    height: 1vh * $i;
+  }
+  .border-#{$i}px {
+    border: 1px * $i solid;
+  }
+}

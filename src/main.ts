@@ -12,6 +12,7 @@ import "@/assets/css/base.hh.less";
 import "@/assets/css/variable.less";
 import "@/assets/css/elestyle.less";
 import "@/assets/css/common.less";
+import "@/assets/css/base.scss";
 import axios, { Axios } from "axios"; // 引入axios
 
 

@@ -1,7 +1,6 @@
 <template>
   <div class="drawer-header flex align-center">
     <div class="font-16-vw">唐阳</div>
-    <hr />
     <div class="font-16-vw">前方摄像头</div>
   </div>
   <el-collapse>
@@ -208,7 +207,7 @@
               </div>
             </el-form-item>
             <el-form-item label="画面区域">
-              <el-input v-model="form.name">
+              <el-input v-model="form.name" placeholder="(0,0)~(1920,1080)">
               </el-input>
             </el-form-item>
           </el-form>
@@ -219,6 +218,29 @@
         <div>
           <el-form :model="form" label-width="120px" label-position="left">
             <el-form-item label="行走位置">
+              <el-radio-group v-model="size">
+                <el-radio-button label="正常" />
+                <el-radio-button label="告警" />
+                <el-radio-button label="严重" />
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="运动物体">
+              <el-radio-group v-model="size">
+                <el-radio-button label="正常" />
+                <el-radio-button label="告警" />
+                <el-radio-button label="严重" />
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="区域标记">
+              <div class="flex align-center w100">
+                <el-input v-model="form.name" placeholder="(0,0)~(1920,1080)">
+                </el-input>
+                <div class="flex align-center justify-center w-36px h-36px border-1px" style="border-color: rgba(0, 255, 243, 0.5);border-left: none;">
+                  <i class="iconfont iconfont-bianji-01 font-14-vw"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="人员安全">
               <el-radio-group v-model="size">
                 <el-radio-button label="正常" />
                 <el-radio-button label="告警" />
