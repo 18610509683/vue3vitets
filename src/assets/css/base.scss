@@ -8,6 +8,60 @@
   .p-#{$i}vh {
     padding: 1vh * $i;
   }
+  .px-#{$i}px {
+    padding: 0 1px * $i;
+  }
+  .px-#{$i}vw {
+    padding: 0 1vw * $i;
+  }
+  .px-#{$i}vh {
+    padding: 0 1vh * $i;
+  }
+  .py-#{$i}px {
+    padding: 1px * $i 0;
+  }
+  .py-#{$i}vw {
+    padding: 1vw * $i 0;
+  }
+  .py-#{$i}vh {
+    padding: 1vh * $i 0;
+  }
+  .pr-#{$i}px {
+    padding-right: 1px * $i;
+  }
+  .pr-#{$i}vw {
+    padding-right: 1vw * $i;
+  }
+  .pr-#{$i}vh {
+    padding-right: 1vh * $i;
+  }
+  .pl-#{$i}px {
+    padding-left: 1px * $i;
+  }
+  .pl-#{$i}vw {
+    padding-left: 1vw * $i;
+  }
+  .pl-#{$i}vh {
+    padding-left: 1vh * $i;
+  }
+  .pt-#{$i}px {
+    padding-top: 1px * $i;
+  }
+  .pt-#{$i}vw {
+    padding-top: 1vw * $i;
+  }
+  .pt-#{$i}vh {
+    padding-top: 1vh * $i;
+  }
+  .pb-#{$i}px {
+    padding-bottom: 1px * $i;
+  }
+  .pb-#{$i}vw {
+    padding-bottom: 1vw * $i;
+  }
+  .pb-#{$i}vh {
+    padding-bottom: 1vh * $i;
+  }
   .m-#{$i}px {
     margin: 1px * $i;
   }
@@ -16,6 +70,60 @@
   }
   .m-#{$i}vh {
     margin: 1vh * $i;
+  }
+  .mx-#{$i}px {
+    margin: 0 1px * $i;
+  }
+  .mx-#{$i}vw {
+    margin: 0 1vw * $i;
+  }
+  .mx-#{$i}vh {
+    margin: 0 1vh * $i;
+  }
+  .my-#{$i}px {
+    margin: 1px * $i 0;
+  }
+  .my-#{$i}vw {
+    margin: 1vw * $i 0;
+  }
+  .my-#{$i}vh {
+    margin: 1vh * $i 0;
+  }
+  .mr-#{$i}px {
+    margin-right: 1px * $i;
+  }
+  .mr-#{$i}vw {
+    margin-right: 1vw * $i;
+  }
+  .mr-#{$i}vh {
+    margin-right: 1vh * $i;
+  }
+  .ml-#{$i}px {
+    margin-left: 1px * $i;
+  }
+  .ml-#{$i}vw {
+    margin-left: 1vw * $i;
+  }
+  .ml-#{$i}vh {
+    margin-left: 1vh * $i;
+  }
+  .mt-#{$i}px {
+    margin-top: 1px * $i;
+  }
+  .mt-#{$i}vw {
+    margin-top: 1vw * $i;
+  }
+  .mt-#{$i}vh {
+    margin-top: 1vh * $i;
+  }
+  .mb-#{$i}px {
+    margin-bottom: 1px * $i;
+  }
+  .mb-#{$i}vw {
+    margin-bottom: 1vw * $i;
+  }
+  .mb-#{$i}vh {
+    margin-bottom: 1vh * $i;
   }
   .w-#{$i}px {
     width: 1px * $i;
@@ -38,4 +146,49 @@
   .border-#{$i}px {
     border: 1px * $i solid;
   }
+}
+
+/* 常用尺寸 */
+.h-34 {
+  height: 3.1481vh;
+}
+
+/* 常用文字颜色 */
+.text-active-all {
+  color: #00fff3;
+  *{
+    color: #00fff3;
+  }
+}
+.text-active{
+  color:#00fff3
+}
+.text-off {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/*  */
+.cursor-pointer {
+  cursor: pointer;
+}
+.hidden-xy {
+  overflow: hidden;
+}
+.scroll-y {
+  overflow-y: scroll;
+}
+.hidden-y {
+  overflow-y: hidden;
+}
+.scroll-x {
+  overflow-x: scroll;
+}
+.hidden-x {
+  overflow-x: hidden;
+}
+.truncate {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

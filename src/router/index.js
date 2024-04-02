@@ -1,7 +1,7 @@
 import {
   createRouter,
   createWebHistory,
-  createWebHashHistory
+  createWebHashHistory,
 } from "vue-router";
 import { ElLoading } from "element-plus";
 const router = createRouter({
@@ -20,7 +20,7 @@ const router = createRouter({
         title: "vue+ts文件demo",
         keepalive: true,
       },
-      component: async () => await import("@/views/ademo/index.vue")
+      component: async () => await import("@/views/ademo/index.vue"),
     },
     {
       path: "/test",
@@ -29,7 +29,7 @@ const router = createRouter({
         title: "fabric测试",
         keepalive: true,
       },
-      component: async () => await import("@/views/test/index.vue")
+      component: async () => await import("@/views/test/index.vue"),
     },
     {
       path: "/remote",
@@ -56,24 +56,33 @@ const router = createRouter({
         title: "巡检任务",
         keepalive: true,
       },
-      component: async () => await import("@/views/task/index.vue")
+      component: async () => await import("@/views/task/index.vue"),
     },
-  ]
-})
+    {
+      path: "/createTask",
+      name: "createTask",
+      meta: {
+        title: "创建巡检任务",
+        keepalive: true,
+      },
+      component: async () => await import("@/views/createTask/index.vue"),
+    },
+  ],
+});
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  console.log(to);
   if (to.meta.title) {
-    document.title = '机器人巡检__'+to.meta.title
+    document.title = "机器人巡检__" + to.meta.title;
   }
   const loadingInstance = ElLoading.service({
     lock: true,
     text: "加载中……",
-    background: 'rgba(0, 0, 0, .3)'
+    background: "rgba(0, 0, 0, .3)",
   });
   window.loading = loadingInstance;
   next();
   setTimeout(() => {
-    window.loading.close()
+    window.loading.close();
   }, 500);
-})
+});
 export default router;

@@ -1,6 +1,10 @@
 <template>
   <div
-    class="corner-box"
+    class="corner-box flex flex-direction"
+    :style="{
+      '--b':$props.boxBorderWidth,
+      backgroundColor:$props.backgroundColor
+    }"
   >
     <span
       v-for="corner in ['top-left', 'top-right', 'bottom-left', 'bottom-right']"
@@ -32,6 +36,14 @@ export default {
       type: String,
       default: "", //variable["primaryColor--light-30"],
     },
+    boxBorderWidth:{
+      type:String,
+      default:"1px"
+    },
+    backgroundColor:{
+      type:String,
+      default:'transparent'
+    }
   },
 };
 </script>
@@ -42,7 +54,7 @@ export default {
   height: 100%;
   position: relative;
   // display: flex;
-  border: 1px solid @border;
+  border: var(--b) solid @border;
   .corner {
     display: block;
     position: absolute;

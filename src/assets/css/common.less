@@ -1,42 +1,53 @@
 @import "./variable.less";
-.block-fill-10{
-    background: @primary--light-10;
+.block-fill-10 {
+  background: @primary--light-10;
 }
 
 // 小图标背景色hover效果：
-.icon-sty{
-    &:hover{
-      background: @primary--light-20 !important;
-    }
+.icon-sty {
+  &:hover {
+    background: @primary--light-20 !important;
+  }
 }
 
-.content-title{
-    display: inline-block;
-    height: 3vh;
-    line-height: 3vh;
-    padding-left: 0.52vw;
-    position: relative;
-    &::before{
-        content: '';
-        width: 100%;
-        height: 50%;
-        position: absolute;
-        left: 0;
-        top: 50%;
-        background-image: linear-gradient(to right, rgba(81, 249, 255, 0.4), rgba(81, 249, 255, 0));
-    }
+.content-title {
+  display: inline-block;
+  height: 3vh;
+  line-height: 3vh;
+  padding-left: 0.52vw;
+  position: relative;
+  &::before {
+    content: "";
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    background-image: linear-gradient(
+      to right,
+      rgba(81, 249, 255, 0.4),
+      rgba(81, 249, 255, 0)
+    );
+  }
 }
 
-.edit-type-popper{
-    .el-select-dropdown__item{
-        padding: 0 12px!important;
-    }
+.edit-type-popper {
+  .el-select-dropdown__item {
+    padding: 0 12px !important;
+  }
 }
 
-.iconfont{
-    color: @primary--light-50;
-    &:hover{
-        color: @primary;
-        cursor: pointer;
-    }
+.iconfont {
+  color: @primary--light-50;
+  &:hover {
+    color: @primary;
+    cursor: pointer;
+  }
+}
+.iconfont-silent {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
