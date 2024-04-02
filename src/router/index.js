@@ -32,6 +32,15 @@ const router = createRouter({
       component: async () => await import("@/views/test/index.vue"),
     },
     {
+      path: "/remoteControl",
+      name: "remoteContrl",
+      meta: {
+        title: "远程监控",
+        keepalive: false,
+      },
+      component: async () => await import("@/views/remoteControl/index.vue"),
+    },
+    {
       path: "/remote",
       name: "remote",
       meta: {
