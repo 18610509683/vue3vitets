@@ -3,6 +3,7 @@ class TaskCanvas {
   container = null;
   width = 0;
   height = 0;
+  isSelected = false;
   constructor({ id, dom }) {
     if (!this.container) {
       this.container = new fabric.Canvas(id, {
@@ -11,6 +12,7 @@ class TaskCanvas {
       });
     }
     this.drawRect();
+    this.drawGroupCircle();
   }
   drawRect() {
     let rect = new fabric.Rect({
@@ -20,20 +22,67 @@ class TaskCanvas {
       height: 40, // 矩形高度
       lockMovementX: true,
       lockMovementY: true,
+      // hasBorders:false,
+      hasControls: false,
+      borderColor: "#00fff3",
+      stroke: "#00fff3",
+      strokeWidth: 1,
+      fill: "#0B5B66",
     });
-    rect.on('mouseover',()=>{
-       rect.set({
-        stroke: '#95e1d3'
-       })
-       this.container.renderAll()
-    })
-    rect.on('mouseout',()=>{
-        rect.set({
-         stroke: 'red'
-        })
-        this.container.renderAll()
-     })
+    // rect.on("selected", () => {
+    //   rect.set({
+    //     // strokeWidth:2,
+    //   });
+    //   this.container.renderAll();
+    // });
+    // rect.on("deselected", () => {
+    //   rect.set({
+    //   });
+    //   console.log('取消选中');
+    //   this.container.renderAll();
+    // });
     this.container.add(rect);
+  }
+  drawGroupCircle() {
+    let solidCircle = new fabric.Circle({
+      name: "solidCircle",
+      radius: 30,
+      fill: "#00fff3",
+      originX: "center",
+      originY: "center",
+      // borderColor:'#00fff3',
+      // stoke:'#00fff3',
+      // strokeWidth:1
+    });
+    let hollowCircle = new fabric.Circle({
+      name: "hollowCircle",
+      radius: 50,
+      // borderColor:'#00fff3',
+      stroke: "#00fff3",
+      strokeWidth: 2,
+      fill: "transparent",
+      originX: "center",
+      originY: "center",
+    });
+    let group = new fabric.Group([solidCircle, hollowCircle], {
+      left: 150,
+      top: 100,
+    });
+    group.on("mouse:down", ({ e, target }) => {
+      this.isSelected=!this.isSelected
+      if (this.isSelected) {
+        target._objects[0].set({
+          fill: "transparent",
+        });
+      } else {
+        target._objects[0].set({
+          fill: "#00fff3",
+        });
+      }
+
+      this.container.renderAll();
+    });
+    this.container.add(group);
   }
 }
 
