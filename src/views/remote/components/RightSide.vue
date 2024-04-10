@@ -42,6 +42,60 @@
           <i class="iconfont iconfont-redtemp"></i>
         </div>
       </div>
+      <div
+        class="w100 margin-top-15"
+        style="height: 263px; border: 1px solid white"
+      ></div>
+      <div class="flex" style="margin: 20px 0px 20px 10px">
+        <div class="controlBox">
+          <div class="controlBox_center"></div>
+          <img
+            src="../../../assets/img/remote/RESET.png"
+            class="controlBox_img"
+          />
+          <!-- <div class="line1"></div> -->
+
+          <div class="arrow-up"></div>
+          <div class="arrow-down"></div>
+          <div class="arrow-left"></div>
+          <div class="arrow-right"></div>
+        </div>
+        <div
+          class="flex_column_between"
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 230px;
+          "
+        >
+          <div class="process"></div>
+          <div>
+            <div class="des">
+              <div class="text">云台垂直角度</div>
+              <div class="num">123.34°</div>
+            </div>
+            <div class="des">
+              <div class="text">云台水平角度</div>
+              <div class="num">90.00°</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="personIcon">
+          <span class="icon iconfont personIcon">&#xe640;</span>
+        </div>
+        <div class="light">
+          <span class="icon iconfont">&#xe644;</span>前照灯
+        </div>
+        <div class="light">
+          <span class="icon iconfont">&#xe63f;</span>云台灯
+        </div>
+        <div class="light">
+          <span class="icon iconfont">&#xe645;</span>后照灯
+        </div>
+      </div>
     </LightCornerBox>
 
     <!-- 采集巡检点 -->
@@ -59,7 +113,7 @@
         </div>
       </template>
       <div class="drawer-body">
-        <div class="body-top">
+        <div class="body-top" v-if="false">
           <div class="content-title font-16-vw">采集巡检点</div>
           <div class="desc font-14-vw p10-vw">
             通过机器人或固定摄像头采集巡检点，以便日后自动或手动执行巡检。需要继续巡检设备、点位名称和具体动作类型。
@@ -101,10 +155,11 @@
                   class="w100 h100 flex align-center flex-sub point-name"
                   :class="{ 'is-focus': showDropDown }"
                 >
+                  <!-- 新增 -->
                   <el-select
                     v-model="selectName"
                     placeholder=""
-                    style="width: 3.2vw"
+                    style="width: 4.2vw"
                     suffix-icon=""
                     class="edit-type"
                     popper-class="edit-type-popper"
@@ -114,14 +169,14 @@
                     <el-option label="更新" value="2" />
                   </el-select>
                   <el-input
-                    v-if="false"
                     v-model="form.name"
                     placeholder="请输入巡检点名称"
                     maxlength="20"
                     show-word-limit
                   >
                   </el-input>
-                  <el-select
+                  <!-- 更新 -->
+                  <!-- <el-select
                     v-if="true"
                     v-model="selectName"
                     placeholder=""
@@ -129,14 +184,15 @@
                   >
                     <el-option label="正面点位" value="1" />
                     <el-option label="背面点位" value="2" />
-                  </el-select>
+                  </el-select> -->
                 </div>
               </el-form-item>
               <el-form-item label="所在场景" class="form-item-disabled">
                 <el-select
                   v-model="form.env"
-                  placeholder="please select your zone"
+                  placeholder="请选择所在场景"
                   disabled
+                  class="disabled"
                 >
                   <!-- <template #prefix>
                     <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
@@ -163,7 +219,8 @@
               <el-form-item label="所在区域" class="form-item-disabled">
                 <el-select
                   v-model="form.area"
-                  placeholder="please select your zone"
+                  placeholder="请选择所在区域"
+                  class="disabled"
                   disabled
                 >
                   <!-- <template #prefix>
@@ -191,7 +248,7 @@
               <el-form-item label="动作类型">
                 <el-select
                   v-model="form.ActionType"
-                  placeholder="please select your zone"
+                  placeholder="请选择动作类型"
                 >
                   <!-- <template #prefix>
                     <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
@@ -239,14 +296,19 @@ import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
 let val = ref();
 let PointsDialog = ref(false);
 let form = ref({
-  equitname: "jvbu",
+  equitname: "zhuapai",
+  selectName: "1",
   name: "",
-  env: "hongwai",
-  area: "lianpai",
-  ActionType: "kejianguang",
+  env: "",
+  area: "",
+  ActionType: "zhuapai",
 });
 let ActionTypeOptions = ref([
-  { name: "可见光抓拍", value: "zhuapai", icon: "tubiao_kejianguangzhuapai-42" },
+  {
+    name: "可见光抓拍",
+    value: "zhuapai",
+    icon: "tubiao_kejianguangzhuapai-42",
+  },
   { name: "红外测温", value: "hongwai", icon: "redtemp" },
   { name: "环境监测", value: "huanjing", icon: "tubiao_huanjingjiance" },
   { name: "表计识别", value: "biaoji", icon: "kejianguangshibie" },
@@ -314,6 +376,112 @@ const handleSelectChange = (val) => {
       }
     }
   }
+  .controlBox {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    background-color: #0c3743;
+    border: 1px solid rgba(0, 255, 243, 0.05);
+    position: relative;
+    padding: 10px;
+    .controlBox_center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgb(11, 65, 76);
+    }
+    .controlBox_img {
+      width: 30px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .arrow-up {
+      position: absolute;
+      left: 50px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid rgb(0, 255, 243);
+    }
+
+    .arrow-down {
+      position: absolute;
+      left: 50px;
+      bottom: 10px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid rgb(173, 182, 186);
+    }
+    .arrow-right {
+      right: 10px;
+      position: absolute;
+      top: 50px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 10px solid rgb(173, 182, 186);
+    }
+    .arrow-left {
+      position: absolute;
+      top: 50px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: 10px solid rgb(173, 182, 186);
+    }
+    .line1 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 0.09px;
+      background-color: azure;
+      // border: 0.1px solid gray;
+      transform: rotate(135deg);
+    }
+  }
+  .process {
+    border: 1px solid rgba(0, 255, 243, 1);
+    width: 100%;
+    height: 34px;
+  }
+  .des {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px;
+    margin-left: 50px;
+    .text {
+      color: gray;
+    }
+    .num {
+      font-weight: 600;
+      color: white;
+    }
+  }
+  // .personIcon{
+  //   width: 40px;
+  // }
+  .light {
+    border: 1px solid rgba(0, 255, 243, 1);
+    padding: 10px;
+    color: rgba(0, 255, 243, 1);
+    span {
+      margin: 0 5px;
+      color: rgba(0, 255, 243, 1);
+    }
+  }
 }
 
 // 抽屉弹框
@@ -347,8 +515,14 @@ const handleSelectChange = (val) => {
   }
   .point-name {
     border: 1px solid @primary--light-50;
-
     .edit-type {
+      .el-select__wrapper {
+        box-shadow: none;
+        border-right: 1px solid rgba(0, 255, 243, 1);
+      }
+      span {
+        color: rgba(0, 255, 243, 1);
+      }
       .el-input__wrapper {
         position: relative;
         padding-right: 0;
@@ -379,5 +553,30 @@ const handleSelectChange = (val) => {
       border: 0;
     }
   }
+  .disabled {
+    .el-select__wrapper {
+      background-color: #0c3643 !important;
+      box-shadow: 0 0 0 1px rgba(77, 123, 142, 1) inset;
+      // .el-icon {
+      //   color: red;
+      // }
+    }
+    .el-select__selected-item {
+      span {
+        color: rgba(77, 123, 142, 1);
+      }
+    }
+    .el-input__inner {
+      border: 1px solid gray;
+      box-shadow: none;
+    }
+  }
 }
+// /deep/.el-select__wrapper.is-disabled {
+//   // background-color: #0c3643 !important;
+// }
+// /deep/.el-select .disabled {
+//   border: none !important;
+//   box-shadow: red !important;
+// }
 </style>
