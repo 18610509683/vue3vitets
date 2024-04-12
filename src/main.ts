@@ -1,9 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from "./router";
+import bus from '@/buses/index'
 
 import 'keystar-ui/dist/style.css';
-import keystarUI from 'keystar-ui'
+// import keystarUI from 'keystar-ui'
 
 // import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -97,8 +98,9 @@ window.getTokens = () => {
 
 
 const app = createApp(App);
-app.use(keystarUI)
-
+// app.use(keystarUI)
+// 全局挂载
+app.config.globalProperties.$bus = bus;
 
 import { Close }  from "@element-plus/icons-vue";
 app.component('Close', Close)

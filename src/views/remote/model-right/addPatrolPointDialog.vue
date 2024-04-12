@@ -3,9 +3,9 @@
     <div class="font-16-vw">唐阳</div>
     <div class="font-16-vw">前方摄像头</div>
   </div>
-  <el-collapse>
-    <div class="body-form">
-      <el-collapse-item name="1">
+  <el-collapse v-model="activeNames" style="z-index: 2;position: fixed;width: 20.62vw;">
+    <div class="body-form" id="publicBox">
+      <el-collapse-item name="name1">
         <template #title>点位信息</template>
         <div>
           <el-form :model="form" label-width="120px" label-position="left">
@@ -126,6 +126,7 @@
               <el-select
                 v-model="form.ActionType"
                 placeholder="please select your zone"
+                @change="actionTypeChange"
               >
                 <!-- <template #prefix>
                       <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
@@ -152,7 +153,7 @@
           </el-form>
         </div>
       </el-collapse-item>
-      <el-collapse-item name="2">
+      <el-collapse-item name="name2">
         <template #title>位姿参数</template>
         <div>
           <el-form :model="form" label-width="120px" label-position="left">
@@ -213,7 +214,8 @@
           </el-form>
         </div>
       </el-collapse-item>
-      <el-collapse-item name="3">
+      <div id="name3"></div>
+      <el-collapse-item name="name3" id="name3" style="opacity: 0;ba" v-if="0">
         <template #title>告警设置</template>
         <div>
           <el-form :model="form" label-width="120px" label-position="left">
@@ -252,15 +254,17 @@
       </el-collapse-item>
     </div>
   </el-collapse>
-  <div class="model-btn-sty">
-    <el-button class="el-btn-cancel" @click="cancelClick">取 消</el-button>
-    <el-button type="primary" @click="confirmClick">保 存</el-button>
-  </div>
+
 </template>
 
 <script setup>
-import { ref, onMounted, watch, defineEmits } from "vue";
+import { defineEmits,getCurrentInstance } from '@vue/runtime-core';
+import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
+const activeNames=ref(['name1'])
+const { proxy } = getCurrentInstance();
+console.log(proxy.$bus)
+
 let val = ref();
 let form = ref({
   equitname: "jvbu",
@@ -278,11 +282,47 @@ let ActionTypeOptions = ref([
   { name: "局部放电检测", value: "fangdian", icon: "tubiao_fangdianjiance" },
   { name: "守望", value: "shouwang", icon: "shouwang" },
 ]);
+const emit=defineEmits(['updateForm'])
+const actionTypeChange=(val)=>{
+  console.log(val)
+  emit('updateForm',form.value)
+}
 
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
   showDropDown.value = val;
 };
+
+
+const tempTop=ref(250)
+onMounted(()=>{
+  const dom=document.querySelector('#publicBox');
+
+
+  // 选择目标节点
+  const targetNode = document.getElementById('myElement');
+  
+  // 观察器的配置（需要观察什么变动）
+  const config = { attributes: true, childList: true, subtree: true };
+  
+  // 当观察到变动时执行的回调函数
+  const callback = function(mutationsList, observer) {
+    let dom=document.querySelector('#name3')
+    let rect=dom.getBoundingClientRect();
+    // console.log(rect)
+    tempTop.value=rect.top
+    proxy.$bus.emit('updateTop',rect.top)
+  };
+  
+  // 创建一个观察器实例并传入回调函数
+  const observer = new MutationObserver(callback);
+  
+  // 开始观察目标节点
+  observer.observe(dom, config);
+  
+  // 以后，你可以停止观察
+  // observer.disconnect();  
+})
 </script>
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
@@ -294,10 +334,10 @@ const handleSelectChange = (val) => {
   margin-bottom: 0 !important;
 }
 .body-form {
-  height: 76vh;
+  // height: 76vh;
   margin-bottom: 1.12vh;
   overflow-y: auto;
-
+  position: relative;
   .right-btn-opera {
     width: 3.54vw;
     height: 3.8vh;
