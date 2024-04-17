@@ -44,11 +44,27 @@
         {{ item.name }}
       </div>
     </div>
+    <div
+      v-show="cpPosition.show"
+      class="canvas-popover"
+      :style="{
+        '--cp-left': cpPosition.left + 'px',
+        '--cp-top': cpPosition.top + 'px',
+      }"
+    ></div>
+    <div
+      v-show="ctPosition.show"
+      class="canvas-tooltip"
+      :style="{
+        '--ct-left': ctPosition.left + 'px',
+        '--ct-top': ctPosition.top + 'px',
+      }"
+    ></div>
   </div>
 </template>
 
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { TaskCanvas } from "../js/taskCanvas";
 const filterOptions = ref([
   {
@@ -93,17 +109,30 @@ const tabOptions = [
   },
 ];
 let currentTab = ref("clickSelect");
-let taskCanvas=null
-onMounted(()=>{
-  taskCanvas=new TaskCanvas({
-    id:'myCanvas',
-    dom:document.getElementById("draw-box")
-  })
-})
+let taskCanvas = null;
+let cpPosition = ref({
+  show: false,
+  left: 0,
+  top: 0,
+});
+let ctPosition = ref({
+  show: false,
+  left: 0,
+  top: 0,
+});
+onMounted(() => {
+  taskCanvas = new TaskCanvas({
+    id: "myCanvas",
+    dom: document.getElementById("draw-box"),
+    cpPosition:cpPosition.value,
+    ctPosition:ctPosition.value,
+  });
+});
 </script>
 
 <style lang="scss" scoped>
 .task-canvas {
+  position: relative;
   .filter-box {
     height: 3.1481vh;
     padding-right: 1.5625vw;
@@ -129,6 +158,32 @@ onMounted(()=>{
       bottom: 0;
       left: var(--left);
       transition: all 0.5s;
+    }
+  }
+  .canvas-popover {
+    position: absolute;
+    top: var(--cp-top);
+    left: var(--cp-left);
+  }
+  .canvas-tooltip {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    background-color:rgba(0,0,0,0.75);
+    border-radius: 3px;
+    top: var(--ct-top);
+    left: var(--ct-left);
+    transform: translate(-50%,-100%);
+    &::before{
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      content:"";
+      width: 0;
+        height: 0;
+        border:8px solid;
+        border-color: rgba(0,0,0,0.75) transparent transparent transparent;
+      transform: translate(-50%,100%)
     }
   }
 }
