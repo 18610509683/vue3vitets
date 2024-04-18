@@ -1,7 +1,9 @@
 <template>
   <div class="drawer-header flex align-center">
-    <div class="font-16-vw">唐阳</div>
-    <div class="font-16-vw">前方摄像头</div>
+    <div class="flex-1 h100">
+      <MySiteWithDevice :is-adaption="true" :adaption-dom="'.model-right'"></MySiteWithDevice>
+    </div>
+    <i class="iconfont iconfont-close font-14"></i>
   </div>
   <el-collapse v-model="activeNames" style="z-index: 2;position: fixed;width: 20.62vw;">
     <div class="body-form" id="publicBox">
@@ -261,6 +263,7 @@
 import { defineEmits,getCurrentInstance } from '@vue/runtime-core';
 import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
+import MySiteWithDevice from './MySiteWithDevice'
 const activeNames=ref(['name1'])
 const { proxy } = getCurrentInstance();
 console.log(proxy.$bus)
@@ -327,11 +330,14 @@ onMounted(()=>{
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
 .drawer-header {
-  padding: 0 0.52vw;
   width: 100%;
   height: 4.63vh;
-  background: rgba(10, 100, 108, 1);
+  background: url(../../../assets/img/table_header.png);
   margin-bottom: 0 !important;
+  cursor: pointer;
+  i{
+    margin: 0 0.5208vw;
+  }
 }
 .body-form {
   // height: 76vh;
