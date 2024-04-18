@@ -1,10 +1,24 @@
 <template>
   <div class="page full_wh flex">
     <div class="model-left h100">
-      环境监测 {{ publicData }}
+      <div class="left-container">
+        <div class="content">
+          <div>序号</div>
+          <div>传感器</div>
+          <div>实时监控</div>
+          <div>&nbsp;&nbsp;</div>
+        </div>
+        <div class="content light-content">
+          <div>①</div>
+          <div>温度</div>
+          <div><span class="bt">正常</span></div>
+          <div>33.32°C</div>
+        </div>
+      </div>
     </div>
     <div class="model-right h100">
-      <div class="fixed_box" :style="{ top: tempTop + 'px', opacity: 1, height: `calc(90vh - ${tempTop}px)` }">
+        <div class="fixed_box">  
+        <slot name="right"></slot>
         <el-collapse>
           <el-collapse-item name="1">
             <template #title>测试1</template>
@@ -51,33 +65,43 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-.page {
-  left: 0;
-  top: 0;
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
+<style lang="less" scoped>
+@import "@/assets/css/variable.less";
 
+.page {
   .model-left {
     flex: 1;
-    padding: 0 1.04vw 0.93vh 0.52vw;
-    pointer-events: all;
-  }
+    padding: 13.6111vh 1.04vw 7.9167vw 0.52vw;
+    .left-container {
+      width: 37.4074vh;
+      border: 1px solid pink;
+      .content {
+        padding: 0 1.0417vw;
+        background-color: rgba(11, 76, 87, 1);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 4.4444vh;
+        margin-bottom: 1.1111vh;
 
-  .model-right {
-    width: 20.62vw;
-    padding-left: 0.52vw;
-    position: relative;
+        div {
+          flex: 1;
+        }
+        .bt {
+          padding: 0.1852vh 0.4604vw;
+          border: 1px solid rgba(0, 255, 243, 1);
+        }
+      }
 
-    .fixed_box {
-      width: 20.62vw;
-      overflow: scroll;
-      right: .6vw;
-      position: fixed;
-      pointer-events: all;
-      z-index: 1;
+      .light-content {
+        background-color: rgb(12, 68, 81);
+      }
+      :hover {
+        background-color: white;
+      }
     }
   }
+
+
 }
 </style>

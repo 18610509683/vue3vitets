@@ -5,7 +5,7 @@
     </div>
     <i class="iconfont iconfont-close font-14"></i>
   </div>
-  <el-collapse v-model="activeNames" style="z-index: 2;position: fixed;width: 20.62vw;">
+  <el-collapse v-model="activeNames">
     <div class="body-form" id="publicBox">
       <el-collapse-item name="name1">
         <template #title>点位信息</template>
