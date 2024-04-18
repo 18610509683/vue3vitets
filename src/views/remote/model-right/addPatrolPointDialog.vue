@@ -1,10 +1,4 @@
 <template>
-  <div class="drawer-header flex align-center">
-    <div class="flex-1 h100">
-      <MySiteWithDevice :is-adaption="true" :adaption-dom="'.model-right'"></MySiteWithDevice>
-    </div>
-    <i class="iconfont iconfont-close font-14"></i>
-  </div>
   <el-collapse v-model="activeNames">
     <div class="body-form" id="publicBox">
       <el-collapse-item name="name1">
@@ -263,10 +257,15 @@
 import { defineEmits,getCurrentInstance } from '@vue/runtime-core';
 import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
-import MySiteWithDevice from './MySiteWithDevice'
 const activeNames=ref(['name1'])
 const { proxy } = getCurrentInstance();
 console.log(proxy.$bus)
+const props=defineProps({
+  formData:{
+    type:Object,
+    default:null
+  }
+})
 
 let val = ref();
 let form = ref({
@@ -274,7 +273,7 @@ let form = ref({
   name: "",
   env: "hongwai",
   area: "lianpai",
-  ActionType: "kejianguang",
+  ActionType: null,
 });
 let ActionTypeOptions = ref([
   { name: "可见光抓拍", value: "zhuapai", icon: "tubiao_kejianguangzhuapai-42" },
@@ -299,32 +298,32 @@ const handleSelectChange = (val) => {
 
 const tempTop=ref(250)
 onMounted(()=>{
+  //每次选择新类型后都会重新加载组件，故要保留上一次的信息
+  form.value=props.formData
   const dom=document.querySelector('#publicBox');
-
-
-  // 选择目标节点
-  const targetNode = document.getElementById('myElement');
+  // // 选择目标节点
+  // const targetNode = document.getElementById('myElement');
   
-  // 观察器的配置（需要观察什么变动）
-  const config = { attributes: true, childList: true, subtree: true };
+  // // 观察器的配置（需要观察什么变动）
+  // const config = { attributes: true, childList: true, subtree: true };
   
-  // 当观察到变动时执行的回调函数
-  const callback = function(mutationsList, observer) {
-    let dom=document.querySelector('#name3')
-    let rect=dom.getBoundingClientRect();
-    // console.log(rect)
-    tempTop.value=rect.top
-    proxy.$bus.emit('updateTop',rect.top)
-  };
+  // // 当观察到变动时执行的回调函数
+  // const callback = function(mutationsList, observer) {
+  //   let dom=document.querySelector('#name3')
+  //   let rect=dom.getBoundingClientRect();
+  //   // console.log(rect)
+  //   tempTop.value=rect.top
+  //   proxy.$bus.emit('updateTop',rect.top)
+  // };
   
-  // 创建一个观察器实例并传入回调函数
-  const observer = new MutationObserver(callback);
+  // // 创建一个观察器实例并传入回调函数
+  // const observer = new MutationObserver(callback);
   
-  // 开始观察目标节点
-  observer.observe(dom, config);
+  // // 开始观察目标节点
+  // observer.observe(dom, config);
   
-  // 以后，你可以停止观察
-  // observer.disconnect();  
+  // // 以后，你可以停止观察
+  // // observer.disconnect();  
 })
 </script>
 <style scoped lang="less">

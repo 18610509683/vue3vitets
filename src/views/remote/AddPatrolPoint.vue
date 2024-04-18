@@ -1,126 +1,160 @@
 <template>
   <div class="w100 h100 p10-vw">
-    <div class="full_wh" style="position: relative;">
-      <LightCornerBox width="10px" border-width="1px" class="lightCorner-Box flex-1 p10-vw">
-        <VisibleLightCapture decs="可见光抓拍" v-if="formData.ActionType == 'zhuapai'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </template>
-        </VisibleLightCapture>
-        <InfraredTemperature desc="红外测温" v-if="formData.ActionType == 'hongwai'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </template>
-        </InfraredTemperature>
-        <ContinuousShot desc="连拍" v-if="formData.ActionType == 'lianpai'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm"  #right/>
-          </template>
-        </ContinuousShot>
-        <EnvironmentWatch desc="环境监测" v-if="formData.ActionType == 'huanjing'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </template>
-        </EnvironmentWatch>
-        <MeterIdentify desc="表计识别" v-if="formData.ActionType == 'biaoji'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </template>
-        </MeterIdentify>
-        <PartialDischange desc="局放监测" v-if="formData.ActionType == 'fangdian'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </template>
-        </PartialDischange>
-        <KeepWatch desc="守望-越界告警" v-if="formData.ActionType == 'shouwang'" :publicData="formData">
-          <template #right>
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </template>
-        </KeepWatch>
-      </LightCornerBox>
-
-
-      <!-- <LightCornerBox width="10px" border-width="1px" class="lightCorner-Box flex-1 p10-vw">
-        <div class="addPoint-model flex align-center h100">
-          <div class="model-left h100">
-            <div class="model-left-header w100 flex align-center justify-between">
+    <div class="full_wh" style="position: relative">
+      <LightCornerBox
+        width="15px"
+        border-width="1px"
+        class="lightCorner-Box flex-1 p10-vw"
+      >
+        <component
+          :is="
+            actionTypeEnums.find((item) => item.value == formData.ActionType)
+              ?.component ?? VisibleLightCapture
+          "
+        >
+          <!-- 左侧头部公共部分 -->
+          <template #left>
+            <div
+              class="model-left-header w100 flex align-center justify-between"
+            >
               <div class="content-title font-16-vw">采集巡检点</div>
               <div class="icon-group">
-                <el-tooltip effect="dark" content="返回远程遥控" placement="top"><i
-                    class="iconfont iconfont-a-fanhuishangyibu-01 font-22-vw"></i>
+                <el-tooltip effect="dark" content="返回远程遥控" placement="top"
+                  ><i
+                    class="iconfont iconfont-a-fanhuishangyibu-01 font-22-vw"
+                  ></i>
                 </el-tooltip>
-                <el-tooltip v-if="auxboxStatus" effect="dark" content="关闭辅助框" placement="top"><i
-                    class="iconfont iconfont-auxbox-off font-18-vw" @click="auxboxSwitch(false)"></i></el-tooltip>
-                <el-tooltip v-else effect="dark" content="开启辅助框" placement="top"><i
-                    class="iconfont iconfont-auxbox-on font-18-vw" @click="auxboxSwitch(true)"></i></el-tooltip>
-                <el-tooltip effect="dark" content="全屏" placement="top"><i
-                    class="iconfont iconfont-fullscreen font-18-vw"></i></el-tooltip>
+                <el-tooltip
+                  v-if="auxboxStatus"
+                  effect="dark"
+                  content="关闭辅助框"
+                  placement="top"
+                  ><i
+                    class="iconfont iconfont-auxbox-off font-18-vw"
+                    @click="auxboxSwitch(false)"
+                  ></i
+                ></el-tooltip>
+                <el-tooltip
+                  v-else
+                  effect="dark"
+                  content="开启辅助框"
+                  placement="top"
+                  ><i
+                    class="iconfont iconfont-auxbox-on font-18-vw"
+                    @click="auxboxSwitch(true)"
+                  ></i
+                ></el-tooltip>
+                <el-tooltip effect="dark" content="全屏" placement="top"
+                  ><i class="iconfont iconfont-fullscreen font-18-vw"></i
+                ></el-tooltip>
               </div>
             </div>
-          </div>
-          <div class="model-right h100" style="background-color: #043846;">
-            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
-          </div>
-
-        </div>
-      </LightCornerBox> -->
-
+          </template>
+          <template #swd>
+            <div class="drawer-header flex align-center">
+              <div class="flex-1 h100">
+                <MySiteWithDevice
+                  :is-adaption="true"
+                  :adaption-dom="'.model-right'"
+                ></MySiteWithDevice>
+              </div>
+              <i class="iconfont iconfont-close font-14"></i>
+            </div>
+          </template>
+          <!-- 右侧头部公共部分 -->
+          <template #right>
+            <AddPatrolPointDialog
+              desc="右侧共用部分"
+              :form-data="formData"
+              @updateForm="updateForm"
+            />
+          </template>
+        </component>
+      </LightCornerBox>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, getCurrentInstance } from '@vue/runtime-core';
-import AddPatrolPointDialog from './model-right/addPatrolPointDialog.vue'
-import VisibleLightCapture from './types/VisibleLightCapture/index'
-import InfraredTemperature from './types/InfraredTemperature/index'
-import ContinuousShot from './types/ContinuousShot/index'
-import EnvironmentWatch from './types/EnvironmentWatch/index'
-import MeterIdentify from './types/MeterIdentify/index'
-import PartialDischange from './types/PartialDischange/index'
-import KeepWatch from './types/KeepWatch/index'
-
-const ActionType = ref()
-console.log(defineProps)
+import { defineProps, getCurrentInstance, ref } from "@vue/runtime-core";
+import MySiteWithDevice from "./model-right/MySiteWithDevice.vue";
+import AddPatrolPointDialog from "./model-right/addPatrolPointDialog.vue";
+import VisibleLightCapture from "./types/VisibleLightCapture/index";
+import InfraredTemperature from "./types/InfraredTemperature/index";
+import ContinuousShot from "./types/ContinuousShot/index";
+import EnvironmentWatch from "./types/EnvironmentWatch/index";
+import MeterIdentify from "./types/MeterIdentify/index";
+import PartialDischange from "./types/PartialDischange/index";
+import KeepWatch from "./types/KeepWatch/index";
+/* --------采点类型相关 start---------- */
+const actionTypeEnums = ref([
+  {
+    name: "可见光抓拍",
+    value: "zhuapai",
+    component: VisibleLightCapture,
+  },
+  {
+    name: "红外测温",
+    value: "hongwai",
+    component: InfraredTemperature,
+  },
+  {
+    name: "环境监测",
+    value: "huanjing",
+    component: EnvironmentWatch,
+  },
+  {
+    name: "表计识别",
+    value: "biaoji",
+    component: MeterIdentify,
+  },
+  {
+    name: "连拍",
+    value: "lianpai",
+    component: ContinuousShot,
+  },
+  {
+    name: "局部放电检测",
+    value: "fangdian",
+    component: PartialDischange,
+  },
+  {
+    name: "守望",
+    value: "shouwang",
+    component: KeepWatch,
+  },
+]);
+const ActionType = ref("");
+/* --------采点类型相关 end---------- */
+console.log(defineProps);
 const formData = ref({
-  ActionType: 'lianpai'
-})
+  equitname: "jvbu",
+  name: "",
+  env: "hongwai",
+  area: "lianpai",
+  ActionType: 'fangdian',
+});
 const updateForm = (data) => {
   formData.value = data;
-  console.log(data)
-}
+  console.log(data);
+};
 onMounted(() => {
-  console.log(defineProps)
-
-})
+  console.log(defineProps);
+});
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/css/variable.less";
-
-.addPoint-model {
-  position: relative;
-
-  .model-left {
-    flex: 1;
-    padding: 0 1.04vw 0.93vh 0.52vw;
-
-    .model-left-header {
-      height: 4.63vh;
-    }
-
-    .model-left-content {
-      margin-top: 1.12vh;
-    }
-  }
-
-  .model-right {
-    width: 20.62vw;
-    padding-left: 0.52vw;
-    border-left: 1.5px solid @border--light-05;
+.drawer-header {
+  width: 100%;
+  height: 4.63vh;
+  min-height: 34px;
+  background: url(../../assets/img/table_header.png);
+  margin-bottom: 0 !important;
+  cursor: pointer;
+  i {
+    margin: 0 0.5208vw;
   }
 }
-
 .icon-group {
   margin-top: 1vh;
 

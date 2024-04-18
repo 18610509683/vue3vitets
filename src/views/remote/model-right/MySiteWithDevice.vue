@@ -94,7 +94,8 @@ const getStationApi = () => {
 };
 /* -----------站点相关 end--------------- */
 
-/* --------------设备树相关 start--------------- */
+/* --------------设备树api相关 start--------------- */
+//注意！！！！！！！！！！本处可能不是查全部设备的接口，后期注意替换
 const MyTreeTypeApi = () => {
   return new Promise(async (resolve, reject) => {
     let res = await TreeTypeApi(props.treeTypeParams);

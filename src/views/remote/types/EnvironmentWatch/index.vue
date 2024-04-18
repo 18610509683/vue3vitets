@@ -16,8 +16,9 @@
         </div>
       </div>
     </div>
-    <div class="model-right h100">
-        <div class="fixed_box">  
+    <div class="model-right h100 flex flex-direction">
+      <slot name="swd"></slot>
+      <div class="model-form h100 flex-1">
         <slot name="right"></slot>
         <el-collapse>
           <el-collapse-item name="1">
@@ -32,46 +33,39 @@
             <template #title>测试1</template>
             <div>测试内容</div>
           </el-collapse-item>
-
         </el-collapse>
-        <div class="model-btn-sty">
-          <el-button class="el-btn-cancel" @click="cancelClick">取 消</el-button>
-          <el-button type="primary" @click="confirmClick">保 存</el-button>
-        </div>
+      </div>
+      <div class="model-btn-sty flex justify-end">
+        <el-button class="el-btn-cancel" @click="cancelClick">取 消</el-button>
+        <el-button type="primary" @click="confirmClick">保 存</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted } from 'vue'
+import { getCurrentInstance, onMounted } from "vue";
 const { proxy } = getCurrentInstance();
-const tempTop = ref(450)
+const tempTop = ref(450);
 const props = defineProps({
   publicData: {
-    type: Object
-  }
-})
-const cancelClick=()=>{
-
-}
-const confirmClick=()=>{
-  
-}
+    type: Object,
+  },
+});
+const cancelClick = () => {};
+const confirmClick = () => {};
 onMounted(() => {
-  proxy.$bus.on('updateTop', (data) => {
+  proxy.$bus.on("updateTop", (data) => {
     tempTop.value = data;
-  })
-})
+  });
+});
 </script>
 
-<style lang="less" scoped>
-@import "@/assets/css/variable.less";
+<style lang="scss" scoped>
+@import "../../css/typeBaseStyle.scss";
 
 .page {
   .model-left {
-    flex: 1;
-    padding: 13.6111vh 1.04vw 7.9167vw 0.52vw;
     .left-container {
       width: 37.4074vh;
       border: 1px solid pink;
@@ -101,7 +95,14 @@ onMounted(() => {
       }
     }
   }
-
-
+  .bt {
+    padding: 0.1852vh 0.4604vw;
+    border: 1px solid rgba(0, 255, 243, 1);
+  }
+}
+.model-form {
+  .light-content {
+    background-color: rgb(12, 68, 81);
+  }
 }
 </style>

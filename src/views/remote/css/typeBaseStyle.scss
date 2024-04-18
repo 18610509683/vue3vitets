@@ -1,0 +1,18 @@
+.page {
+  .model-left {
+    flex: 1;
+    padding: 0 1.04vw 0.93vh 0.52vw;
+    border-right: 1px solid rgba(0, 255, 243, 0.1);
+  }
+  .model-right {
+    width: 20.62vw;
+    padding-left: 0.52vw;
+    overflow-y: hidden;
+    .model-form{
+        overflow-y: scroll;
+    }
+    .model-btn-sty{
+        margin-top: 0.5208vw;
+    }
+  }
+}
