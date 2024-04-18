@@ -151,48 +151,46 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="点位名称">
-                <div
-                  class="w100 h100 flex align-center flex-sub point-name"
-                  :class="{ 'is-focus': showDropDown }"
+              <div
+                class="w100 h100 flex align-center flex-sub point-name"
+                :class="{ 'is-focus': showDropDown }"
+              >
+                <el-select
+                  v-model="selectName"
+                  placeholder=""
+                  style="width: 3.2vw"
+                  suffix-icon=""
+                  class="edit-type"
+                  popper-class="edit-type-popper"
+                  @visible-change="handleSelectChange"
                 >
-                  <!-- 新增 -->
-                  <el-select
-                    v-model="selectName"
-                    placeholder=""
-                    style="width: 4.2vw"
-                    suffix-icon=""
-                    class="edit-type"
-                    popper-class="edit-type-popper"
-                    @visible-change="handleSelectChange"
-                  >
-                    <el-option label="新增" value="1" />
-                    <el-option label="更新" value="2" />
-                  </el-select>
-                  <el-input
-                    v-model="form.name"
-                    placeholder="请输入巡检点名称"
-                    maxlength="20"
-                    show-word-limit
-                  >
-                  </el-input>
-                  <!-- 更新 -->
-                  <!-- <el-select
-                    v-if="true"
-                    v-model="selectName"
-                    placeholder=""
-                    @visible-change="handleSelectChange"
-                  >
-                    <el-option label="正面点位" value="1" />
-                    <el-option label="背面点位" value="2" />
-                  </el-select> -->
-                </div>
-              </el-form-item>
+                  <el-option label="新增" value="1" />
+                  <el-option label="更新" value="2" />
+                </el-select>
+                <el-input
+                  v-if="true"
+                  v-model="form.name"
+                  placeholder="请输入巡检点名称"
+                  maxlength="20"
+                  show-word-limit
+                >
+                </el-input>
+                <el-select
+                  v-if="false"
+                  v-model="selectName"
+                  placeholder=""
+                  @visible-change="handleSelectChange"
+                >
+                  <el-option label="正面点位" value="1" />
+                  <el-option label="背面点位" value="2" />
+                </el-select>
+              </div>
+            </el-form-item>
               <el-form-item label="所在场景" class="form-item-disabled">
                 <el-select
                   v-model="form.env"
                   placeholder="请选择所在场景"
                   disabled
-                  class="disabled"
                 >
                   <!-- <template #prefix>
                     <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
@@ -220,7 +218,6 @@
                 <el-select
                   v-model="form.area"
                   placeholder="请选择所在区域"
-                  class="disabled"
                   disabled
                 >
                   <!-- <template #prefix>
@@ -514,16 +511,17 @@ const handleSelectChange = (val) => {
     font-size: 0.73vw !important;
   }
   .point-name {
+    height: 3.7vh;
     border: 1px solid @primary--light-50;
-    .edit-type {
-      .el-select__wrapper {
+    .el-select__wrapper {
         box-shadow: none;
-        border-right: 1px solid rgba(0, 255, 243, 1);
-      }
+    }
+
+    .edit-type {
       span {
         color: rgba(0, 255, 243, 1);
       }
-      .el-input__wrapper {
+      .el-select__wrapper {
         position: relative;
         padding-right: 0;
         &::after {
@@ -548,35 +546,13 @@ const handleSelectChange = (val) => {
 
     &.is-focus {
       border-color: @primary;
+      .el-select__icon svg {
+        color: @primary !important;
+      }
     }
     .el-input__wrapper {
       border: 0;
     }
   }
-  .disabled {
-    .el-select__wrapper {
-      background-color: #0c3643 !important;
-      box-shadow: 0 0 0 1px rgba(77, 123, 142, 1) inset;
-      // .el-icon {
-      //   color: red;
-      // }
-    }
-    .el-select__selected-item {
-      span {
-        color: rgba(77, 123, 142, 1);
-      }
-    }
-    .el-input__inner {
-      border: 1px solid gray;
-      box-shadow: none;
-    }
-  }
 }
-// /deep/.el-select__wrapper.is-disabled {
-//   // background-color: #0c3643 !important;
-// }
-// /deep/.el-select .disabled {
-//   border: none !important;
-//   box-shadow: red !important;
-// }
 </style>

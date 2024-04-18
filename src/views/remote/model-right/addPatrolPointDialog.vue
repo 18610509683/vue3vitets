@@ -34,7 +34,7 @@
             </el-form-item>
             <el-form-item label="点位名称">
               <div
-                class="w100 h100 flex align-center flex-sub point-name"
+                class="w100 flex align-center flex-sub point-name"
                 :class="{ 'is-focus': showDropDown }"
               >
                 <el-select
@@ -71,7 +71,7 @@
             <el-form-item label="所在场景" class="form-item-disabled">
               <el-select
                 v-model="form.env"
-                placeholder="please select your zone"
+                placeholder="请选择所在场景"
                 disabled
               >
                 <!-- <template #prefix>
@@ -98,7 +98,7 @@
             <el-form-item label="所在区域" class="form-item-disabled">
               <el-select
                 v-model="form.area"
-                placeholder="please select your zone"
+                placeholder="请选择所在区域"
                 disabled
               >
                 <!-- <template #prefix>
@@ -357,10 +357,17 @@ onMounted(()=>{
     font-size: 0.73vw !important;
   }
   .point-name {
+    height: 3.7vh;
     border: 1px solid @primary--light-50;
+    .el-select__wrapper {
+        box-shadow: none;
+    }
 
     .edit-type {
-      .el-input__wrapper {
+      span {
+        color: rgba(0, 255, 243, 1);
+      }
+      .el-select__wrapper {
         position: relative;
         padding-right: 0;
         &::after {
