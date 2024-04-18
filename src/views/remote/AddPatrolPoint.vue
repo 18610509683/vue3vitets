@@ -1,15 +1,46 @@
 <template>
   <div class="w100 h100 p10-vw">
     <div class="full_wh" style="position: relative;">
-      <VisibleLightCapture decs="可见光抓拍" v-if="formData.ActionType == 'zhuapai'" :publicData="formData" />
-      <InfraredTemperature desc="红外测温" v-if="formData.ActionType == 'hongwai'" :publicData="formData" />
-      <ContinuousShot desc="连拍" v-if="formData.ActionType == 'lianpai'" :publicData="formData" />
-      <EnvironmentWatch desc="环境监测" v-if="formData.ActionType == 'huanjing'" :publicData="formData" />
-      <MeterIdentify desc="表计识别" v-if="formData.ActionType == 'biaoji'" :publicData="formData" />
-      <PartialDischange desc="局放监测" v-if="formData.ActionType == 'fangdian'" :publicData="formData" />
-      <KeepWatch desc="守望-越界告警" v-if="formData.ActionType == 'shouwang'" :publicData="formData"/>
-
       <LightCornerBox width="10px" border-width="1px" class="lightCorner-Box flex-1 p10-vw">
+        <VisibleLightCapture decs="可见光抓拍" v-if="formData.ActionType == 'zhuapai'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
+          </template>
+        </VisibleLightCapture>
+        <InfraredTemperature desc="红外测温" v-if="formData.ActionType == 'hongwai'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
+          </template>
+        </InfraredTemperature>
+        <ContinuousShot desc="连拍" v-if="formData.ActionType == 'lianpai'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm"  #right/>
+          </template>
+        </ContinuousShot>
+        <EnvironmentWatch desc="环境监测" v-if="formData.ActionType == 'huanjing'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
+          </template>
+        </EnvironmentWatch>
+        <MeterIdentify desc="表计识别" v-if="formData.ActionType == 'biaoji'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
+          </template>
+        </MeterIdentify>
+        <PartialDischange desc="局放监测" v-if="formData.ActionType == 'fangdian'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
+          </template>
+        </PartialDischange>
+        <KeepWatch desc="守望-越界告警" v-if="formData.ActionType == 'shouwang'" :publicData="formData">
+          <template #right>
+            <AddPatrolPointDialog desc="右侧共用部分" @updateForm="updateForm" />
+          </template>
+        </KeepWatch>
+      </LightCornerBox>
+
+
+      <!-- <LightCornerBox width="10px" border-width="1px" class="lightCorner-Box flex-1 p10-vw">
         <div class="addPoint-model flex align-center h100">
           <div class="model-left h100">
             <div class="model-left-header w100 flex align-center justify-between">
@@ -32,7 +63,7 @@
           </div>
 
         </div>
-      </LightCornerBox>
+      </LightCornerBox> -->
 
     </div>
   </div>
@@ -49,9 +80,11 @@ import MeterIdentify from './types/MeterIdentify/index'
 import PartialDischange from './types/PartialDischange/index'
 import KeepWatch from './types/KeepWatch/index'
 
-const ActionType = ref('')
+const ActionType = ref()
 console.log(defineProps)
-const formData = ref({})
+const formData = ref({
+  ActionType: 'lianpai'
+})
 const updateForm = (data) => {
   formData.value = data;
   console.log(data)

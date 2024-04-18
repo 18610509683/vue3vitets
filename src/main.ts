@@ -4,7 +4,7 @@ import router from "./router";
 import bus from '@/buses/index'
 
 import 'keystar-ui/dist/style.css';
-// import keystarUI from 'keystar-ui'
+import keystarUI from 'keystar-ui'
 
 // import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -14,9 +14,12 @@ import "@/assets/css/variable.less";
 import "@/assets/css/elestyle.less";
 import "@/assets/css/common.less";
 import "@/assets/css/base.scss";
+import "@/assets/css/baseAnimation.scss"
 import axios, { Axios } from "axios"; // 引入axios
 
-
+/* ---自动检测本地调试还是线上环境，只有本地调试时才会自己添加站点信息-- */
+import {initSiteInDev} from '@/utils/setSite';
+initSiteInDev()
 
 // // import log from 'loglevel';
 // // log.setLevel(1)
@@ -98,7 +101,7 @@ window.getTokens = () => {
 
 
 const app = createApp(App);
-// app.use(keystarUI)
+app.use(keystarUI)
 // 全局挂载
 app.config.globalProperties.$bus = bus;
 

@@ -4,7 +4,8 @@
       可见光抓拍 {{ publicData }}
     </div>
     <div class="model-right h100">
-      <div class="fixed_box" :style="{ top: tempTop + 'px', opacity: 1, height: `calc(90vh - ${tempTop}px)` }">
+        <div class="fixed_box">  
+        <slot name="right"></slot>
         <el-collapse>
           <el-collapse-item name="1">
             <template #title>测试1</template>
@@ -87,33 +88,8 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-.page {
-  left: 0;
-  top: 0;
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
+<style lang="less" scoped>
+@import "@/assets/css/variable.less";
 
-  .model-left {
-    flex: 1;
-    padding: 0 1.04vw 0.93vh 0.52vw;
-    pointer-events: all;
-  }
 
-  .model-right {
-    width: 20.62vw;
-    padding-left: 0.52vw;
-    position: relative;
-
-    .fixed_box {
-      width: 20.62vw;
-      overflow: scroll;
-      right: .6vw;
-      position: fixed;
-      pointer-events: all;
-      z-index: 1;
-    }
-  }
-}
 </style>
