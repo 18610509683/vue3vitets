@@ -298,7 +298,7 @@ const handleSelectChange = (val) => {
 
 const tempTop=ref(250)
 onMounted(()=>{
-  //每次选择新类型后都会重新加载组件，故要保留上一次的信息
+  //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
   form.value=props.formData
   const dom=document.querySelector('#publicBox');
   // // 选择目标节点
