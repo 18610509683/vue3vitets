@@ -4,12 +4,12 @@
       <el-collapse-item name="name1">
         <template #title>点位信息</template>
         <div>
-          <el-form :model="form" label-width="120px" label-position="left">
+          <el-form :model="formData" label-width="120px" label-position="left">
             <el-form-item label="巡检设备">
-              <el-select v-model="form.equitname" placeholder="请选择巡检设备">
-                <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->
+              <el-select
+                v-model="formData.equitname"
+                placeholder="请选择巡检设备"
+              >
                 <el-option
                   v-for="item in ActionTypeOptions"
                   :key="item.value"
@@ -34,7 +34,7 @@
                 :class="{ 'is-focus': showDropDown }"
               >
                 <el-select
-                  v-model="selectName"
+                  v-model="formData.editType"
                   placeholder=""
                   style="width: 3.2vw"
                   suffix-icon=""
@@ -45,34 +45,32 @@
                   <el-option label="新增" value="1" />
                   <el-option label="更新" value="2" />
                 </el-select>
+                <el-select
+                  v-if="formData.editType == 2"
+                  v-model="formData.name"
+                  placeholder="请选择巡检点"
+                  @visible-change="handleSelectChange"
+                  style="transform: translateX(-2px)"
+                >
+                  <el-option label="正面点位" value="1" />
+                  <el-option label="背面点位" value="2" />
+                </el-select>
                 <el-input
-                  v-if="false"
-                  v-model="form.name"
+                  v-else
+                  v-model="formData.name"
                   placeholder="请输入巡检点名称"
                   maxlength="20"
                   show-word-limit
                 >
                 </el-input>
-                <el-select
-                  v-if="true"
-                  v-model="selectName"
-                  placeholder=""
-                  @visible-change="handleSelectChange"
-                >
-                  <el-option label="正面点位" value="1" />
-                  <el-option label="背面点位" value="2" />
-                </el-select>
               </div>
             </el-form-item>
             <el-form-item label="所在场景" class="form-item-disabled">
               <el-select
-                v-model="form.env"
+                v-model="formData.env"
                 placeholder="请选择所在场景"
                 disabled
               >
-                <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->
                 <el-option
                   v-for="item in ActionTypeOptions"
                   :key="item.value"
@@ -93,13 +91,10 @@
             </el-form-item>
             <el-form-item label="所在区域" class="form-item-disabled">
               <el-select
-                v-model="form.area"
+                v-model="formData.area"
                 placeholder="请选择所在区域"
                 disabled
               >
-                <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->
                 <el-option
                   v-for="item in ActionTypeOptions"
                   :key="item.value"
@@ -120,14 +115,21 @@
             </el-form-item>
             <el-form-item label="动作类型">
               <el-select
-                v-model="form.ActionType"
-                placeholder="please select your zone"
+                v-model="formData.ActionType"
+                placeholder="请选择动作类型"
                 @change="actionTypeChange"
               >
-                <!-- <template #prefix>
-                      <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                    </template> -->
-
+                <template #prefix v-if="formData.ActionType">
+                  <i
+                    :class="
+                      'iconfont iconfont-' +
+                      ActionTypeOptions.find(
+                        (i) => i.value == formData.ActionType
+                      )?.icon
+                    "
+                    style="margin-right: 2px"
+                  ></i>
+                </template>
                 <el-option
                   v-for="item in ActionTypeOptions"
                   :key="item.value"
@@ -136,7 +138,7 @@
                 >
                   <span style="float: left">
                     <i
-                      :class="'iconfont iconfont-' + item.icon + ''"
+                      :class="'iconfont iconfont-' + item.icon"
                       style="margin-right: 10px"
                     ></i>
                   </span>
@@ -152,21 +154,19 @@
       <el-collapse-item name="name2">
         <template #title>位姿参数</template>
         <div>
-          <el-form :model="form" label-width="120px" label-position="left">
+          <el-form :model="formData" label-width="120px" label-position="left">
             <el-form-item label="行走位置">
               <div class="flex align-center w100">
-                <el-input v-model="form.name" placeholder="请输入行走位置">
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-xia-copy font-14-vw"></i>
+                  <i class="iconfont iconfont-xia-copy font-14-vw disabled"></i>
                   <i class="iconfont iconfont-shang-copy font-14-vw"></i>
                 </div>
               </div>
             </el-form-item>
             <el-form-item label="水平角度">
               <div class="flex align-center w100">
-                <el-input v-model="form.name" placeholder="请输入水平角度">
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-xia-copy font-14-vw"></i>
                   <i class="iconfont iconfont-shang-copy font-14-vw"></i>
@@ -175,8 +175,7 @@
             </el-form-item>
             <el-form-item label="垂直角度">
               <div class="flex align-center w100">
-                <el-input v-model="form.name" placeholder="请输入垂直角度">
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-shang font-14-vw"></i>
                   <i class="iconfont iconfont-xia font-14-vw"></i>
@@ -185,8 +184,7 @@
             </el-form-item>
             <el-form-item label="变焦值">
               <div class="flex align-center w100">
-                <el-input v-model="form.name" placeholder="请输入变焦值">
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-add-rectangle font-18-vw"></i>
                   <i class="iconfont iconfont-minus-rectangle font-18-vw"></i>
@@ -195,8 +193,7 @@
             </el-form-item>
             <el-form-item label="变倍值">
               <div class="flex align-center w100">
-                <el-input v-model="form.name" placeholder="请输入变倍值">
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-add-rectangle font-18-vw"></i>
                   <i class="iconfont iconfont-minus-rectangle font-18-vw"></i>
@@ -204,8 +201,7 @@
               </div>
             </el-form-item>
             <el-form-item label="画面区域">
-              <el-input v-model="form.name" placeholder="(0,0)~(1920,1080)">
-              </el-input>
+              <el-input v-model="formData.name" disabled> </el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -214,7 +210,7 @@
       <el-collapse-item name="name3" id="name3" style="opacity: 0;ba" v-if="0">
         <template #title>告警设置</template>
         <div>
-          <el-form :model="form" label-width="120px" label-position="left">
+          <el-form :model="formData" label-width="120px" label-position="left">
             <el-form-item label="行走位置">
               <el-radio-group v-model="size">
                 <el-radio-button label="正常" />
@@ -231,7 +227,10 @@
             </el-form-item>
             <el-form-item label="区域标记">
               <div class="flex align-center w100">
-                <el-input v-model="form.name" placeholder="(0,0)~(1920,1080)">
+                <el-input
+                  v-model="formData.name"
+                  placeholder="(0,0)~(1920,1080)"
+                >
                 </el-input>
                 <div
                   class="flex align-center justify-center w-36px h-36px border-1px"
@@ -264,6 +263,7 @@ import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
 const activeNames = ref(["name1"]);
 const { proxy } = getCurrentInstance();
+console.log(proxy.$bus);
 const props = defineProps({
   formData: {
     type: Object,
@@ -271,14 +271,6 @@ const props = defineProps({
   },
 });
 
-let val = ref();
-let form = ref({
-  equitname: "jvbu",
-  name: "",
-  env: "hongwai",
-  area: "lianpai",
-  ActionType: null,
-});
 let ActionTypeOptions = ref([
   {
     name: "可见光抓拍",
@@ -294,22 +286,16 @@ let ActionTypeOptions = ref([
 ]);
 const emit = defineEmits(["updateForm"]);
 const actionTypeChange = (val) => {
-  emit("updateForm", form.value);
+  console.log(val);
+  emit("updateForm", formData.value);
 };
 
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
-  showDropDown.value = val;
+  showDropDown.value = !showDropDown.value;
 };
-
-const tempTop = ref(250);
-onMounted(() => {
   //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
-  form.value = props.formData;
   const dom = document.querySelector("#publicBox");
-  // // 选择目标节点
-  // const targetNode = document.getElementById('myElement');
-
   // // 观察器的配置（需要观察什么变动）
   // const config = { attributes: true, childList: true, subtree: true };
 
@@ -392,7 +378,7 @@ onMounted(() => {
             rgba(255, 255, 255, 0) 100%
           );
           position: absolute;
-          top: 0.8vh;
+          top: 0.7vh;
           right: 0;
         }
         .el-input__inner {

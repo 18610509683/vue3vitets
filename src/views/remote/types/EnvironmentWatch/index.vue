@@ -1,6 +1,7 @@
 <template>
   <div class="page full_wh flex">
     <div class="model-left h100">
+      <slot name="left"></slot>
       <div class="left-container">
         <div class="content">
           <div>序号</div>

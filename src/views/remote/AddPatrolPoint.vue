@@ -76,7 +76,12 @@
 </template>
 
 <script setup>
-import { defineProps, getCurrentInstance, ref } from "@vue/runtime-core";
+import {
+  defineProps,
+  getCurrentInstance,
+  ref,
+  onMounted,
+} from "@vue/runtime-core";
 import MySiteWithDevice from "./model-right/MySiteWithDevice.vue";
 import AddPatrolPointDialog from "./model-right/addPatrolPointDialog.vue";
 import VisibleLightCapture from "./types/VisibleLightCapture/index";
@@ -84,8 +89,15 @@ import InfraredTemperature from "./types/InfraredTemperature/index";
 import ContinuousShot from "./types/ContinuousShot/index";
 import EnvironmentWatch from "./types/EnvironmentWatch/index";
 import MeterIdentify from "./types/MeterIdentify/index";
-import PartialDischange from "./types/PartialDischange/index";
+import PartialDischarge from "./types/PartialDischarge/index";
 import KeepWatch from "./types/KeepWatch/index";
+import { useRoute } from "vue-router";
+const route = useRoute();
+let formData = ref({});
+formData.value = route.query.editType
+  ? route.query
+  : { editType: "1" };
+
 /* --------采点类型相关 start---------- */
 const actionTypeEnums = ref([
   {
@@ -116,7 +128,7 @@ const actionTypeEnums = ref([
   {
     name: "局部放电检测",
     value: "fangdian",
-    component: PartialDischange,
+    component: PartialDischarge,
   },
   {
     name: "守望",
@@ -124,19 +136,11 @@ const actionTypeEnums = ref([
     component: KeepWatch,
   },
 ]);
-const ActionType = ref("");
 /* --------采点类型相关 end---------- */
-const formData = ref({
-  equitname: "jvbu",
-  name: "",
-  env: "hongwai",
-  area: "lianpai",
-  ActionType: "biaoji",
-});
+console.log(defineProps);
 const updateForm = (data) => {
   formData.value = data;
 };
-onMounted(() => {});
 </script>
 
 <style lang="less" scoped>
@@ -159,3 +163,4 @@ onMounted(() => {});
   }
 }
 </style>
+./types/PartialDischarge/index
