@@ -6,7 +6,10 @@
         <div>
           <el-form :model="formData" label-width="120px" label-position="left">
             <el-form-item label="巡检设备">
-              <el-select v-model="formData.equitname" placeholder="请选择巡检设备">
+              <el-select
+                v-model="formData.equitname"
+                placeholder="请选择巡检设备"
+              >
                 <el-option
                   v-for="item in ActionTypeOptions"
                   :key="item.value"
@@ -45,8 +48,9 @@
                 <el-select
                   v-if="formData.editType == 2"
                   v-model="formData.name"
-                  placeholder=""
+                  placeholder="请选择巡检点"
                   @visible-change="handleSelectChange"
+                  style="transform: translateX(-2px)"
                 >
                   <el-option label="正面点位" value="1" />
                   <el-option label="背面点位" value="2" />
@@ -112,11 +116,19 @@
             <el-form-item label="动作类型">
               <el-select
                 v-model="formData.ActionType"
-                placeholder="please select your zone"
+                placeholder="请选择动作类型"
                 @change="actionTypeChange"
               >
-                <template #prefix>
-                  <i :class="'iconfont iconfont-' + ActionTypeOptions.find((i) => i.value == formData.ActionType).icon" style="margin-right: 2px;"></i>
+                <template #prefix v-if="formData.ActionType">
+                  <i
+                    :class="
+                      'iconfont iconfont-' +
+                      ActionTypeOptions.find(
+                        (i) => i.value == formData.ActionType
+                      )?.icon
+                    "
+                    style="margin-right: 2px"
+                  ></i>
                 </template>
                 <el-option
                   v-for="item in ActionTypeOptions"
@@ -145,8 +157,7 @@
           <el-form :model="formData" label-width="120px" label-position="left">
             <el-form-item label="行走位置">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled>
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-xia-copy font-14-vw disabled"></i>
                   <i class="iconfont iconfont-shang-copy font-14-vw"></i>
@@ -155,8 +166,7 @@
             </el-form-item>
             <el-form-item label="水平角度">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled>
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-xia-copy font-14-vw"></i>
                   <i class="iconfont iconfont-shang-copy font-14-vw"></i>
@@ -165,8 +175,7 @@
             </el-form-item>
             <el-form-item label="垂直角度">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled>
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-shang font-14-vw"></i>
                   <i class="iconfont iconfont-xia font-14-vw"></i>
@@ -175,8 +184,7 @@
             </el-form-item>
             <el-form-item label="变焦值">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled>
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-add-rectangle font-18-vw"></i>
                   <i class="iconfont iconfont-minus-rectangle font-18-vw"></i>
@@ -185,8 +193,7 @@
             </el-form-item>
             <el-form-item label="变倍值">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled>
-                </el-input>
+                <el-input v-model="formData.name" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
                   <i class="iconfont iconfont-add-rectangle font-18-vw"></i>
                   <i class="iconfont iconfont-minus-rectangle font-18-vw"></i>
@@ -194,8 +201,7 @@
               </div>
             </el-form-item>
             <el-form-item label="画面区域">
-              <el-input v-model="formData.name" disabled>
-              </el-input>
+              <el-input v-model="formData.name" disabled> </el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -221,9 +227,18 @@
             </el-form-item>
             <el-form-item label="区域标记">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" placeholder="(0,0)~(1920,1080)">
+                <el-input
+                  v-model="formData.name"
+                  placeholder="(0,0)~(1920,1080)"
+                >
                 </el-input>
-                <div class="flex align-center justify-center w-36px h-36px border-1px" style="border-color: rgba(0, 255, 243, 0.5);border-left: none;">
+                <div
+                  class="flex align-center justify-center w-36px h-36px border-1px"
+                  style="
+                    border-color: rgba(0, 255, 243, 0.5);
+                    border-left: none;
+                  "
+                >
                   <i class="iconfont iconfont-bianji-01 font-14-vw"></i>
                 </div>
               </div>
@@ -240,22 +255,21 @@
       </el-collapse-item>
     </div>
   </el-collapse>
-
 </template>
 
 <script setup>
-import { defineEmits,getCurrentInstance } from '@vue/runtime-core';
+import { defineEmits, getCurrentInstance } from "@vue/runtime-core";
 import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
-const activeNames=ref(['name1'])
+const activeNames = ref(["name1"]);
 const { proxy } = getCurrentInstance();
-console.log(proxy.$bus)
-const props=defineProps({
-  formData:{
-    type:Object,
-    default:null
-  }
-})
+console.log(proxy.$bus);
+const props = defineProps({
+  formData: {
+    type: Object,
+    default: null,
+  },
+});
 
 let ActionTypeOptions = ref([
   { name: "可见光抓拍", value: "zhuapai", icon: "tubiao_kejianguangzhuapai-42" },
@@ -266,28 +280,27 @@ let ActionTypeOptions = ref([
   { name: "局部放电检测", value: "fangdian", icon: "tubiao_fangdianjiance" },
   { name: "守望", value: "shouwang", icon: "shouwang" },
 ]);
-const emit=defineEmits(['updateForm'])
-const actionTypeChange=(val)=>{
-  console.log(val)
-  emit('updateForm',formData.value)
-}
+const emit = defineEmits(["updateForm"]);
+const actionTypeChange = (val) => {
+  console.log(val);
+  emit("updateForm", formData.value);
+};
 
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
   showDropDown.value = !showDropDown.value;
 };
 
-
-const tempTop=ref(250)
-onMounted(()=>{
+const tempTop = ref(250);
+onMounted(() => {
   //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
-  const dom=document.querySelector('#publicBox');
+  const dom = document.querySelector("#publicBox");
   // // 选择目标节点
   // const targetNode = document.getElementById('myElement');
-  
+
   // // 观察器的配置（需要观察什么变动）
   // const config = { attributes: true, childList: true, subtree: true };
-  
+
   // // 当观察到变动时执行的回调函数
   // const callback = function(mutationsList, observer) {
   //   let dom=document.querySelector('#name3')
@@ -296,16 +309,16 @@ onMounted(()=>{
   //   tempTop.value=rect.top
   //   proxy.$bus.emit('updateTop',rect.top)
   // };
-  
+
   // // 创建一个观察器实例并传入回调函数
   // const observer = new MutationObserver(callback);
-  
+
   // // 开始观察目标节点
   // observer.observe(dom, config);
-  
+
   // // 以后，你可以停止观察
-  // // observer.disconnect();  
-})
+  // // observer.disconnect();
+});
 </script>
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
@@ -315,7 +328,7 @@ onMounted(()=>{
   background: url(../../../assets/img/table_header.png);
   margin-bottom: 0 !important;
   cursor: pointer;
-  i{
+  i {
     margin: 0 0.5208vw;
   }
 }
@@ -346,7 +359,7 @@ onMounted(()=>{
     height: 3.7vh;
     border: 1px solid @primary--light-50;
     .el-select__wrapper {
-        box-shadow: none;
+      box-shadow: none;
     }
 
     .edit-type {
