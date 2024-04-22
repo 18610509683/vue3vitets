@@ -84,7 +84,7 @@ import InfraredTemperature from "./types/InfraredTemperature/index";
 import ContinuousShot from "./types/ContinuousShot/index";
 import EnvironmentWatch from "./types/EnvironmentWatch/index";
 import MeterIdentify from "./types/MeterIdentify/index";
-import PartialDischange from "./types/PartialDischange/index";
+import PartialDischarge from "./types/PartialDischarge/index";
 import KeepWatch from "./types/KeepWatch/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -121,7 +121,7 @@ const actionTypeEnums = ref([
   {
     name: "局部放电检测",
     value: "fangdian",
-    component: PartialDischange,
+    component: PartialDischarge,
   },
   {
     name: "守望",
@@ -157,3 +157,4 @@ const updateForm = (data) => {
   }
 }
 </style>
+./types/PartialDischarge/index

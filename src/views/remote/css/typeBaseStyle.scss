@@ -1,3 +1,4 @@
+/* ---------左右两侧公共样式，某个类型特有的样式请不要再此填写------- */
 .page {
   .model-left {
     flex: 1;
@@ -23,7 +24,7 @@
             border: 1px solid rgba(0, 255, 243, 1);
           }
           .el-input {
-            flex:1;
+            flex: 1;
             height: 100%;
             .el-input__wrapper {
               box-shadow: none;
@@ -64,10 +65,10 @@
               box-shadow: none;
             }
           }
-          &-btn{
-            color:rgba(0, 255, 243, 0.5);
-            &:hover{
-                color: #00fff3;
+          &-btn {
+            color: rgba(0, 255, 243, 0.5);
+            &:hover {
+              color: #00fff3;
             }
           }
         }
@@ -84,17 +85,17 @@
             margin-right: 5px;
             .el-select__wrapper {
               min-height: 34px;
-              span{
+              span {
                 color: #00fff3;
               }
             }
           }
-          .el-input{
+          .el-input {
             margin-right: 5px;
             height: 100%;
             flex: 1;
-            &__inner{
-                color: #00fff3;
+            &__inner {
+              color: #00fff3;
             }
           }
         }
@@ -133,6 +134,47 @@
     }
     .model-btn-sty {
       margin-top: 0.5208vw;
+    }
+  }
+}
+
+/* -------------不同类型表单样式------------ */
+.pd-page {
+  .pd-container {
+    margin-top: 3.1481vh;
+    position: relative;
+    .loading-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      backdrop-filter: blur(3px);
+    }
+
+    .my-legend {
+      position: absolute;
+      top: 20px;
+      left: 10px;
+      div{
+        margin-right: 10px;
+      }
+      &-label{
+        border: 1px solid;
+        padding: 0.5556vh 1.3889vh;
+      }
+    }
+    .normal {
+      border-color: #00fff3;
+      background-color: rgba(0, 255, 243, 0.1);
+    }
+    .alarm{
+      border-color: #FFCC4C;
+      background-color: rgba(201, 173, 87,0.1);
+    }
+    .serious{
+      border-color: #FC9028;
+      background-color: rgba(199, 128, 60,0.1);
     }
   }
 }
