@@ -126,21 +126,17 @@ const actionTypeEnums = ref([
 ]);
 const ActionType = ref("");
 /* --------采点类型相关 end---------- */
-console.log(defineProps);
 const formData = ref({
   equitname: "jvbu",
   name: "",
   env: "hongwai",
   area: "lianpai",
-  ActionType: 'fangdian',
+  ActionType: "biaoji",
 });
 const updateForm = (data) => {
   formData.value = data;
-  console.log(data);
 };
-onMounted(() => {
-  console.log(defineProps);
-});
+onMounted(() => {});
 </script>
 
 <style lang="less" scoped>

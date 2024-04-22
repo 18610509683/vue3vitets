@@ -233,7 +233,13 @@
               <div class="flex align-center w100">
                 <el-input v-model="form.name" placeholder="(0,0)~(1920,1080)">
                 </el-input>
-                <div class="flex align-center justify-center w-36px h-36px border-1px" style="border-color: rgba(0, 255, 243, 0.5);border-left: none;">
+                <div
+                  class="flex align-center justify-center w-36px h-36px border-1px"
+                  style="
+                    border-color: rgba(0, 255, 243, 0.5);
+                    border-left: none;
+                  "
+                >
                   <i class="iconfont iconfont-bianji-01 font-14-vw"></i>
                 </div>
               </div>
@@ -250,22 +256,20 @@
       </el-collapse-item>
     </div>
   </el-collapse>
-
 </template>
 
 <script setup>
-import { defineEmits,getCurrentInstance } from '@vue/runtime-core';
+import { defineEmits, getCurrentInstance } from "@vue/runtime-core";
 import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
-const activeNames=ref(['name1'])
+const activeNames = ref(["name1"]);
 const { proxy } = getCurrentInstance();
-console.log(proxy.$bus)
-const props=defineProps({
-  formData:{
-    type:Object,
-    default:null
-  }
-})
+const props = defineProps({
+  formData: {
+    type: Object,
+    default: null,
+  },
+});
 
 let val = ref();
 let form = ref({
@@ -276,7 +280,11 @@ let form = ref({
   ActionType: null,
 });
 let ActionTypeOptions = ref([
-  { name: "可见光抓拍", value: "zhuapai", icon: "tubiao_kejianguangzhuapai-42" },
+  {
+    name: "可见光抓拍",
+    value: "zhuapai",
+    icon: "tubiao_kejianguangzhuapai-42",
+  },
   { name: "红外测温", value: "hongwai", icon: "redtemp" },
   { name: "环境监测", value: "huanjing", icon: "tubiao_huanjingjiance" },
   { name: "表计识别", value: "biaoji", icon: "kejianguangshibie" },
@@ -284,29 +292,27 @@ let ActionTypeOptions = ref([
   { name: "局部放电检测", value: "fangdian", icon: "tubiao_fangdianjiance" },
   { name: "守望", value: "shouwang", icon: "shouwang" },
 ]);
-const emit=defineEmits(['updateForm'])
-const actionTypeChange=(val)=>{
-  console.log(val)
-  emit('updateForm',form.value)
-}
+const emit = defineEmits(["updateForm"]);
+const actionTypeChange = (val) => {
+  emit("updateForm", form.value);
+};
 
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
   showDropDown.value = val;
 };
 
-
-const tempTop=ref(250)
-onMounted(()=>{
+const tempTop = ref(250);
+onMounted(() => {
   //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
-  form.value=props.formData
-  const dom=document.querySelector('#publicBox');
+  form.value = props.formData;
+  const dom = document.querySelector("#publicBox");
   // // 选择目标节点
   // const targetNode = document.getElementById('myElement');
-  
+
   // // 观察器的配置（需要观察什么变动）
   // const config = { attributes: true, childList: true, subtree: true };
-  
+
   // // 当观察到变动时执行的回调函数
   // const callback = function(mutationsList, observer) {
   //   let dom=document.querySelector('#name3')
@@ -315,16 +321,16 @@ onMounted(()=>{
   //   tempTop.value=rect.top
   //   proxy.$bus.emit('updateTop',rect.top)
   // };
-  
+
   // // 创建一个观察器实例并传入回调函数
   // const observer = new MutationObserver(callback);
-  
+
   // // 开始观察目标节点
   // observer.observe(dom, config);
-  
+
   // // 以后，你可以停止观察
-  // // observer.disconnect();  
-})
+  // // observer.disconnect();
+});
 </script>
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
@@ -334,7 +340,7 @@ onMounted(()=>{
   background: url(../../../assets/img/table_header.png);
   margin-bottom: 0 !important;
   cursor: pointer;
-  i{
+  i {
     margin: 0 0.5208vw;
   }
 }
@@ -365,7 +371,7 @@ onMounted(()=>{
     height: 3.7vh;
     border: 1px solid @primary--light-50;
     .el-select__wrapper {
-        box-shadow: none;
+      box-shadow: none;
     }
 
     .edit-type {
