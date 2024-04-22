@@ -9,6 +9,7 @@
         padding: 60px 0px 6px 20px;
       "
     >
+    <slot name="left"></slot>
       <canvas
         id="canvas"
         style="border: 1px solid white; pointer-events: all"

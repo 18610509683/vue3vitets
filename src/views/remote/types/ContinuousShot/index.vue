@@ -1,6 +1,8 @@
 <template>
   <div class="page full_wh flex">
-    <div class="model-left h100">连拍 {{ publicData }}</div>
+    <div class="model-left h100">
+      <slot name="left"></slot>
+    </div>
     <div class="model-right h100 flex flex-direction">
       <slot name="swd"></slot>
       <div class="model-form h100 flex-1">
