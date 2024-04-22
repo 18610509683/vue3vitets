@@ -106,10 +106,11 @@
       :append-to-body="false"
     >
       <template #header>
-        <div class="drawer-header flex align-center">
-          <div class="font-16-vw">唐阳</div>
-          <hr />
-          <div class="font-16-vw">前方摄像头</div>
+        <div class="flex-1 h100" v-if="PointsDialog">
+            <MySiteWithDevice
+              :is-adaption="true"
+              :adaption-dom="'.el-drawer-Box'"
+            ></MySiteWithDevice>
         </div>
       </template>
       <div class="drawer-body">
@@ -122,15 +123,12 @@
         <div class="body-form">
           <div class="title font-16-vw">点位信息</div>
           <div>
-            <el-form :model="form" label-width="120px" label-position="left">
+            <el-form :model="formData" label-width="120px" label-position="left">
               <el-form-item label="巡检设备">
                 <el-select
-                  v-model="form.equitname"
+                  v-model="formData.equitname"
                   placeholder="请选择巡检设备"
                 >
-                  <!-- <template #prefix>
-                    <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                  </template> -->
                   <el-option
                     v-for="item in ActionTypeOptions"
                     :key="item.value"
@@ -156,7 +154,7 @@
                 :class="{ 'is-focus': showDropDown }"
               >
                 <el-select
-                  v-model="selectName"
+                  v-model="formData.editType"
                   placeholder=""
                   style="width: 3.2vw"
                   suffix-icon=""
@@ -167,34 +165,31 @@
                   <el-option label="新增" value="1" />
                   <el-option label="更新" value="2" />
                 </el-select>
-                <el-input
-                  v-if="true"
-                  v-model="form.name"
-                  placeholder="请输入巡检点名称"
-                  maxlength="20"
-                  show-word-limit
-                >
-                </el-input>
                 <el-select
-                  v-if="false"
-                  v-model="selectName"
+                  v-if="formData.editType == 2"
+                  v-model="formData.name"
                   placeholder=""
                   @visible-change="handleSelectChange"
                 >
                   <el-option label="正面点位" value="1" />
                   <el-option label="背面点位" value="2" />
                 </el-select>
+                <el-input
+                  v-else
+                  v-model="formData.name"
+                  placeholder="请输入巡检点名称"
+                  maxlength="20"
+                  show-word-limit
+                >
+                </el-input>
               </div>
             </el-form-item>
               <el-form-item label="所在场景" class="form-item-disabled">
                 <el-select
-                  v-model="form.env"
+                  v-model="formData.env"
                   placeholder="请选择所在场景"
                   disabled
                 >
-                  <!-- <template #prefix>
-                    <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                  </template> -->
                   <el-option
                     v-for="item in ActionTypeOptions"
                     :key="item.value"
@@ -216,13 +211,10 @@
               </el-form-item>
               <el-form-item label="所在区域" class="form-item-disabled">
                 <el-select
-                  v-model="form.area"
+                  v-model="formData.area"
                   placeholder="请选择所在区域"
                   disabled
                 >
-                  <!-- <template #prefix>
-                    <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                  </template> -->
                   <el-option
                     v-for="item in ActionTypeOptions"
                     :key="item.value"
@@ -244,13 +236,12 @@
               </el-form-item>
               <el-form-item label="动作类型">
                 <el-select
-                  v-model="form.ActionType"
+                  v-model="formData.ActionType"
                   placeholder="请选择动作类型"
                 >
-                  <!-- <template #prefix>
-                    <i :class="'iconfont iconfont-' + item.icon + ''" style="margin-right: 2px;"></i>
-                  </template> -->
-
+                  <template #prefix>
+                    <i :class="'iconfont iconfont-' + ActionTypeOptions.find((i) => i.value == formData.ActionType).icon" style="margin-right: 2px;"></i>
+                  </template>
                   <el-option
                     v-for="item in ActionTypeOptions"
                     :key="item.value"
@@ -290,15 +281,17 @@
 <script setup>
 import { ref, onMounted, watch, defineEmits } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
-let val = ref();
+import MySiteWithDevice from "../model-right/MySiteWithDevice.vue";
+import { useRouter } from "vue-router";
+
 let PointsDialog = ref(false);
-let form = ref({
-  equitname: "zhuapai",
-  selectName: "1",
+let formData = ref({
+  equitname: "jvbu",
+  editType: '1',
   name: "",
-  env: "",
-  area: "",
-  ActionType: "zhuapai",
+  env: "hongwai",
+  area: "lianpai",
+  ActionType: 'fangdian',
 });
 let ActionTypeOptions = ref([
   {
@@ -313,7 +306,6 @@ let ActionTypeOptions = ref([
   { name: "局部放电检测", value: "fangdian", icon: "tubiao_fangdianjiance" },
   { name: "守望", value: "shouwang", icon: "shouwang" },
 ]);
-const emit = defineEmits(["openAddPoint"]);
 
 const modelPoints = () => {
   PointsDialog.value = true;
@@ -321,14 +313,20 @@ const modelPoints = () => {
 const cancelClick = () => {
   PointsDialog.value = false;
 };
+
+const router = useRouter();
 const confirmClick = () => {
   PointsDialog.value = false;
-  emit("openAddPoint");
+  router.push({
+    path:"/remote/addpatrolpoint",
+    query:formData.value
+  });
 };
 
+let editType = ref('1');
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
-  showDropDown.value = val;
+  showDropDown.value = !showDropDown.value;
 };
 </script>
 <style scoped lang="less">
@@ -483,6 +481,7 @@ const handleSelectChange = (val) => {
 
 // 抽屉弹框
 :deep(.el-drawer-Box) {
+  box-sizing: border-box;
   width: 20.62vw !important;
   height: calc(100% - 11.294vh);
   margin-top: 10.36vh;
@@ -501,6 +500,9 @@ const handleSelectChange = (val) => {
         margin-bottom: 2.3vh;
       }
     }
+  }
+  .site-with-device .device-tree-drop-down{
+    left: -20px;
   }
 }
 
@@ -535,7 +537,7 @@ const handleSelectChange = (val) => {
             rgba(255, 255, 255, 0) 100%
           );
           position: absolute;
-          top: 0.8vh;
+          top: 0.7vh;
           right: 0;
         }
         .el-input__inner {

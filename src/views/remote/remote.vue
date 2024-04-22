@@ -29,7 +29,7 @@
         </LightCornerBox>
       </div>
       <div class="Con-Right h100">
-        <RightSide @openAddPoint="openAddPoint"></RightSide>
+        <RightSide></RightSide>
       </div>
     </div>
   </div>
@@ -38,8 +38,6 @@
 <script setup>
 import axios from "axios";
 import RightSide from "@/views/remote/components/RightSide.vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
 
 let sensorsArr = ref([
   { name: "氧气", value: 20, unit: "m" },
@@ -52,9 +50,6 @@ let sensorsArr = ref([
   { name: "氧气", value: 20, unit: "m" },
 ]);
 
-const openAddPoint = () => {
-  router.push("/remote/addpatrolpoint");
-};
 </script>
 
 <style scoped lang="less">

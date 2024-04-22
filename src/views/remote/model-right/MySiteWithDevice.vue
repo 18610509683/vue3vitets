@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import {
   getStationPageApi,
@@ -117,8 +117,9 @@ const MyTreeDataApi = (params) => {
 /* -----------弹窗大小自适应模块 start---------------- */
 let boxHeight = ref(821);
 let boxWidth = ref(395);
-const adaptionFunc = () => {
+const adaptionFunc = async() => {
   if (props.isAdaption) {
+    await nextTick();
     let dom = document.querySelector(props.adaptionDom);
     boxHeight.value = dom.offsetHeight;
     boxWidth.value = dom.offsetWidth;

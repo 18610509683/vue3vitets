@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { defineProps, getCurrentInstance, ref } from "@vue/runtime-core";
+import { defineProps, getCurrentInstance, ref, onMounted } from "@vue/runtime-core";
 import MySiteWithDevice from "./model-right/MySiteWithDevice.vue";
 import AddPatrolPointDialog from "./model-right/addPatrolPointDialog.vue";
 import VisibleLightCapture from "./types/VisibleLightCapture/index";
@@ -86,6 +86,11 @@ import EnvironmentWatch from "./types/EnvironmentWatch/index";
 import MeterIdentify from "./types/MeterIdentify/index";
 import PartialDischange from "./types/PartialDischange/index";
 import KeepWatch from "./types/KeepWatch/index";
+import { useRoute } from "vue-router";
+const route = useRoute();
+let formData = ref({});
+formData.value = route.query;
+
 /* --------采点类型相关 start---------- */
 const actionTypeEnums = ref([
   {
@@ -124,23 +129,12 @@ const actionTypeEnums = ref([
     component: KeepWatch,
   },
 ]);
-const ActionType = ref("");
 /* --------采点类型相关 end---------- */
 console.log(defineProps);
-const formData = ref({
-  equitname: "jvbu",
-  name: "",
-  env: "hongwai",
-  area: "lianpai",
-  ActionType: 'fangdian',
-});
 const updateForm = (data) => {
   formData.value = data;
   console.log(data);
 };
-onMounted(() => {
-  console.log(defineProps);
-});
 </script>
 
 <style lang="less" scoped>
