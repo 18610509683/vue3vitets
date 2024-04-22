@@ -1,6 +1,8 @@
 <template>
   <div class="page full_wh flex">
-    <div class="model-left h100">局放监测 {{ publicData }}</div>
+    <div class="model-left h100">
+      <slot name="left"></slot>
+    </div>
     <div class="model-right h100 flex flex-direction">
       <slot name="swd"></slot>
       <div class="model-form h100 flex-1">
@@ -29,203 +31,231 @@
                     v-model="form.matchData"
                   ></el-input>
                   <el-select v-model="form.matchData" v-else></el-select>
+                  <span
+                    class="mix-box-btn"
+                    @click.stop="
+                      () => {
+                        controlField.isShowDetail = !controlField.isShowDetail;
+                      }
+                    "
+                  >
+                    {{ controlField.isShowDetail ? "隐藏" : "展开" }}
+                  </span>
                 </div>
               </el-form-item>
-              <el-form-item label="数据单位">
-                <el-input
-                  v-model="form.unit"
-                  v-if="form.matchDataType == '1'"
-                ></el-input>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="数据说明">
-                <textarea
-                  v-model="form.explain"
-                  v-if="form.matchDataType == '1'"
-                  class="w100"
-                ></textarea>
-                <div v-else class="read-only" style="height: auto"></div>
-              </el-form-item>
-              <el-form-item label="数据验证">
-                <el-switch
-                  v-model="form.isDataVerify"
-                  size="large"
-                  inline-prompt
-                  active-text="启用"
-                  inactive-text="关闭"
-                  active-value="Y"
-                  inactive-value="N"
-                  style="
-                    --el-switch-on-color: #07909e;
-                    --el-switch-off-color: #033240;
-                  "
-                ></el-switch>
-              </el-form-item>
-              <el-form-item label="数据精度">
-                <el-input-number
-                  :precision="2"
-                  :step="0.1"
-                  v-model="form.presicion"
-                  v-if="form.matchDataType == '1'"
-                ></el-input-number>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="数据下限">
-                <div
-                  class="flex row-box align-center"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <el-select v-model="controlField.isDataLower">
-                    <el-option
-                      v-for="item in controlFieldOptions.isDataLower"
-                      :value="item.value"
-                      :label="item.label"
-                    ></el-option>
-                  </el-select>
-                  <template v-if="controlField.isDataLower">
-                    <el-input v-model="form.dataLower">
-                      <template #suffix>
-                        <span class="text-active">{{ form.unit }}</span>
-                      </template>
-                    </el-input>
-                    <div class="font-12">时，数据不合规</div>
-                  </template>
-                </div>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="数据上限">
-                <div
-                  class="flex row-box align-center"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <el-select v-model="controlField.isDataUpper">
-                    <el-option
-                      v-for="item in controlFieldOptions.isDataUpper"
-                      :value="item.value"
-                      :label="item.label"
-                    ></el-option
-                  ></el-select>
-                  <template v-if="controlField.isDataUpper">
-                    <el-input v-model="form.dataUpper">
-                    <template #suffix>
-                      <span class="text-active">{{ form.unit }}</span>
+              <div
+                :class="[
+                  controlField.isShowDetail
+                    ? 'kr-collapse-list-open'
+                    : 'kr-collapse-list-close',
+                ]"
+              >
+                <el-form-item label="数据单位">
+                  <el-input
+                    v-model="form.unit"
+                    v-if="form.matchDataType == '1'"
+                  ></el-input>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="数据说明">
+                  <textarea
+                    v-model="form.explain"
+                    v-if="form.matchDataType == '1'"
+                    class="w100"
+                  ></textarea>
+                  <div v-else class="read-only" style="height: auto"></div>
+                </el-form-item>
+                <el-form-item label="数据验证">
+                  <el-switch
+                    v-model="form.isDataVerify"
+                    size="large"
+                    inline-prompt
+                    active-text="启用"
+                    inactive-text="关闭"
+                    active-value="Y"
+                    inactive-value="N"
+                    style="
+                      --el-switch-on-color: #07909e;
+                      --el-switch-off-color: #033240;
+                    "
+                  ></el-switch>
+                </el-form-item>
+                <el-form-item label="数据精度">
+                  <el-input-number
+                    :precision="2"
+                    :step="0.1"
+                    v-model="form.presicion"
+                    v-if="form.matchDataType == '1'"
+                  ></el-input-number>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="数据下限">
+                  <div
+                    class="flex row-box align-center"
+                    v-if="form.matchDataType == '1'"
+                  >
+                    <el-select v-model="controlField.isDataLower">
+                      <el-option
+                        v-for="item in controlFieldOptions.isDataLower"
+                        :value="item.value"
+                        :label="item.label"
+                      ></el-option>
+                    </el-select>
+                    <template v-if="controlField.isDataLower">
+                      <el-input v-model="form.dataLower">
+                        <template #suffix>
+                          <span class="text-active">{{ form.unit }}</span>
+                        </template>
+                      </el-input>
+                      <div class="font-12">时，数据不合规</div>
                     </template>
-                  </el-input>
-                  <div class="font-12">时，数据不合规</div>
-                  </template>
-                </div>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="采集间隔">
-                <el-input
-                  v-model="form.interval"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <template #suffix>
-                    <span class="text-active">{{ "s" }}</span>
-                  </template></el-input
-                >
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="告警配置">
-                <el-switch
-                  v-model="form.isAlarm"
-                  size="large"
-                  inline-prompt
-                  active-text="启用"
-                  inactive-text="关闭"
-                  active-value="Y"
-                  inactive-value="N"
-                  style="
-                    --el-switch-on-color: #07909e;
-                    --el-switch-off-color: #033240;
-                  "
-                ></el-switch>
-              </el-form-item>
-              <el-form-item label="严重下限">
-                <div
-                  class="flex row-box align-center"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <el-select v-model="controlField.isSeriourLower">
-                    <el-option
-                      v-for="item in controlFieldOptions.isSeriourLower"
-                      :value="item.value"
-                      :label="item.label"
-                    ></el-option
-                  ></el-select>
-                  <el-input v-model="form.seriousLower">
-                    <template #suffix>
-                      <span class="text-active">{{ form.unit }}</span>
+                  </div>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="数据上限">
+                  <div
+                    class="flex row-box align-center"
+                    v-if="form.matchDataType == '1'"
+                  >
+                    <el-select v-model="controlField.isDataUpper">
+                      <el-option
+                        v-for="item in controlFieldOptions.isDataUpper"
+                        :value="item.value"
+                        :label="item.label"
+                      ></el-option
+                    ></el-select>
+                    <template v-if="controlField.isDataUpper">
+                      <el-input v-model="form.dataUpper">
+                        <template #suffix>
+                          <span class="text-active">{{ form.unit }}</span>
+                        </template>
+                      </el-input>
+                      <div class="font-12">时，数据不合规</div>
                     </template>
-                  </el-input>
-                  <div class="font-12">时，进行严重级别的报警</div>
-                </div>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="警告下限">
-                <div
-                  class="flex row-box align-center"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <el-select v-model="controlField.isAlarmLower">
-                    <el-option
-                      v-for="item in controlFieldOptions.isAlarmLower"
-                      :value="item.value"
-                      :label="item.label"
-                    ></el-option
-                  ></el-select>
-                  <el-input v-model="form.alarmLower">
+                  </div>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="采集间隔">
+                  <el-input
+                    v-model="form.interval"
+                    v-if="form.matchDataType == '1'"
+                  >
                     <template #suffix>
-                      <span class="text-active">{{ form.unit }}</span>
+                      <span class="text-active">{{ "s" }}</span>
+                    </template></el-input
+                  >
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="告警配置">
+                  <el-switch
+                    v-model="form.isAlarm"
+                    size="large"
+                    inline-prompt
+                    active-text="启用"
+                    inactive-text="关闭"
+                    active-value="Y"
+                    inactive-value="N"
+                    style="
+                      --el-switch-on-color: #07909e;
+                      --el-switch-off-color: #033240;
+                    "
+                  ></el-switch>
+                </el-form-item>
+                <el-form-item label="严重下限">
+                  <div
+                    class="flex row-box align-center"
+                    v-if="form.matchDataType == '1'"
+                  >
+                    <el-select v-model="controlField.isSeriourLower">
+                      <el-option
+                        v-for="item in controlFieldOptions.isSeriourLower"
+                        :value="item.value"
+                        :label="item.label"
+                      ></el-option
+                    ></el-select>
+                    <template v-if="controlField.isSeriourLower">
+                      <el-input v-model="form.seriousLower">
+                        <template #suffix>
+                          <span class="text-active">{{ form.unit }}</span>
+                        </template>
+                      </el-input>
+                      <div class="font-12">时，进行严重级别的报警</div>
                     </template>
-                  </el-input>
-                  <div class="font-12">时，进行警告级别的报警</div>
-                </div>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="警告上限">
-                <div
-                  class="flex row-box align-center"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <el-select v-model="controlField.isAlarmUpper">
-                    <el-option
-                      v-for="item in controlFieldOptions.isAlarmUpper"
-                      :value="item.value"
-                      :label="item.label"
-                    ></el-option
-                  ></el-select>
-                  <el-input v-model="form.alarmUpper">
-                    <template #suffix>
-                      <span class="text-active">{{ form.unit }}</span>
+                  </div>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="警告下限">
+                  <div
+                    class="flex row-box align-center"
+                    v-if="form.matchDataType == '1'"
+                  >
+                    <el-select v-model="controlField.isAlarmLower">
+                      <el-option
+                        v-for="item in controlFieldOptions.isAlarmLower"
+                        :value="item.value"
+                        :label="item.label"
+                      ></el-option
+                    ></el-select>
+                    <template v-if="controlField.isAlarmLower">
+                      <el-input v-model="form.alarmLower">
+                        <template #suffix>
+                          <span class="text-active">{{ form.unit }}</span>
+                        </template>
+                      </el-input>
+                      <div class="font-12">时，进行警告级别的报警</div>
                     </template>
-                  </el-input>
-                  <div class="font-12">时，进行警告级别的告警</div>
-                </div>
-                <div v-else class="read-only"></div>
-              </el-form-item>
-              <el-form-item label="严重上限">
-                <div
-                  class="flex row-box align-center"
-                  v-if="form.matchDataType == '1'"
-                >
-                  <el-select v-model="controlField.isSeriousUpper">
-                    <el-option
-                      v-for="item in controlFieldOptions.isSeriousUpper"
-                      :value="item.value"
-                      :label="item.label"
-                    ></el-option
-                  ></el-select>
-                  <el-input v-model="form.seriousUpper">
-                    <template #suffix>
-                      <span class="text-active">{{ form.unit }}</span>
+                  </div>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="警告上限">
+                  <div
+                    class="flex row-box align-center"
+                    v-if="form.matchDataType == '1'"
+                  >
+                    <el-select v-model="controlField.isAlarmUpper">
+                      <el-option
+                        v-for="item in controlFieldOptions.isAlarmUpper"
+                        :value="item.value"
+                        :label="item.label"
+                      ></el-option
+                    ></el-select>
+                    <template v-if="controlField.isAlarmUpper">
+                      <el-input v-model="form.alarmUpper">
+                        <template #suffix>
+                          <span class="text-active">{{ form.unit }}</span>
+                        </template>
+                      </el-input>
+                      <div class="font-12">
+                        时，进行警告级别的告警
+                      </div></template
+                    >
+                  </div>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+                <el-form-item label="严重上限">
+                  <div
+                    class="flex row-box align-center"
+                    v-if="form.matchDataType == '1'"
+                  >
+                    <el-select v-model="controlField.isSeriousUpper">
+                      <el-option
+                        v-for="item in controlFieldOptions.isSeriousUpper"
+                        :value="item.value"
+                        :label="item.label"
+                      ></el-option
+                    ></el-select>
+                    <template v-if="controlField.isSeriousUpper">
+                      <el-input v-model="form.seriousUpper">
+                        <template #suffix>
+                          <span class="text-active">{{ form.unit }}</span>
+                        </template>
+                      </el-input>
+                      <div class="font-12">时，进行严重级别的报警</div>
                     </template>
-                  </el-input>
-                  <div class="font-12">时，进行严重级别的报警</div>
-                </div>
-                <div v-else class="read-only"></div>
-              </el-form-item>
+                  </div>
+                  <div v-else class="read-only"></div>
+                </el-form-item>
+              </div>
             </el-form>
           </el-collapse-item>
         </el-collapse>
@@ -265,6 +295,7 @@ let form = ref({
   seriousUpper: 0, //严重上限
 });
 let controlField = ref({
+  isShowDetail: false, //是否展示模板详情
   isDataLower: true, //是否有数据下限
   isDataUpper: true, //是否数据上限
   isSeriourLower: true, //是否有严重下限
