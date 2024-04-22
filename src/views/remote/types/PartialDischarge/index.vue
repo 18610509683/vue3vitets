@@ -1,7 +1,24 @@
 <template>
-  <div class="page full_wh flex">
-    <div class="model-left h100">
+  <div class="page pd-page full_wh flex">
+    <div class="model-left h100 flex flex-direction">
       <slot name="left"></slot>
+      <div class="flex-1 w100 pd-container">
+        <div
+          v-if="myLoading"
+          class="loading-text w100 h100 font-24 flex justify-center align-center" 
+          :style="{
+            backdropFilter: `blur(${myLoading ? 3 : 0}px)`,
+          }"
+        >
+          正在采样...
+        </div>
+        <div class="flex my-legend justify-center align-center">
+          <div :class="['my-legend-label normal']">正常</div>
+          <div>超声检测</div>
+          <div class="font-20 text-active bold"> 32.32dB</div>
+        </div>
+        <Echart :option="option"></Echart>
+      </div>
     </div>
     <div class="model-right h100 flex flex-direction">
       <slot name="swd"></slot>
@@ -270,12 +287,15 @@
 
 <script setup>
 import { getCurrentInstance, onMounted } from "vue";
+import Echart from "@/components/Echart.vue";
+import { partailDischargeChart } from "../../js/echartsHandle";
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   publicData: {
     type: Object,
   },
 });
+let myLoading = ref(true);
 let form = ref({
   dataTemplateType: "1", //数据模板类型
   dataTemplate: null, //数据模板
@@ -329,14 +349,17 @@ const controlFieldOptions = {
     { value: false, label: "无" },
   ],
 };
-let selectValue = ref(1);
+let option = ref(null);
 const cancelClick = () => {};
 const confirmClick = () => {};
-onMounted(() => {});
+onMounted(() => {
+  option.value = partailDischargeChart();
+  setTimeout(() => {
+    myLoading.value = false;
+  }, 2000);
+});
 </script>
 
 <style lang="scss" scoped>
 @import "../../css/typeBaseStyle.scss";
-.page {
-}
 </style>
