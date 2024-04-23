@@ -1,0 +1,6 @@
+.el-switch.is-checked .el-switch__core{
+  --el-switch-on-color:var(--kkd_switch_open_bg_color);
+}
+.el-switch__core{
+  --el-switch-off-color:var(--kkd_switch_close_bg_color);
+}

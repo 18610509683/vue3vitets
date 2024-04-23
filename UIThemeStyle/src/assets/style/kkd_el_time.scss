@@ -1,0 +1,16 @@
+.el-time-spinner__item{
+  color: var(--kkd_white_50p_color);
+}
+.el-time-spinner__item:hover{
+  background: var(--kkd_main_10p_color)!important;
+}
+.el-time-spinner__item.is-active:not(.is-disabled){
+  background: var(--kkd_main_10p_color);
+}
+.el-time-panel__footer{
+  border-top-color: var(--kkd_main_50p_color);
+}
+.el-time-panel__content::before{
+  border-top:none;
+  border-bottom:none;
+}
