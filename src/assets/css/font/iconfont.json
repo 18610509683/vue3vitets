@@ -6,6 +6,20 @@
   "description": "机器人新页面inon",
   "glyphs": [
     {
+      "icon_id": "34926493",
+      "name": "新增",
+      "font_class": "add",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "39965465",
+      "name": "copy",
+      "font_class": "copy",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
       "icon_id": "27910004",
       "name": "前往",
       "font_class": "arrow-go",
@@ -183,7 +197,7 @@
     {
       "icon_id": "35329697",
       "name": "删除-01",
-      "font_class": "shanchu-01",
+      "font_class": "shanchu",
       "unicode": "e6df",
       "unicode_decimal": 59103
     },
