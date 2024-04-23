@@ -316,7 +316,7 @@ const handleSelectChange = (val) => {
 
   // // 以后，你可以停止观察
   // // observer.disconnect();
-});
+// });
 </script>
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
