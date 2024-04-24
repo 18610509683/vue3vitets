@@ -174,7 +174,6 @@
                     v-model="formData.name"
                     placeholder="请选择巡检点"
                     @visible-change="handleSelectChange"
-                    style="transform: translateX(-2px)"
                   >
                     <el-option label="正面点位" value="1" />
                     <el-option label="背面点位" value="2" />
@@ -196,7 +195,7 @@
                   disabled
                 >
                   <el-option
-                    v-for="item in ActionTypeOptions"
+                    v-for="item in actionTypeOption"
                     :key="item.value"
                     :label="item.name"
                     :value="item.value"
@@ -221,7 +220,7 @@
                   disabled
                 >
                   <el-option
-                    v-for="item in ActionTypeOptions"
+                    v-for="item in actionTypeOption"
                     :key="item.value"
                     :label="item.name"
                     :value="item.value"
@@ -241,35 +240,35 @@
               </el-form-item>
               <el-form-item label="动作类型">
                 <el-select
-                  v-model="formData.ActionType"
+                  v-model="formData.actionType"
                   placeholder="请选择动作类型"
                 >
-                  <template #prefix v-if="formData.ActionType">
+                  <template #prefix v-if="formData.actionType">
                     <i
                       :class="
                         'iconfont iconfont-' +
-                        ActionTypeOptions.find(
-                          (i) => i.value == formData.ActionType
-                        )?.icon
+                        actionTypeOption.find(
+                          (i) => i.actionTypeValue == formData.actionType
+                        )?.actionTypeIcon
                       "
                       style="margin-right: 2px"
                     ></i>
                   </template>
                   <el-option
-                    v-for="item in ActionTypeOptions"
-                    :key="item.value"
-                    :label="item.name"
-                    :value="item.value"
+                    v-for="item in actionTypeOption"
+                    :key="item.actionTypeValue"
+                    :label="item.actionTypeLabel"
+                    :value="item.actionTypeValue"
                   >
                     <span style="float: left">
                       <i
-                        :class="'iconfont iconfont-' + item.icon + ''"
+                        :class="'iconfont iconfont-' + item.actionTypeIcon + ''"
                         style="margin-right: 10px"
                       ></i>
                     </span>
                     <span
                       style="float: left; color: #8492a6; font-size: 13px"
-                      >{{ item.name }}</span
+                      >{{ item.actionTypeLabel }}</span
                     >
                   </el-option>
                 </el-select>
@@ -295,6 +294,7 @@
 import { ref, onMounted, watch, defineEmits } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
 import MySiteWithDevice from "../model-right/MySiteWithDevice.vue";
+import addPatrolPointOptions from "../js/addPatrolPointOption.js";
 import { useRouter } from "vue-router";
 
 let PointsDialog = ref(false);
@@ -304,21 +304,19 @@ let formData = ref({
   name: "",
   env: "",
   area: "",
-  ActionType: "",
+  actionType: "zhuapai",
 });
-let ActionTypeOptions = ref([
-  {
-    name: "可见光抓拍",
-    value: "zhuapai",
-    icon: "tubiao_kejianguangzhuapai-42",
-  },
-  { name: "红外测温", value: "hongwai", icon: "redtemp" },
-  { name: "环境监测", value: "huanjing", icon: "tubiao_huanjingjiance" },
-  { name: "表计识别", value: "biaoji", icon: "kejianguangshibie" },
-  { name: "连拍", value: "lianpai", icon: "tubiao_hengxianglianpai-40" },
-  { name: "局部放电检测", value: "fangdian", icon: "tubiao_fangdianjiance" },
-  { name: "守望", value: "shouwang", icon: "shouwang" },
-]);
+
+const { list } = addPatrolPointOptions();
+let actionTypeOption = ref([]);
+actionTypeOption = list.find((item) => item.devicesTypeValue == '4').actionTypeOption;
+
+// 切换站点或监测设备清空值
+const clearForm = ()=>{
+  formData.value = {
+    editType:'1'
+  }
+}
 
 const modelPoints = () => {
   PointsDialog.value = true;
@@ -336,7 +334,6 @@ const confirmClick = () => {
   });
 };
 
-let editType = ref("1");
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
   showDropDown.value = !showDropDown.value;
@@ -539,6 +536,7 @@ const handleSelectChange = (val) => {
       .el-select__wrapper {
         position: relative;
         padding-right: 0;
+        margin-right: -1px;
         &::after {
           content: "";
           height: 60%;
