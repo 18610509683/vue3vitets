@@ -1,7 +1,9 @@
 <template>
   <div class="page full_wh flex">
     <div class="model-left h100">
-      <slot name="left"></slot>
+      <!-- <slot name="left"></slot> -->
+      连拍
+      <ElForm1 />
     </div>
     <div class="model-right h100 flex flex-direction">
       <slot name="swd"></slot>
@@ -69,6 +71,7 @@
 
 <script setup>
 import { getCurrentInstance, onMounted } from "vue";
+import ElForm1 from '~/components/ElForm1'
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   publicData: {
@@ -82,5 +85,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../css/typeBaseStyle.scss";
+@import "../../../../assets/css/typeBaseStyle.scss";
 </style>

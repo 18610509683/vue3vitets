@@ -1,0 +1,25 @@
+
+:root {
+  --kkd_main_color: rgba(0, 255, 243);
+  --kkd_main_50p_color: rgba(0, 255, 243, 50%);
+  --kkd_main_20p_color: rgba(0, 255, 243, 20%);
+  --kkd_main_5p_color: rgba(0, 255, 243, 5%);
+  --kkd_main_10p_color: rgba(0, 255, 243, 10%);
+
+  --kkd_white_color: rgba(255, 255, 255);
+  --kkd_white_50p_color: rgba(255, 255, 255, 50%);
+
+  --kkd_disable_bg_color: rgba(65, 106, 123, 80%);
+  --kkd_disable_bg_10p_color: rgba(65, 106, 123, 10%);
+  --kkd_disable_bg_100p_color: rgba(65, 106, 123, 1);
+  //--el-color-primary: var(--kkd_main_color) !important;
+  --kkd_orange_color:#FC9028;
+  --kkd_date_selected_color:#68AFB0;//日期组件选中高亮的颜色
+  --kkd_drop_panel_bg_color:rgba(16, 72, 91, 1);//#10485B 下拉面板的背景
+  --kkd_switch_open_bg_color:#0A9198;//switch背景颜色 开启
+  --kkd_switch_close_bg_color:#889DA2;//switch背景颜色 关闭
+
+  --kkd_slider_disabled_bg_color:#417F9A;//#rgba(65, 127, 154, 1) 滑块背景颜色（禁用状态）
+  --kkd_slider_normal_bg_color:#09616B;//#rgba(9, 97, 107, 1) 滑块背景颜色（正常状态）
+  --kkd_slider_normal_border_color:#2BA1AE;//#rgba(43, 161, 174, 1) 滑块边框颜色（正常状态）
+}

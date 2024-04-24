@@ -1,0 +1,54 @@
+.el-select-v2{
+  --el-select-input-color:var(--kkd_main_color);
+  --el-border-color:var(--kkd_main_50p_color);
+  --el-select-border-color-hover:var(--kkd_main_color);
+  --el-select-input-focus-border-color:var(--kkd_main_color);
+  --el-select-input-hover-border-color:var(--kkd_main_color);
+  .el-select__suffix{
+    font-size: 16px;
+    .el-select__icon{
+      font-size: 16px;
+    }
+    .el-input__validateIcon{
+      position: absolute;
+      left: calc(100% + 14px);
+    }
+    &-inner{
+      width: 100%;
+      height: 100%;
+      .el-select__icon{
+        margin-left: 0;
+        font-size: 16px;
+      }
+    }
+  }
+}
+.el-select-v2__wrapper{
+  background: none;
+}
+.el-select-v2__popper.el-popper{
+  background: var(--kkd_drop_panel_bg_color);
+  border-color: var(--kkd_main_color);
+}
+.el-popper.is-light .el-popper__arrow::before{
+  display: none;
+}
+.el-select-dropdown__item.is-hovering{
+  background-color: var(--kkd_main_color);
+}
+.el-select-dropdown__item,.el-select__placeholder{
+  color:var(--kkd_white_color);
+}
+
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover,.el-select-dropdown.is-multiple .el-select-dropdown__item.selected,.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover{
+  background-color: var(--kkd_main_color);
+}
+.el-select-v2__wrapper.is-focused{
+  border-color: var(--kkd_main_color);
+}
+.el-select-dropdown__option-item.hover{
+  background-color: var(--kkd_main_50p_color)!important;//此处需要覆盖elementplus自带
+}
+.el-select-v2__placeholder{
+  color: var(--kkd_white_color);
+}

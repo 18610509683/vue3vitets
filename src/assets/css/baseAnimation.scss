@@ -151,13 +151,13 @@
 /* --------列表收展动画 start--------- */
 .kr-collapse-list{
   &-open{
-    max-height: 1000px;
-    transition: max-height 0.3s ease-in;
+    max-height: 1000vh;
+    transition: max-height 0.5s ease-in;
   }
   &-close{
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    transition: max-height 0.5s ease-out;
   }
 }
 /* --------列表收展动画 end--------- */

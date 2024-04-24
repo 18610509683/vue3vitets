@@ -1,0 +1,56 @@
+.el-date-picker{
+  --el-datepicker-active-color:var(--kkd_date_selected_color);
+  --el-datepicker-icon-color:var(--kkd_white_color);
+  --el-text-color-primary:var(--kkd_white_color);
+}
+.el-picker__popper.el-popper{
+  --el-datepicker-border-color:var(--kkd_main_color);
+  background: var(--kkd_drop_panel_bg_color);
+}
+.el-date-picker__header-label{
+  color:var(--kkd_main_color);
+}
+.el-date-table td.in-range .el-date-table-cell{
+  background-color: var(--kkd_main_10p_color);
+}
+.el-date-table td.start-date .el-date-table-cell__text, .el-date-table td.end-date .el-date-table-cell__text{
+  background-color:var(--kkd_date_selected_color)
+}
+.el-picker-panel{
+  background: var(--kkd_drop_panel_bg_color);
+  color: var(--kkd_white_color);
+}
+.el-picker-panel__icon-btn{
+  color: var(--kkd_white_color);
+}
+.el-date-table td.available:hover{
+  color: var(--kkd_main_10p_color);
+}
+.el-date-editor .el-range-separator{
+  color: var(--kkd_white_color);
+}
+.el-date-table td.in-range .el-date-table-cell:hover{
+  background-color:var(--kkd_date_selected_color);
+  color: var(--kkd_white_color);
+}
+.el-date-table td .el-date-table-cell:hover{
+  background-color:var(--kkd_date_selected_color);
+  color: var(--kkd_white_color);
+}
+.el-time-spinner__item.is-active:not(.is-disabled){
+  color: var(--kkd_main_color);
+}
+
+.el-time-panel__footer{
+  text-align: center;
+}
+.el-time-panel__btn{
+  color: var(--kkd_white_color);
+  font-size: 16px;
+}
+.el-date-editor.el-input__wrapper{
+  box-shadow: 0 0 0 1px var(--kkd_main_50p_color) inset;
+}
+.el-date-editor .el-range-input{
+  color:var(--kkd_white_color);
+}

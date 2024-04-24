@@ -1,0 +1,26 @@
+.el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next, .el-pagination.is-background .el-pager li{
+  background-color: var(--kkd_main_5p_color);
+  color: var(--kkd_main_50p_color);
+}
+//.el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next,
+.el-pagination.is-background .el-pager li:hover{
+  border: solid 1px var(--kkd_main_color);
+  color: var(--kkd_main_color);
+}
+.el-pagination.is-background .btn-prev.is-active, .el-pagination.is-background .btn-next.is-active, .el-pagination.is-background .el-pager li.is-active{
+  background-color:var(--kkd_main_20p_color);
+  border: solid 1px var(--kkd_main_color);
+}
+.el-pagination.is-background .btn-prev,.el-pagination.is-background .btn-next{
+  background: none;
+}
+.el-pagination.is-background .btn-prev:hover,.el-pagination.is-background .btn-next:hover{
+  color: var(--kkd_main_color);
+}
+.el-pagination.is-background .btn-prev:active,.el-pagination.is-background .btn-next:active{
+  background-color:var(--kkd_main_20p_color);
+  color: var(--kkd_main_color);
+}
+.el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .btn-prev.is-disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-next.is-disabled, .el-pagination.is-background .el-pager li:disabled, .el-pagination.is-background .el-pager li.is-disabled{
+  background: none;
+}

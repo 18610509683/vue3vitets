@@ -390,9 +390,6 @@ onMounted(() => {
   // }
   //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
   const dom = document.querySelector("#publicBox");
-  // // 选择目标节点
-  // const targetNode = document.getElementById('myElement');
-
   // // 观察器的配置（需要观察什么变动）
   // const config = { attributes: true, childList: true, subtree: true };
 

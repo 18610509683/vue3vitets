@@ -63,6 +63,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      '~':resolve(__dirname, './UIThemeStyle/src'),
     },
     // 忽略后缀名的配置选项
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']

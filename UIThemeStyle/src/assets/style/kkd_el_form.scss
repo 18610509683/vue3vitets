@@ -1,0 +1,21 @@
+.kkd_el_form{
+  .is-required{
+    .el-input__suffix{
+      //width: 24px;
+      //height: 24px;
+      .el-input__validateIcon{
+        position: absolute;
+        left: calc(100% + 14px);
+      }
+      &-inner{
+        width: 100%;
+        height: 100%;
+        .el-input__icon{
+          margin-left: 0;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+}

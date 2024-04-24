@@ -5,8 +5,11 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Vue + TS</title>
-    <script type="text/javascript" src="../ipConfig.js?v=<%= Version %>"></script>
-    <script type="text/javascript" src="/apiConfig.js?v=<%= Version %>"></script>
+    <!-- <script type="text/javascript" src="../ipConfig.js?v=<%= Version %>"></script> -->
+    <script>
+      window.tempUrl='10.20.2.231'
+    </script>
+    <script src="http://10.20.2.231/allConfig.js"></script>
   </head>
   <body>
     <div id="app"></div>

@@ -1,0 +1,10 @@
+.el-badge__content{
+  background-color: var(--kkd_orange_color);
+  border: none;
+  height: 17px;
+  line-height: 17px;
+}
+.el-badge__content.is-dot{
+  width: 6px;
+  height: 6px;
+}
