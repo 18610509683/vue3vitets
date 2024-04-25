@@ -148,6 +148,7 @@ textarea {
       color: #d6eded;
     }
     .el-icon svg{
+      transition: color 0.3s;
       color: @primary--light-60 !important;
     }
   }
@@ -371,6 +372,27 @@ textarea {
     &.is-active,
     &.focusing:focus:not(:hover) {
       color: @light-50;
+    }
+    span{
+      color: @light-50;
+      font-size: 0.73vw;
+      margin-right: 0.86vw;
+      &:first-child{
+        font-size: 0.83vw;
+        margin-right: 1.02vw;
+      }
+      &:nth-child(2){
+        position: relative;
+        &::after{
+          content: '';
+          position: absolute;
+          top: 0.28vw;
+          right: -0.46vw;
+          height: 0.52vw;
+          width: 0.1vw;
+          background: @light-50;
+        }
+      }
     }
   }
   .el-collapse-item__wrap {

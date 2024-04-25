@@ -155,9 +155,38 @@
       </el-collapse-item>
       <!-- 位姿参数 -->
       <el-collapse-item name="location-pose">
-        <template #title>位姿参数</template>
+        <template #title>
+          <div class="el-collapse-item__header_div">
+            <span>位姿参数</span>
+            <span
+              v-if="canUsePresetPoint"
+              :class="{ primary: activeLPType == 0 }"
+              @click.stop="
+                () => {
+                  activeLPType = 0;
+                }
+              "
+              >调用预置点</span
+            >
+            <span
+              v-if="canUsePresetPoint"
+              :class="{ primary: activeLPType == 1 }"
+              @click.stop="
+                () => {
+                  activeLPType = 1;
+                }
+              "
+              >平台采集</span
+            >
+          </div>
+        </template>
         <div>
-          <el-form :model="_formData" label-width="120px" label-position="left">
+          <el-form
+            :model="_formData"
+            v-if="!canUsePresetPoint || activeLPType == 1"
+            label-width="120px"
+            label-position="left"
+          >
             <el-form-item label="行走位置" v-if="locationPoseObj?.xingzou">
               <div class="flex align-center w100">
                 <el-input v-model="_formData.xingzou" disabled> </el-input>
@@ -225,8 +254,12 @@
               <div class="flex align-center w100">
                 <el-input v-model="_formData.bgliangdu" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"></i>
-                  <i class="iconfont iconfont-add-rectangle font-16-vw move-left-1"></i>
+                  <i
+                    class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"
+                  ></i>
+                  <i
+                    class="iconfont iconfont-add-rectangle font-16-vw move-left-1"
+                  ></i>
                 </div>
               </div>
             </el-form-item>
@@ -252,8 +285,12 @@
               <div class="flex align-center w100">
                 <el-input v-model="_formData.bianjiao" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"></i>
-                  <i class="iconfont iconfont-add-rectangle font-16-vw move-left-1"></i>
+                  <i
+                    class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"
+                  ></i>
+                  <i
+                    class="iconfont iconfont-add-rectangle font-16-vw move-left-1"
+                  ></i>
                 </div>
               </div>
             </el-form-item>
@@ -261,13 +298,59 @@
               <div class="flex align-center w100">
                 <el-input v-model="_formData.bianbei" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"></i>
-                  <i class="iconfont iconfont-add-rectangle font-16-vw move-left-1"></i>
+                  <i
+                    class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"
+                  ></i>
+                  <i
+                    class="iconfont iconfont-add-rectangle font-16-vw move-left-1"
+                  ></i>
                 </div>
               </div>
             </el-form-item>
             <el-form-item label="画面区域" v-if="locationPoseObj?.huamian">
               <el-input v-model="_formData.huamian" disabled> </el-input>
+            </el-form-item>
+          </el-form>
+          <el-form
+            :model="_formData"
+            v-else
+            label-width="120px"
+            label-position="left"
+          >
+            <el-form-item label="预置点">
+              <el-select
+                v-model="_formData.presetPoint"
+                placeholder="请选择动作类型"
+                @change="actionTypeChange"
+              >
+                <template #prefix v-if="_formData.actionType">
+                  <i
+                    :class="
+                      'iconfont iconfont-' +
+                      actionTypeOption.find(
+                        (i) => i.actionTypeValue == _formData.actionType
+                      )?.actionTypeIcon
+                    "
+                    style="margin-right: 2px"
+                  ></i>
+                </template>
+                <el-option
+                  v-for="item in actionTypeOption"
+                  :key="item.actionTypeValue"
+                  :label="item.actionTypeLabel"
+                  :value="item.actionTypeValue"
+                >
+                  <span style="float: left">
+                    <i
+                      :class="'iconfont iconfont-' + item.actionTypeIcon"
+                      style="margin-right: 10px"
+                    ></i>
+                  </span>
+                  <span style="float: left; color: #8492a6; font-size: 13px">{{
+                    item.actionTypeLabel
+                  }}</span>
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-form>
         </div>
@@ -329,7 +412,7 @@ import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
 import addPatrolPointOptions from "../js/addPatrolPointOption.js";
 
-const activeCollapse = ref(["point-info","location-pose"]);
+const activeCollapse = ref(["point-info", "location-pose"]);
 const props = defineProps({
   formData: {
     type: Object,
@@ -343,31 +426,36 @@ let actionTypeOption = ref([]);
 let locationPoseObj = ref({});
 watch(
   () => props.formData,
-  (newVal,oldVal) => {
-    // 切换站点、监测设备、动作类型 重新赋值中间变量 
-    if(oldVal == undefined || Object.keys(newVal).length == 1){
+  (newVal, oldVal) => {
+    // 切换站点、监测设备、动作类型 重新赋值中间变量
+    if (oldVal == undefined || Object.keys(newVal).length == 1) {
       _formData.value = { ...newVal };
-      _formData.value.editType = _formData.value.editType ?? '1'
+      _formData.value.editType = _formData.value.editType ?? "1";
     }
   },
   {
-    immediate:true
+    immediate: true,
   }
 );
-actionTypeOption.value = list.find((item) => item.devicesTypeValue == '2').actionTypeOption;
-locationPoseObj.value = actionTypeOption.value.find((item) => item.actionTypeValue == _formData.value.actionType)?.locationPoseObj;
+actionTypeOption.value = list.find(
+  (item) => item.devicesTypeValue == "4"
+).actionTypeOption;
+locationPoseObj.value = actionTypeOption.value.find(
+  (item) => item.actionTypeValue == _formData.value.actionType
+)?.locationPoseObj;
 
 const emit = defineEmits(["updateForm"]);
 watch(
-  () => ({..._formData.value}),
-  (newVal,oldVal) => {
+  () => ({ ..._formData.value }),
+  (newVal, oldVal) => {
     // 不监听editType属性 传给父组件点位信息，位姿参数
-    if(oldVal.editType == newVal.editType){
+    if (oldVal.editType == newVal.editType) {
       // 切换动作类型 位姿属性清空
-      if(newVal.actionType != oldVal.actionType){
+      if (newVal.actionType != oldVal.actionType) {
         for (let key in locationPoseObj.value) {
           delete _formData.value[key];
         }
+        delete _formData.value.presetPoint;
       }
       emit("updateForm", _formData.value);
     }
@@ -382,14 +470,19 @@ const handleSelectChange = (val) => {
   showDropDown.value = !showDropDown.value;
 };
 
+let canUsePresetPoint = actionTypeOption.value.find(
+  (item) => item.actionTypeValue == _formData.value.actionType
+)?.canUsePresetPoint;
+let activeLPType = ref(0);
+
 // const { proxy } = getCurrentInstance();
 // console.log(proxy.$bus);
 // const tempTop = ref(250);
 onMounted(() => {
   // 赋值位姿参数
-  // for (let key in locationPoseObj.value) {
-  //   _formData.value[key] = '12';
-  // }
+  for (let key in locationPoseObj.value) {
+    _formData.value[key] = "--";
+  }
   //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
   const dom = document.querySelector("#publicBox");
   // // 观察器的配置（需要观察什么变动）
@@ -434,15 +527,15 @@ onMounted(() => {
     height: 3.8vh;
     border: 1px solid @primary--light-50;
     border-left: 0;
-    padding:0 0.46vw;
+    padding: 0 0.46vw;
     i {
       width: 0.68vw;
       text-align: center;
-      &:not(:last-child){
+      &:not(:last-child) {
         margin-right: 0.76vw;
       }
-      &.move-left-1{
-        transform:translateX(-1px);
+      &.move-left-1 {
+        transform: translateX(-1px);
       }
     }
   }
