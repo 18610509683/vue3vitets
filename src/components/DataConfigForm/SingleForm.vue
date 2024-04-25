@@ -520,8 +520,11 @@ const dataTypeChangeHandle = (val) => {
   }
 };
 //切换数据模板
-const dataTemplateChangeHandle = () => {
+const dataTemplateChangeHandle = (val) => {
   formRef.value.clearValidate();
+  if (val == "custom") {
+    isShowDetail.value = true;
+  }
 };
 /* --------表单类型 end------------- */
 
@@ -746,7 +749,7 @@ const dataConfigFormValidate = async () => {
   let validateFlag = true;
   let msg = "";
   if (form.value.dataTemplate != "custom") {
-    if (form.matchData == "" || form.matchData == null) {
+    if (form.value.matchData == "" || form.value.matchData == null) {
       validateFlag = false;
       msg = "数据匹配不能为空！";
     }
@@ -775,6 +778,7 @@ watch(
 );
 
 defineExpose({
+  form,
   validate: dataConfigFormValidate,
 });
 </script>

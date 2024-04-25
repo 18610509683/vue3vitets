@@ -7,10 +7,12 @@
   }
   .model-right {
     width: 20.62vw;
-    padding-left: 0.52vw;
-    overflow-y: hidden;
+    padding-left: 1.25vw;
+    position: relative;
     .model-form {
       overflow-y: scroll;
+      padding-left: 50px;
+      margin-left: -50px;
     }
     .model-btn-sty {
       margin-top: 0.5208vw;

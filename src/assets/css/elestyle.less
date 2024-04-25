@@ -250,9 +250,12 @@ textarea {
   .el-form-item__label {
     width: 3.9063vw;
     font-size: 0.73vw ;
+    &::before{
+      display: none;
+    }
   }
   .el-form-item {
-    margin-bottom: 10px;
+    margin-bottom: 1.8519vh;
     .el-form-item__label {
       color: rgba(255, 255, 255, 0.95);
     }
@@ -367,6 +370,7 @@ textarea {
   .el-collapse-item__wrap {
     background: transparent;
     border: 0;
+    overflow: visible;
     .el-collapse-item__content {
       padding-bottom: 0;
       margin-top: 1.13vh;
