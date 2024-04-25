@@ -267,7 +267,7 @@ console.log(proxy.$bus);
 const props = defineProps({
   formData: {
     type: Object,
-    default: null,
+    default: {},
   },
 });
 
@@ -294,29 +294,29 @@ let showDropDown = ref(false);
 const handleSelectChange = (val) => {
   showDropDown.value = !showDropDown.value;
 };
-  //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
-  const dom = document.querySelector("#publicBox");
-  // // 观察器的配置（需要观察什么变动）
-  // const config = { attributes: true, childList: true, subtree: true };
+//每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
+const dom = document.querySelector("#publicBox");
+// // 观察器的配置（需要观察什么变动）
+// const config = { attributes: true, childList: true, subtree: true };
 
-  // // 当观察到变动时执行的回调函数
-  // const callback = function(mutationsList, observer) {
-  //   let dom=document.querySelector('#name3')
-  //   let rect=dom.getBoundingClientRect();
-  //   // console.log(rect)
-  //   tempTop.value=rect.top
-  //   proxy.$bus.emit('updateTop',rect.top)
-  // };
+// // 当观察到变动时执行的回调函数
+// const callback = function(mutationsList, observer) {
+//   let dom=document.querySelector('#name3')
+//   let rect=dom.getBoundingClientRect();
+//   // console.log(rect)
+//   tempTop.value=rect.top
+//   proxy.$bus.emit('updateTop',rect.top)
+// };
 
-  // // 创建一个观察器实例并传入回调函数
-  // const observer = new MutationObserver(callback);
+// // 创建一个观察器实例并传入回调函数
+// const observer = new MutationObserver(callback);
 
-  // // 开始观察目标节点
-  // observer.observe(dom, config);
+// // 开始观察目标节点
+// observer.observe(dom, config);
 
-  // // 以后，你可以停止观察
-  // // observer.disconnect();
-});
+// // 以后，你可以停止观察
+// // observer.disconnect();
+// });
 </script>
 <style scoped lang="less">
 @import "@/assets/css/variable.less";

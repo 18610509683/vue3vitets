@@ -304,7 +304,7 @@ let formData = ref({
   name: "",
   env: "",
   area: "",
-  ActionType: "",
+  ActionType: "biaoji",
 });
 let ActionTypeOptions = ref([
   {

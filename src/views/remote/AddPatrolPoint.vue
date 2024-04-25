@@ -94,9 +94,7 @@ import KeepWatch from "./types/KeepWatch/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
 let formData = ref({});
-formData.value = route.query.editType
-  ? route.query
-  : { editType: "1" };
+formData.value = route.query.editType ? route.query : { editType: "1" };
 
 /* --------采点类型相关 start---------- */
 const actionTypeEnums = ref([
