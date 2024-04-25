@@ -184,6 +184,8 @@
                     placeholder="请输入巡检点名称"
                     maxlength="20"
                     show-word-limit
+                    @focus="handleSelectChange"
+                    @blur="handleSelectChange"
                   >
                   </el-input>
                 </div>
@@ -521,51 +523,6 @@ const handleSelectChange = (val) => {
   .el-form-item__label {
     width: 4.57vw !important;
     font-size: 0.73vw !important;
-  }
-  .point-name {
-    height: 3.7vh;
-    border: 1px solid @primary--light-50;
-    .el-select__wrapper {
-      box-shadow: none;
-    }
-
-    .edit-type {
-      span {
-        color: rgba(0, 255, 243, 1);
-      }
-      .el-select__wrapper {
-        position: relative;
-        padding-right: 0;
-        margin-right: -1px;
-        &::after {
-          content: "";
-          height: 60%;
-          width: 1px;
-          background-image: linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.8) 50%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          position: absolute;
-          top: 0.7vh;
-          right: 0;
-        }
-        .el-input__inner {
-          color: @primary;
-        }
-      }
-    }
-
-    &.is-focus {
-      border-color: @primary;
-      .el-select__icon svg {
-        color: @primary !important;
-      }
-    }
-    .el-input__wrapper {
-      border: 0;
-    }
   }
 }
 </style>

@@ -122,17 +122,26 @@ textarea {
     box-shadow: 0 0 0 1px rgba(0, 255, 243, 0.5) inset;
     &.is-hovering:not(.is-focused) {
       box-shadow: 0 0 0 1px rgba(0, 255, 243, 1) inset;
+      .el-icon svg{
+        color: @primary !important;
+      }
     }
     &.is-focused {
       box-shadow: 0 0 0 1px rgba(0, 255, 243, 1) inset;
+      .el-icon svg{
+        color: @primary !important;
+      }
     }
     &.is-disabled{
       box-shadow: 0 0 0 1px @disabled inset !important;
       .el-select__placeholder span{
         color: @disabled !important;
       }
-      .el-icon svg {
-        color: @disabled!important;
+      .el-select__suffix .el-icon svg {
+        color: @disabled !important;
+      }
+      .el-select__prefix .iconfont{
+        color: @disabled !important;
       }
     }
     .el-select__prefix .iconfont{
