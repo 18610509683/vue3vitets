@@ -438,7 +438,7 @@ watch(
   }
 );
 actionTypeOption.value = list.find(
-  (item) => item.devicesTypeValue == "4"
+  (item) => item.devicesTypeValue == "2"
 ).actionTypeOption;
 locationPoseObj.value = actionTypeOption.value.find(
   (item) => item.actionTypeValue == _formData.value.actionType
