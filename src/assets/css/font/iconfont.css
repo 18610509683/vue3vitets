@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4411586 */
-  src: url('iconfont.woff2?t=1711522867927') format('woff2'),
-       url('iconfont.woff?t=1711522867927') format('woff'),
-       url('iconfont.ttf?t=1711522867927') format('truetype');
+  src: url('iconfont.woff2?t=1713950866149') format('woff2'),
+       url('iconfont.woff?t=1713950866149') format('woff'),
+       url('iconfont.ttf?t=1713950866149') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,54 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.iconfont-wubian-add:before {
+  content: "\e749";
+}
+
+.iconfont-a-166:before {
+  content: "\e661";
+}
+
+.iconfont-a-167:before {
+  content: "\e662";
+}
+
+.iconfont-a-165:before {
+  content: "\e663";
+}
+
+.iconfont-a-161:before {
+  content: "\e664";
+}
+
+.iconfont-a-159:before {
+  content: "\e665";
+}
+
+.iconfont-a-164:before {
+  content: "\e666";
+}
+
+.iconfont-a-162:before {
+  content: "\e667";
+}
+
+.iconfont-a-163:before {
+  content: "\e668";
+}
+
+.iconfont-a-160:before {
+  content: "\e669";
+}
+
+.iconfont-add:before {
+  content: "\e60d";
+}
+
+.iconfont-copy:before {
+  content: "\e660";
 }
 
 .iconfont-arrow-go:before {
@@ -113,7 +161,7 @@
   content: "\e6da";
 }
 
-.iconfont-shanchu-01:before {
+.iconfont-shanchu:before {
   content: "\e6df";
 }
 

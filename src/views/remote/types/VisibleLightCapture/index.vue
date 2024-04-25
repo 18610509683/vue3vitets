@@ -80,5 +80,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../css/typeBaseStyle.scss";
+@import "../../../../assets/css/typeBaseStyle.scss";
 </style>

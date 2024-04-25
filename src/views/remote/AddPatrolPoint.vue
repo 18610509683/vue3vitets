@@ -8,9 +8,10 @@
       >
         <component
           :is="
-            actionTypeEnums.find((item) => item.value == formData.ActionType)
+            actionTypeEnums.find((item) => item.value == formData.actionType)
               ?.component ?? VisibleLightCapture
           "
+          :form-data-public="formDataPublic"
         >
           <!-- 左侧头部公共部分 -->
           <template #left>
@@ -81,6 +82,7 @@ import {
   getCurrentInstance,
   ref,
   onMounted,
+  watch
 } from "@vue/runtime-core";
 import MySiteWithDevice from "./model-right/MySiteWithDevice.vue";
 import AddPatrolPointDialog from "./model-right/addPatrolPointDialog.vue";
@@ -92,9 +94,12 @@ import MeterIdentify from "./types/MeterIdentify/index";
 import PartialDischarge from "./types/PartialDischarge/index";
 import KeepWatch from "./types/KeepWatch/index";
 import { useRoute } from "vue-router";
+
 const route = useRoute();
 let formData = ref({});
-formData.value = route.query.editType ? route.query : { editType: "1" };
+formData.value = route.query.actionType
+  ? route.query
+  : { actionType: "zhuapai" };
 
 /* --------采点类型相关 start---------- */
 const actionTypeEnums = ref([
@@ -135,10 +140,21 @@ const actionTypeEnums = ref([
   },
 ]);
 /* --------采点类型相关 end---------- */
-console.log(defineProps);
+
+// 公共部分参数
+let formDataPublic = ref({});
 const updateForm = (data) => {
   formData.value = data;
+  const { editType, ...others} = data;
+  formDataPublic.value = others;
+  console.log(formDataPublic.value);
+  console.log(formData.value);
 };
+
+// 切换站点或监测设备清空值
+const clearForm = ()=>{
+  formData.value = {}
+}
 </script>
 
 <style lang="less" scoped>

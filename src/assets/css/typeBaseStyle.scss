@@ -1,0 +1,62 @@
+/* ---------左右两侧公共样式，某个类型特有的样式请不要再此填写------- */
+.page {
+  .model-left {
+    flex: 1;
+    padding: 0 1.04vw 0.93vh 0.52vw;
+    border-right: 1px solid rgba(0, 255, 243, 0.1);
+  }
+  .model-right {
+    width: 20.62vw;
+    padding-left: 1.25vw;
+    position: relative;
+    .model-form {
+      overflow-y: scroll;
+      padding-left: 50px;
+      margin-left: -50px;
+    }
+    .model-btn-sty {
+      margin-top: 0.5208vw;
+    }
+  }
+}
+
+/* -------------不同类型表单样式------------ */
+.pd-page {
+  .pd-container {
+    margin-top: 3.1481vh;
+    position: relative;
+    .loading-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      backdrop-filter: blur(3px);
+    }
+
+    .my-legend {
+      position: absolute;
+      top: 20px;
+      left: 10px;
+      div {
+        margin-right: 10px;
+      }
+      &-label {
+        border: 1px solid;
+        padding: 0.5556vh 1.3889vh;
+      }
+    }
+    .normal {
+      border-color: #00fff3;
+      background-color: rgba(0, 255, 243, 0.1);
+    }
+    .alarm {
+      border-color: #ffcc4c;
+      background-color: rgba(201, 173, 87, 0.1);
+    }
+    .serious {
+      border-color: #fc9028;
+      background-color: rgba(199, 128, 60, 0.1);
+    }
+  }
+}

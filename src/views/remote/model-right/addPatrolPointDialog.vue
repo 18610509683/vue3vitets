@@ -1,24 +1,25 @@
 <template>
-  <el-collapse v-model="activeNames">
+  <el-collapse v-model="activeCollapse">
     <div class="body-form" id="publicBox">
-      <el-collapse-item name="name1">
+      <!-- 点位信息 -->
+      <el-collapse-item name="point-info">
         <template #title>点位信息</template>
         <div>
-          <el-form :model="formData" label-width="120px" label-position="left">
+          <el-form :model="_formData" label-width="120px" label-position="left">
             <el-form-item label="巡检设备">
               <el-select
-                v-model="formData.equitname"
+                v-model="_formData.equitname"
                 placeholder="请选择巡检设备"
               >
                 <el-option
-                  v-for="item in ActionTypeOptions"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.value"
+                  v-for="item in actionTypeOption"
+                  :key="item.actionTypeValue"
+                  :label="item.actionTypeLabel"
+                  :value="item.actionTypeValue"
                 >
                   <span style="float: left">
                     <i
-                      :class="'iconfont iconfont-' + item.icon + ''"
+                      :class="'iconfont iconfont-' + item.actionTypeIcon + ''"
                       style="margin-right: 10px"
                     ></i>
                   </span>
@@ -34,7 +35,7 @@
                 :class="{ 'is-focus': showDropDown }"
               >
                 <el-select
-                  v-model="formData.editType"
+                  v-model="_formData.editType"
                   placeholder=""
                   style="width: 3.2vw"
                   suffix-icon=""
@@ -46,18 +47,17 @@
                   <el-option label="更新" value="2" />
                 </el-select>
                 <el-select
-                  v-if="formData.editType == 2"
-                  v-model="formData.name"
+                  v-if="_formData.editType == 2"
+                  v-model="_formData.name"
                   placeholder="请选择巡检点"
                   @visible-change="handleSelectChange"
-                  style="transform: translateX(-2px)"
                 >
                   <el-option label="正面点位" value="1" />
                   <el-option label="背面点位" value="2" />
                 </el-select>
                 <el-input
                   v-else
-                  v-model="formData.name"
+                  v-model="_formData.name"
                   placeholder="请输入巡检点名称"
                   maxlength="20"
                   show-word-limit
@@ -67,15 +67,15 @@
             </el-form-item>
             <el-form-item label="所在场景" class="form-item-disabled">
               <el-select
-                v-model="formData.env"
+                v-model="_formData.env"
                 placeholder="请选择所在场景"
                 disabled
               >
                 <el-option
-                  v-for="item in ActionTypeOptions"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.value"
+                  v-for="item in actionTypeOption"
+                  :key="item.actionTypeValue"
+                  :label="item.actionTypeLabel"
+                  :value="item.actionTypeValue"
                 >
                   <span style="float: left">
                     <i
@@ -91,19 +91,19 @@
             </el-form-item>
             <el-form-item label="所在区域" class="form-item-disabled">
               <el-select
-                v-model="formData.area"
+                v-model="_formData.area"
                 placeholder="请选择所在区域"
                 disabled
               >
                 <el-option
-                  v-for="item in ActionTypeOptions"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.value"
+                  v-for="item in actionTypeOption"
+                  :key="item.actionTypeValue"
+                  :label="item.actionTypeLabel"
+                  :value="item.actionTypeValue"
                 >
                   <span style="float: left">
                     <i
-                      :class="'iconfont iconfont-' + item.icon + ''"
+                      :class="'iconfont iconfont-' + item.actionTypeIcon + ''"
                       style="margin-right: 10px"
                     ></i>
                   </span>
@@ -115,35 +115,35 @@
             </el-form-item>
             <el-form-item label="动作类型">
               <el-select
-                v-model="formData.ActionType"
+                v-model="_formData.actionType"
                 placeholder="请选择动作类型"
                 @change="actionTypeChange"
               >
-                <template #prefix v-if="formData.ActionType">
+                <template #prefix v-if="_formData.actionType">
                   <i
                     :class="
                       'iconfont iconfont-' +
-                      ActionTypeOptions.find(
-                        (i) => i.value == formData.ActionType
-                      )?.icon
+                      actionTypeOption.find(
+                        (i) => i.actionTypeValue == _formData.actionType
+                      )?.actionTypeIcon
                     "
                     style="margin-right: 2px"
                   ></i>
                 </template>
                 <el-option
-                  v-for="item in ActionTypeOptions"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.value"
+                  v-for="item in actionTypeOption"
+                  :key="item.actionTypeValue"
+                  :label="item.actionTypeLabel"
+                  :value="item.actionTypeValue"
                 >
                   <span style="float: left">
                     <i
-                      :class="'iconfont iconfont-' + item.icon"
+                      :class="'iconfont iconfont-' + item.actionTypeIcon"
                       style="margin-right: 10px"
                     ></i>
                   </span>
                   <span style="float: left; color: #8492a6; font-size: 13px">{{
-                    item.name
+                    item.actionTypeLabel
                   }}</span>
                 </el-option>
               </el-select>
@@ -151,63 +151,127 @@
           </el-form>
         </div>
       </el-collapse-item>
-      <el-collapse-item name="name2">
+      <!-- 位姿参数 -->
+      <el-collapse-item name="location-pose">
         <template #title>位姿参数</template>
         <div>
-          <el-form :model="formData" label-width="120px" label-position="left">
-            <el-form-item label="行走位置">
+          <el-form :model="_formData" label-width="120px" label-position="left">
+            <el-form-item label="行走位置" v-if="locationPoseObj?.xingzou">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled> </el-input>
+                <el-input v-model="_formData.xingzou" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-xia-copy font-14-vw disabled"></i>
-                  <i class="iconfont iconfont-shang-copy font-14-vw"></i>
+                  <i class="iconfont iconfont-a-161 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-162 font-13-vw"></i>
                 </div>
               </div>
             </el-form-item>
-            <el-form-item label="水平角度">
+            <el-form-item label="精确行走" v-if="locationPoseObj?.jingque">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled> </el-input>
+                <el-input v-model="_formData.jingque" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-xia-copy font-14-vw"></i>
-                  <i class="iconfont iconfont-shang-copy font-14-vw"></i>
+                  <i class="iconfont iconfont-a-165 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-164 font-13-vw"></i>
                 </div>
               </div>
             </el-form-item>
-            <el-form-item label="垂直角度">
+            <el-form-item label="机身高度" v-if="locationPoseObj?.jigao">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled> </el-input>
+                <el-input v-model="_formData.jigao" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-shang font-14-vw"></i>
-                  <i class="iconfont iconfont-xia font-14-vw"></i>
+                  <i class="iconfont iconfont-a-159 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-160 font-13-vw"></i>
                 </div>
               </div>
             </el-form-item>
-            <el-form-item label="变焦值">
+            <el-form-item label="机身朝向" v-if="locationPoseObj?.jichao">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled> </el-input>
+                <el-input v-model="_formData.jichao" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-add-rectangle font-18-vw"></i>
-                  <i class="iconfont iconfont-minus-rectangle font-18-vw"></i>
+                  <i class="iconfont iconfont-a-165 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-161 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-163 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-162 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-164 font-13-vw"></i>
                 </div>
               </div>
             </el-form-item>
-            <el-form-item label="变倍值">
+            <el-form-item label="相机角度" v-if="locationPoseObj?.xjjiaodu">
               <div class="flex align-center w100">
-                <el-input v-model="formData.name" disabled> </el-input>
+                <el-input v-model="_formData.xjjiaodu" disabled> </el-input>
                 <div class="flex align-center right-btn-opera">
-                  <i class="iconfont iconfont-add-rectangle font-18-vw"></i>
-                  <i class="iconfont iconfont-minus-rectangle font-18-vw"></i>
+                  <i class="iconfont iconfont-a-166 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-159 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-163 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-160 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-167 font-13-vw"></i>
                 </div>
               </div>
             </el-form-item>
-            <el-form-item label="画面区域">
-              <el-input v-model="formData.name" disabled> </el-input>
+            <el-form-item label="补光角度" v-if="locationPoseObj?.bgjiaodu">
+              <div class="flex align-center w100">
+                <el-input v-model="_formData.bgjiaodu" disabled> </el-input>
+                <div class="flex align-center right-btn-opera">
+                  <i class="iconfont iconfont-a-166 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-159 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-163 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-160 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-167 font-13-vw"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="补光亮度" v-if="locationPoseObj?.bgliangdu">
+              <div class="flex align-center w100">
+                <el-input v-model="_formData.bgliangdu" disabled> </el-input>
+                <div class="flex align-center right-btn-opera">
+                  <i class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"></i>
+                  <i class="iconfont iconfont-add-rectangle font-16-vw move-left-1"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="水平角度" v-if="locationPoseObj?.shuiping">
+              <div class="flex align-center w100">
+                <el-input v-model="_formData.shuiping" disabled> </el-input>
+                <div class="flex align-center right-btn-opera">
+                  <i class="iconfont iconfont-a-161 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-162 font-13-vw"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="垂直角度" v-if="locationPoseObj?.chuizhi">
+              <div class="flex align-center w100">
+                <el-input v-model="_formData.chuizhi" disabled> </el-input>
+                <div class="flex align-center right-btn-opera">
+                  <i class="iconfont iconfont-a-159 font-13-vw"></i>
+                  <i class="iconfont iconfont-a-160 font-13-vw"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="变焦值" v-if="locationPoseObj?.bianjiao">
+              <div class="flex align-center w100">
+                <el-input v-model="_formData.bianjiao" disabled> </el-input>
+                <div class="flex align-center right-btn-opera">
+                  <i class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"></i>
+                  <i class="iconfont iconfont-add-rectangle font-16-vw move-left-1"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="变倍值" v-if="locationPoseObj?.bianbei">
+              <div class="flex align-center w100">
+                <el-input v-model="_formData.bianbei" disabled> </el-input>
+                <div class="flex align-center right-btn-opera">
+                  <i class="iconfont iconfont-minus-rectangle font-16-vw move-left-1"></i>
+                  <i class="iconfont iconfont-add-rectangle font-16-vw move-left-1"></i>
+                </div>
+              </div>
+            </el-form-item>
+            <el-form-item label="画面区域" v-if="locationPoseObj?.huamian">
+              <el-input v-model="_formData.huamian" disabled> </el-input>
             </el-form-item>
           </el-form>
         </div>
       </el-collapse-item>
-      <div id="name3"></div>
-      <el-collapse-item name="name3" id="name3" style="opacity: 0;ba" v-if="0">
+      <!-- <div id="name3"></div> -->
+      <!-- <el-collapse-item name="name3" id="name3" style="opacity: 0;ba" v-if="0">
         <template #title>告警设置</template>
         <div>
           <el-form :model="formData" label-width="120px" label-position="left">
@@ -252,7 +316,7 @@
             </el-form-item>
           </el-form>
         </div>
-      </el-collapse-item>
+      </el-collapse-item> -->
     </div>
   </el-collapse>
 </template>
@@ -261,9 +325,9 @@
 import { defineEmits, getCurrentInstance } from "@vue/runtime-core";
 import { ref, onMounted, watch } from "vue";
 import { Calendar, Search, ArrowDownBold } from "@element-plus/icons-vue";
-const activeNames = ref(["name1"]);
-const { proxy } = getCurrentInstance();
-console.log(proxy.$bus);
+import addPatrolPointOptions from "../js/addPatrolPointOption.js";
+
+const activeCollapse = ref(["point-info","location-pose"]);
 const props = defineProps({
   formData: {
     type: Object,
@@ -271,33 +335,63 @@ const props = defineProps({
   },
 });
 
-let ActionTypeOptions = ref([
-  {
-    name: "可见光抓拍",
-    value: "zhuapai",
-    icon: "tubiao_kejianguangzhuapai-42",
+const { list } = addPatrolPointOptions();
+let _formData = ref({});
+let actionTypeOption = ref([]);
+let locationPoseObj = ref({});
+watch(
+  () => props.formData,
+  (newVal,oldVal) => {
+    // 切换站点、监测设备、动作类型 重新赋值中间变量 
+    if(oldVal == undefined || Object.keys(newVal).length == 1){
+      _formData.value = { ...newVal };
+      _formData.value.editType = _formData.value.editType ?? '1'
+    }
   },
-  { name: "红外测温", value: "hongwai", icon: "redtemp" },
-  { name: "环境监测", value: "huanjing", icon: "tubiao_huanjingjiance" },
-  { name: "表计识别", value: "biaoji", icon: "kejianguangshibie" },
-  { name: "连拍", value: "lianpai", icon: "tubiao_hengxianglianpai-40" },
-  { name: "局部放电检测", value: "fangdian", icon: "tubiao_fangdianjiance" },
-  { name: "守望", value: "shouwang", icon: "shouwang" },
-]);
+  {
+    immediate:true
+  }
+);
+actionTypeOption.value = list.find((item) => item.devicesTypeValue == '2').actionTypeOption;
+locationPoseObj.value = actionTypeOption.value.find((item) => item.actionTypeValue == _formData.value.actionType)?.locationPoseObj;
+
 const emit = defineEmits(["updateForm"]);
-const actionTypeChange = (val) => {
-  console.log(val);
-  emit("updateForm", formData.value);
-};
+watch(
+  () => ({..._formData.value}),
+  (newVal,oldVal) => {
+    // 不监听editType属性 传给父组件点位信息，位姿参数
+    if(oldVal.editType == newVal.editType){
+      // 切换动作类型 位姿属性清空
+      if(newVal.actionType != oldVal.actionType){
+        for (let key in locationPoseObj.value) {
+          delete _formData.value[key];
+        }
+      }
+      emit("updateForm", _formData.value);
+    }
+  },
+  {
+    deep: true,
+  }
+);
 
 let showDropDown = ref(false);
 const handleSelectChange = (val) => {
   showDropDown.value = !showDropDown.value;
 };
-//每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
-const dom = document.querySelector("#publicBox");
-// // 观察器的配置（需要观察什么变动）
-// const config = { attributes: true, childList: true, subtree: true };
+
+// const { proxy } = getCurrentInstance();
+// console.log(proxy.$bus);
+// const tempTop = ref(250);
+onMounted(() => {
+  // 赋值位姿参数
+  // for (let key in locationPoseObj.value) {
+  //   _formData.value[key] = '12';
+  // }
+  //每次选择新类型后都会重新加载组件，故要保留上一次的信息,但是部分非表单数据状态需要存储一下状态复原
+  const dom = document.querySelector("#publicBox");
+  // // 观察器的配置（需要观察什么变动）
+  // const config = { attributes: true, childList: true, subtree: true };
 
 // // 当观察到变动时执行的回调函数
 // const callback = function(mutationsList, observer) {
@@ -316,7 +410,7 @@ const dom = document.querySelector("#publicBox");
 
 // // 以后，你可以停止观察
 // // observer.disconnect();
-// });
+});
 </script>
 <style scoped lang="less">
 @import "@/assets/css/variable.less";
@@ -333,16 +427,21 @@ const dom = document.querySelector("#publicBox");
 .body-form {
   // height: 76vh;
   margin-bottom: 1.12vh;
-  overflow-y: auto;
   position: relative;
   .right-btn-opera {
-    width: 3.54vw;
     height: 3.8vh;
     border: 1px solid @primary--light-50;
     border-left: 0;
+    padding:0 0.46vw;
     i {
-      width: 50%;
+      width: 0.68vw;
       text-align: center;
+      &:not(:last-child){
+        margin-right: 0.76vw;
+      }
+      &.move-left-1{
+        transform:translateX(-1px);
+      }
     }
   }
 }
@@ -367,6 +466,7 @@ const dom = document.querySelector("#publicBox");
       .el-select__wrapper {
         position: relative;
         padding-right: 0;
+        margin-right: -1px;
         &::after {
           content: "";
           height: 60%;

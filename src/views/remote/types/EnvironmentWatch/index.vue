@@ -221,7 +221,7 @@ const initChart = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../css/typeBaseStyle.scss";
+@import "../../../../assets/css/typeBaseStyle.scss";
 
 .page {
   .model-left {

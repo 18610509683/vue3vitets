@@ -6,6 +6,90 @@
   "description": "机器人新页面inon",
   "glyphs": [
     {
+      "icon_id": "37365991",
+      "name": "添加",
+      "font_class": "wubian-add",
+      "unicode": "e749",
+      "unicode_decimal": 59209
+    },
+    {
+      "icon_id": "40047017",
+      "name": "166",
+      "font_class": "a-166",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "40047019",
+      "name": "167",
+      "font_class": "a-167",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "40047018",
+      "name": "165",
+      "font_class": "a-165",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "40047016",
+      "name": "161",
+      "font_class": "a-161",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "40047015",
+      "name": "159",
+      "font_class": "a-159",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "40047014",
+      "name": "164",
+      "font_class": "a-164",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "40047013",
+      "name": "162",
+      "font_class": "a-162",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "40047012",
+      "name": "163",
+      "font_class": "a-163",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "40047011",
+      "name": "160",
+      "font_class": "a-160",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "34926493",
+      "name": "新增",
+      "font_class": "add",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "39965465",
+      "name": "copy",
+      "font_class": "copy",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
       "icon_id": "27910004",
       "name": "前往",
       "font_class": "arrow-go",
@@ -183,7 +267,7 @@
     {
       "icon_id": "35329697",
       "name": "删除-01",
-      "font_class": "shanchu-01",
+      "font_class": "shanchu",
       "unicode": "e6df",
       "unicode_decimal": 59103
     },

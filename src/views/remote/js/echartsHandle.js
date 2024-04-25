@@ -16,6 +16,11 @@ export function partailDischargeChart() {
           color: "#999",
         },
       },
+      backgroundColor: "rgba(0,0,0,0.7)",
+      borderWidth: 0,
+      textStyle: {
+        color: "#fff",
+      },
     },
     xAxis: [
       {
@@ -46,7 +51,7 @@ export function partailDischargeChart() {
     yAxis: [
       {
         type: "value",
-        name: "Precipitation",
+        name: "柱状图",
         min: 0,
         max: 250,
         interval: 50,
@@ -62,7 +67,7 @@ export function partailDischargeChart() {
       },
       {
         type: "value",
-        name: "Temperature",
+        name: "波形图",
         min: 0,
         max: 25,
         interval: 5,
@@ -79,7 +84,7 @@ export function partailDischargeChart() {
     ],
     series: [
       {
-        name: "Evaporation",
+        name: "柱状图",
         type: "bar",
         tooltip: {
           valueFormatter: function (value) {
@@ -103,7 +108,7 @@ export function partailDischargeChart() {
         }
       },
       {
-        name: "Temperature",
+        name: "波形图",
         type: "line",
         yAxisIndex: 1,
         tooltip: {
