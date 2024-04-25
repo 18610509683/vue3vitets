@@ -2,28 +2,57 @@
   <div class="page full_wh flex">
     <div
       class="model-left h100"
-      style="
-        width: 100%;
-        height: 100%;
-        position: relative;
-        padding: 60px 0px 6px 20px;
-      "
+      style="width: 100%; height: 100%; position: relative"
     >
-    <slot name="left"></slot>
+      <slot name="left"></slot>
       <canvas
         id="canvas"
-        style="border: 1px solid white; pointer-events: all"
+        style="border: 1px solid white; pointer-events: all; margin-top: 20px"
       ></canvas>
     </div>
     <div class="model-right h100 flex flex-direction">
       <slot name="swd"></slot>
+
       <div class="model-form h100 flex-1">
         <slot name="right"></slot>
         <el-collapse>
           <el-collapse-item name="1">
-            <template #title>表计参数</template>
-            <div>
-              <el-form :model="form" label-width="80px" label-position="left">
+            <template #title>表计配置</template>
+            <div style="display: flex; position: relative">
+              <div
+                style="
+                  left: 20px;
+                  position: absolute;
+                  /* right: 405px; */
+                  width: 50px;
+                  height: 400px;
+                  background-color: pink;
+                  overflow: scroll;
+                  border: 1px solid red;
+                  overflow: visible !important;
+                  z-index: 999999 !important;
+                "
+              >
+                <div class="index" v-for="i in 80" :key="i">{{ i }}</div>
+              </div>
+              <!-- <div
+                class="index-box"
+                v-for="i in 59"
+                :key="i"
+                :style="{ bottom: 510 - 50 * i + 'px' }"
+              >
+                <div class="index">{{ i }}</div>
+              </div> -->
+              <!-- <div class="index-box">
+                <div class="index">77</div>
+              </div> -->
+              <el-form
+                :model="form"
+                label-width="80px"
+                label-position="left"
+                style=""
+                display:flex
+              >
                 <el-form-item label="识别对象">
                   <div class="flex align-center w100 mix-select">
                     <el-input
@@ -58,7 +87,7 @@
                   <div class="w100 h100 flex align-center flex-sub mix-select">
                     <el-select
                       v-model="form.meterType"
-                      style="width:7.7vw"
+                      style="width: 7vw"
                       suffix-icon=""
                       class="edit-type select-color"
                       popper-class="edit-type-popper"
@@ -72,9 +101,9 @@
                       >
                       </el-option>
                     </el-select>
-                    <div class="line"></div>
+                    <!-- <div class="line"></div> -->
                     <el-select
-                      class="edit-type"
+                      class="select-type"
                       v-model="form.meterOptions"
                       placeholder="请选择表计类型"
                       @visible-change="handleSelectChange"
@@ -93,29 +122,98 @@
                 <el-form-item label="数据模版">
                   <div class="w100 h100 flex align-center flex-sub mix-select">
                     <el-select
-                      v-model="selectName"
+                      v-model="form.meterType"
                       placeholder=""
-                      style="width: 3.2vw"
+                      style="width: 7vw"
                       suffix-icon=""
-                      class="edit-type"
+                      class="edit-type select-color"
                       popper-class="edit-type-popper"
                       @visible-change="handleSelectChange"
                     >
-                      <el-option label="新增" value="1" />
-                      <el-option label="更新" value="2" />
+                      <el-option
+                        v-for="item in meterTypeList"
+                        :key="item.value"
+                        :label="item.name"
+                        :value="item.value"
+                      >
+                      </el-option>
                     </el-select>
-                    <div class="line"></div>
+                    <!-- <div class="line"></div> -->
                     <el-select
-                      class="edit-type"
+                      class="select-type"
                       v-model="selectName"
                       placeholder=""
                       @visible-change="handleSelectChange"
                     >
-                      <el-option label="正面点位" value="1" />
-                      <el-option label="背面点位" value="2" />
+                      <el-option
+                        v-for="item in meterOptionsList"
+                        :key="item.value"
+                        :label="item.name"
+                        :value="item.value"
+                      >
+                      </el-option>
                     </el-select>
                   </div>
                 </el-form-item>
+                <el-form-item label="匹配数据">
+                  <div class="w100 h100 flex align-center flex-sub mix-select">
+                    <el-select
+                      v-model="form.meterType"
+                      placeholder=""
+                      style="width: 7vw"
+                      suffix-icon=""
+                      class="edit-type select-color"
+                      popper-class="edit-type-popper"
+                      @visible-change="handleSelectChange"
+                    >
+                      <el-option
+                        v-for="item in meterTypeList"
+                        :key="item.value"
+                        :label="item.name"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                    <!-- <div class="line"></div> -->
+                    <el-select
+                      class="select-type"
+                      v-model="selectName"
+                      placeholder=""
+                      @visible-change="handleSelectChange"
+                    >
+                      <el-option
+                        v-for="item in meterOptionsList"
+                        :key="item.value"
+                        :label="item.name"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </el-form-item>
+                <div>
+                  <el-form-item label="数据单位">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                  <el-form-item label="数据说明">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                  <el-form-item label="数据精度">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                  <el-form-item label="数据上限">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                  <el-form-item label="数据下限">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                  <el-form-item label="采集间隔">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                  <el-form-item label="严重下限">
+                    <div class="flex align-center w100 des">1111</div>
+                  </el-form-item>
+                </div>
               </el-form>
             </div>
           </el-collapse-item>
@@ -141,10 +239,11 @@
               </el-option>
             </el-select>
             <el-select
-              class="hide-dropdown"
               v-model="form.meterOptions"
               placeholder="请选择表计类型"
               @visible-change="handleSelectChange"
+              popper-class="eloption"
+              :popper-append-to-body="true"
               @click="drawer = true"
             >
               <!-- <el-option
@@ -158,14 +257,28 @@
           </div>
         </el-form-item>
         <div>
-          <div style="display: flex; background-color: #0d323f">
-            <div style="width: 88px; height: 88px; border: 1px solid red">
+          <div
+            style="
+              display: flex;
+              background-color: #0d323f;
+              background: linear-gradient(-90deg, #1b4253 0%, #0b202a 100%);
+              padding: 2px;
+              border: 1px solid rgba(11, 76, 87, 1);
+              box-shadow: 0px 2px 10px 0px rgba(3, 17, 15, 0.3);
+            "
+          >
+            <div
+              style="
+                width: 88px;
+                height: 88px;
+                border: 1px solid rgba(29, 172, 196, 1);
+              "
+            >
               <img src="" alt="" />
             </div>
             <div
               style="
                 flex: 1;
-                border: 1px solid green;
                 display: flex;
                 flex-direction: column;
                 padding: 8px 24px;
@@ -255,8 +368,8 @@ let edit = ref(false);
 
 const init = () => {
   canvas = new fabric.Canvas("canvas", {
-    width: 1400,
-    height: 780,
+    width: 1450,
+    height: 870,
   });
 
   canvas.on("mouse:down", canvasMouseDown); // 鼠标在画布上按下
@@ -439,9 +552,29 @@ const setName = (value) => {
         );
       }
     }
+
     .mix-select:hover {
       border: 1px solid rgba(0, 255, 243, 1);
     }
+    .des {
+      background-color: rgba(6, 73, 85, 1);
+    }
+
+    // .index-box {
+    //   position: fixed;
+    //   left: 1493px;
+    // bottom: 460px;
+    .index {
+      border: 1px solid white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      margin: 5px 0px 25px 0;
+    }
+
+    // }
   }
 }
 :deep(.el-form) {
@@ -449,6 +582,27 @@ const setName = (value) => {
   .edit-type {
     .el-select__wrapper {
       box-shadow: none;
+      position: relative;
+      padding-right: 0;
+      &::after {
+        content: "";
+        height: 60%;
+        width: 1px;
+        background-image: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.8) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        position: absolute;
+        top: 0.7vh;
+        right: 0;
+      }
+    }
+  }
+  .select-type {
+    .el-select__wrapper {
+      box-shadow: none !important;
     }
   }
   .select-color {
@@ -475,17 +629,14 @@ const setName = (value) => {
   width: 390px !important;
   margin-top: 10vh;
   background-color: #0b3743;
-  // .el-select__popper.el-popper  {
-  //   display: none !important;
-  // }
-}
-// .edit-type {
-// :deep(.el-popper-container-3318) {
-//   display: none !important;
-// }
-.hide-dropdown {
-  ::v-deep .el-select-dropdown {
-    display: none !important;
+  .el-form-item__label {
+    color: white !important;
   }
+}
+</style>
+<style lang="less">
+// 不能使用scoped 且叠加 popper-class="eloption"
+.el-select__popper.el-popper.eloption {
+  display: none !important;
 }
 </style>

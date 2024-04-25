@@ -27,7 +27,20 @@
         <el-collapse>
           <el-collapse-item name="放电监测">
             <template #title>放电监测</template>
-            <DataTemplate></DataTemplate>
+            <SingleForm ref="dataConfigFormRef"></SingleForm>
+            <!-- <MultipleForm ref="dataConfigFormRef">
+              <template #custom="scope">
+                <el-form label-position="left">
+                  <el-form-item label="测试">
+                    <el-input> 
+                      <template #suffix>
+                        <i class="iconfont iconfont-shanchu" @click="dataConfigFormRef.deleteForm(scope.index)"></i>
+                      </template>
+                    </el-input>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </MultipleForm> -->
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -40,10 +53,12 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
 import Echart from "@/components/Echart.vue";
 import { partailDischargeChart } from "../../js/echartsHandle";
-import DataTemplate from "@/components/DataTemplate.vue";
+import SingleForm from "@/components/DataConfigForm/SingleForm.vue";
+import MultipleForm from "@/components/DataConfigForm/MultipleForm.vue";
+import { ElMessage } from "element-plus";
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   publicData: {
@@ -53,8 +68,15 @@ const props = defineProps({
 
 let myLoading = ref(true);
 let option = ref(null);
+const dataConfigFormRef = ref();
 const cancelClick = () => {};
-const confirmClick = () => {};
+const confirmClick = async () => {
+  let { validateFlag, msg } = await dataConfigFormRef.value.validate();
+  if (!validateFlag) {
+    ElMessage.error({ dangerouslyUseHTMLString: true, message: msg });
+  }
+  console.log(dataConfigFormRef.value.formArr);
+};
 onMounted(() => {
   option.value = partailDischargeChart();
   setTimeout(() => {

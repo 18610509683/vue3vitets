@@ -1,26 +1,37 @@
 <template>
   <div class="form-container">
-    <el-form :form="form" label-position="left">
+    <el-form
+      :model="form"
+      ref="formRef"
+      :rules="formRules"
+      label-position="left"
+    >
       <el-form-item label="数据模板">
         <div class="mix-box w100" tabindex="1">
-          <el-select class="pre-select" v-model="form.dataType" @change="()=>{
-            form=item.formTemplate
-          }">
+          <el-select
+            class="pre-select"
+            v-model="form.dataType"
+            placeholder="未选择模板"
+            @change="dataTypeChangeHandle"
+          >
             <el-option
               v-for="item in dataTypeOptions"
               :label="item.desc"
               :value="item.type"
             ></el-option>
           </el-select>
-          <el-select v-model="form.dataTemplate">
-            <el-option label="无" value="0"></el-option>
+          <el-select
+            v-model="form.dataTemplate"
+            @change="dataTemplateChangeHandle"
+          >
+            <el-option label="不选择模板" value="custom"></el-option>
             <el-option label="模板1" value="1"></el-option>
             <el-option label="模板2" value="2"></el-option>
             <el-option label="模板3" value="3"></el-option>
           </el-select>
         </div>
       </el-form-item>
-      <el-form-item label="数据匹配">
+      <el-form-item label="数据匹配" prop="matchData">
         <div class="mix-box w100" tabindex="1">
           <el-select class="pre-select" v-model="form.matchDataType">
             <el-option label="新增" value="1"></el-option>
@@ -30,7 +41,11 @@
             v-if="form.matchDataType == '1'"
             v-model="form.matchData"
           ></el-input>
-          <el-select v-model="form.matchData" v-else></el-select>
+          <el-select v-model="form.matchData" v-else>
+            <el-option label="模板1" value="1"></el-option>
+            <el-option label="模板2" value="2"></el-option>
+            <el-option label="模板3" value="3"></el-option
+          ></el-select>
           <span
             class="mix-box-btn"
             @click.stop="
@@ -48,16 +63,26 @@
           isShowDetail ? 'kr-collapse-list-open' : 'kr-collapse-list-close',
         ]"
       >
-        <el-form-item label="数据单位">
+        <el-form-item
+          prop="unit"
+          label="数据单位"
+          v-if="form.hasOwnProperty('unit')"
+        >
           <el-input
             v-model="form.unit"
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
           ></el-input>
           <div v-else class="read-only"></div>
         </el-form-item>
-        <el-form-item label="默认位">
+        <el-form-item
+          label="默认位"
+          v-if="
+            form.hasOwnProperty('defaultBit') && form.dataType == 'SWITCHING'
+          "
+        >
           <el-switch
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
+            v-model="form.defaultBit"
             inline-prompt
             style="
               --el-switch-on-color: #07909e;
@@ -71,26 +96,41 @@
           </el-switch>
           <div class="read-only" v-else></div>
         </el-form-item>
-        <el-form-item label="状态字段">
+        <el-form-item
+          label="状态字段"
+          prop="statusField"
+          v-if="form.hasOwnProperty('statusField')"
+        >
           <el-input
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
             v-model="form.statusField"
             maxlength="40"
             show-word-limit
           />
           <div class="read-only" v-else></div>
         </el-form-item>
-        <el-form-item label="名称翻译">
+        <el-form-item
+          label="名称翻译"
+          prop="translation"
+          v-if="form.hasOwnProperty('translation')"
+        >
           <el-input
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
             v-model="form.translation"
             maxlength="40"
             show-word-limit
           />
           <div class="read-only" v-else></div>
         </el-form-item>
-        <el-form-item label="字段范围">
-          <div class="table-container w100" v-if="form.dataTemplate == '0'">
+        <el-form-item
+          label="字段范围"
+          prop="statusRange"
+          v-if="form.hasOwnProperty('statusRange')"
+        >
+          <div
+            class="table-container w100"
+            v-if="form.dataTemplate == 'custom'"
+          >
             <div class="table-header w100 flex justify-start align-center">
               <div class="th table-cell">序号</div>
               <div
@@ -154,11 +194,17 @@
             </div>
           </div>
         </el-form-item>
-        <el-form-item label="默认字段">
+        <el-form-item
+          label="默认字段"
+          v-if="
+            form.hasOwnProperty('defaultBit') && form.dataType == 'ENUMERATION'
+          "
+          prop="defaultBit"
+        >
           <el-select
             class="w100"
             v-model="form.defaultBit"
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
             clearable
           >
             <el-option
@@ -169,10 +215,10 @@
           </el-select>
           <div class="value-tag h100" v-else>{{}}</div>
         </el-form-item>
-        <el-form-item label="数据说明">
+        <el-form-item label="数据说明" v-if="form.hasOwnProperty('explain')">
           <textarea
             v-model="form.explain"
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
             class="w100"
           ></textarea>
           <div v-else class="read-only" style="height: auto"></div>
@@ -182,8 +228,8 @@
             v-model="form.isDataVerify"
             size="large"
             inline-prompt
-            active-text="启用"
-            inactive-text="关闭"
+            active-text="on"
+            inactive-text="off"
             active-value="Y"
             inactive-value="N"
             style="
@@ -192,20 +238,26 @@
             "
           ></el-switch>
         </el-form-item>
-        <el-form-item label="数据精度">
+        <el-form-item
+          prop="precision"
+          label="数据精度"
+          v-if="form.hasOwnProperty('presicion')"
+        >
           <el-input-number
             :precision="2"
             :step="0.1"
             v-model="form.presicion"
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
           ></el-input-number>
           <div v-else class="read-only"></div>
         </el-form-item>
         <el-form-item
           v-for="item in controlField.slice(0, 2)"
           :label="item.label"
+          v-show="form.hasOwnProperty(item.field)"
+          :prop="item.field"
         >
-          <div class="row-box" v-if="form.dataTemplate == '0'">
+          <div class="row-box" v-if="form.dataTemplate == 'custom'">
             <div class="flex">
               <el-select
                 v-model="item.isExist"
@@ -227,19 +279,30 @@
           </div>
           <div v-else class="read-only"></div>
         </el-form-item>
-        <el-form-item label="采集间隔">
-          <el-input v-model="form.interval" v-if="form.dataTemplate == '0'">
+        <el-form-item
+          label="采集间隔"
+          prop="collectInterval"
+          v-if="form.hasOwnProperty('interval')"
+        >
+          <el-input
+            v-model="form.interval"
+            v-if="form.dataTemplate == 'custom'"
+          >
             <template #suffix>
               <span class="text-active">{{ "s" }}</span>
             </template>
           </el-input>
           <div v-else class="read-only"></div>
         </el-form-item>
-        <el-form-item label="统计周期">
+        <el-form-item
+          prop="statPeriod"
+          label="统计周期"
+          v-if="form.hasOwnProperty('statPeriod')"
+        >
           <el-input
             class="interval"
             v-model.number="form.statPeriod"
-            v-if="form.dataTemplate == '0'"
+            v-if="form.dataTemplate == 'custom'"
           >
             <template #suffix>
               <span class="text-active">{{ "min" }}</span>
@@ -252,8 +315,8 @@
             v-model="form.isAlarm"
             size="large"
             inline-prompt
-            active-text="启用"
-            inactive-text="关闭"
+            active-text="on"
+            inactive-text="off"
             active-value="Y"
             inactive-value="N"
             style="
@@ -265,8 +328,10 @@
         <el-form-item
           v-for="item in controlField.slice(2, 6)"
           :label="item.label"
+          v-show="form.hasOwnProperty(item.field)"
+          :prop="item.field"
         >
-          <div class="row-box" v-if="form.dataTemplate == '0'">
+          <div class="row-box" v-if="form.dataTemplate == 'custom'">
             <div class="flex">
               <el-select
                 v-model="item.isExist"
@@ -288,12 +353,21 @@
           </div>
           <div v-else class="read-only"></div
         ></el-form-item>
-        <el-form-item label="报警等级">
-          <el-select v-if="form.dataTemplate == '0'"> </el-select>
+        <el-form-item label="报警等级" v-if="form.hasOwnProperty('alarmLevel')">
+          <el-select
+            v-model="form.alarmLevel"
+            v-if="form.dataTemplate == 'custom'"
+          >
+          </el-select>
           <div v-else class="read-only"></div>
         </el-form-item>
-        <el-form-item v-for="item in controlField.slice(7)" :label="item.label">
-          <div v-if="form.dataTemplate == '0'" class="row-box">
+        <el-form-item
+          v-for="item in controlField.slice(6)"
+          :label="item.label"
+          v-show="form.hasOwnProperty(item.field)"
+          :prop="item.field"
+        >
+          <div v-if="form.dataTemplate == 'custom'" class="row-box">
             <div class="flex">
               <span>当数据为</span>
               <el-select
@@ -348,21 +422,21 @@ const dataTypeOptions = [
     desc: "瞬时量",
     formTemplate: {
       dataType: "INSTANTANEOUS", //数据模板类型
-      dataTemplate: null, //数据模板
+      dataTemplate: "custom", //数据模板
       matchDataType: "1", //匹配数据类型
       matchData: null, //匹配数据
       unit: null, //数据单位
       explain: null, //数据说明
       isDataVerify: "Y", //数据验证开关
       presicion: 0, //数据精度
-      dataLower: 0, //数据下限
-      dataUpper: 0, //数据上限
+      dataLowerLimit: 0, //数据下限
+      dataUpperLimit: 0, //数据上限
       interval: null, //采集间隔
       isAlarm: "Y", //告警配置开关
-      seriousLower: 0, //严重下限
-      alarmLower: 0, //警告下限
-      alarmUpper: 0, //警告上限
-      seriousUpper: 0, //严重上限
+      criticalLowerLimit: 0, //严重下限
+      warningLowerLimit: 0, //警告下限
+      warningUpperLimit: 0, //警告上限
+      criticalUpperLimit: 0, //严重上限
     },
   },
   {
@@ -370,22 +444,22 @@ const dataTypeOptions = [
     desc: "累计量",
     formTemplate: {
       dataType: "CUMULATIVE", //数据模板类型
-      dataTemplate: null, //数据模板
+      dataTemplate: "custom", //数据模板
       matchDataType: "1", //匹配数据类型
       matchData: null, //匹配数据
       unit: null, //数据单位
       explain: null, //数据说明
       isDataVerify: "Y", //数据验证开关
       presicion: 0, //数据精度
-      dataLower: 0, //数据下限
-      dataUpper: 0, //数据上限
+      dataLowerLimit: 0, //数据下限
+      dataUpperLimit: 0, //数据上限
       interval: null, //采集间隔
       statPeriod: null, //采集周期
       isAlarm: "Y", //告警配置开关
-      seriousLower: 0, //严重下限
-      alarmLower: 0, //警告下限
-      alarmUpper: 0, //警告上限
-      seriousUpper: 0, //严重上限
+      criticalLowerLimit: 0, //严重下限
+      warningLowerLimit: 0, //警告下限
+      warningUpperLimit: 0, //警告上限
+      criticalUpperLimit: 0, //严重上限
     },
   },
   {
@@ -393,13 +467,13 @@ const dataTypeOptions = [
     desc: "开关量",
     formTemplate: {
       dataType: "SWITCHING", //数据模板类型
-      dataTemplate: null, //数据模板
+      dataTemplate: "custom", //数据模板
       matchDataType: "1", //匹配数据类型
       matchData: null, //匹配数据
-      defaultBit: null, //默认位
+      defaultBit: "0", //默认位
       explain: null, //数据说明
       isDataVerify: "Y", //数据验证开关
-      presicion: 0, //数据精度
+      presicion: 0, //数据精度:
       interval: null, //采集间隔
       isAlarm: "Y", //告警配置开关
       alarmLevel: null, //报警等级
@@ -410,7 +484,7 @@ const dataTypeOptions = [
     desc: "枚举量",
     formTemplate: {
       dataType: "ENUMERATION", //数据模板类型
-      dataTemplate: null, //数据模板
+      dataTemplate: "custom", //数据模板
       matchDataType: "1", //匹配数据类型
       matchData: null, //匹配数据
       statusField: null, //状态字段
@@ -421,38 +495,45 @@ const dataTypeOptions = [
       isDataVerify: "Y", //数据验证开关
       interval: null, //采集间隔
       isAlarm: "Y", //告警配置开关
-      warningLimits: [], //警告限度
-      severityLimits: [], //严重限度
+      warningLimits: null, //警告限度
+      severityLimits: null, //严重限度
     },
   },
 ];
-let form = ref({
-  dataType: "INSTANTANEOUS", //数据模板类型
-  dataTemplate: null, //数据模板
-  matchDataType: "1", //匹配数据类型
-  matchData: null, //匹配数据
-  unit: null, //数据单位
-  explain: null, //数据说明
-  isDataVerify: "Y", //数据验证开关
-  presicion: 0, //数据精度
-  dataLower: 0, //数据下限
-  dataUpper: 0, //数据上限
-  interval: null, //采集间隔
-  isAlarm: "Y", //告警配置开关
-  seriousLower: 0, //严重下限
-  alarmLower: 0, //警告下限
-  alarmUpper: 0, //警告上限
-  seriousUpper: 0, //严重上限
-  statusRange: [], //字段范围
-});
-
+const formRef = ref();
+let form = ref(JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)));
+//切换数据类型，保留已填过的相同数据
+const dataTypeChangeHandle = (val) => {
+  formRef.value.clearValidate();
+  let tempForm = JSON.parse(JSON.stringify(form.value));
+  form.value = JSON.parse(
+    JSON.stringify(
+      dataTypeOptions.find((item) => item.type == val).formTemplate
+    )
+  );
+  if (tempForm.dataTemplate == "custom") {
+    for (let key in tempForm) {
+      if (form.value.hasOwnProperty(key) && key !== "dataType") {
+        form.value[key] = tempForm[key];
+      }
+    }
+  }
+};
+//切换数据模板
+const dataTemplateChangeHandle = (val) => {
+  formRef.value.clearValidate();
+  if (val == "custom") {
+    isShowDetail.value = true;
+  }
+};
 /* --------表单类型 end------------- */
+
 /* ------控制表单项 start-------- */
-let isShowDetail = ref(false); //是否展示模板详情
+let isShowDetail = ref(true); //是否展示模板详情
 let controlField = ref([
   {
     label: "数据下限",
-    field: "dataLower",
+    field: "dataLowerLimit",
     isExist: true, //是否有数据下限
     options: [
       { value: true, label: "当数据≤" },
@@ -462,7 +543,7 @@ let controlField = ref([
   },
   {
     label: "数据上限",
-    field: "dataUpper",
+    field: "dataUpperLimit",
     isExist: true, //是否有数据上限
     options: [
       { value: true, label: "当数据≥" },
@@ -472,7 +553,7 @@ let controlField = ref([
   },
   {
     label: "严重下限",
-    field: "seriousLower",
+    field: "criticalLowerLimit",
     isExist: true, //是否有严重下限
     options: [
       { value: true, label: "当数据≤" },
@@ -482,7 +563,7 @@ let controlField = ref([
   },
   {
     label: "警告下限",
-    field: "alarmLower",
+    field: "warningLowerLimit",
     isExist: true, //是否有警告下限
     options: [
       { value: true, label: "当数据≤" },
@@ -492,7 +573,7 @@ let controlField = ref([
   },
   {
     label: "警告上限",
-    field: "alarmUpper",
+    field: "warningUpperLimit",
     isExist: true, //是否有警告上限
     options: [
       { value: true, label: "当数据≥" },
@@ -502,7 +583,7 @@ let controlField = ref([
   },
   {
     label: "严重上限",
-    field: "seriousUpper",
+    field: "criticalUpperLimit",
     isExist: true, //是否有严重上限
     options: [
       { value: true, label: "当数据≥" },
@@ -510,16 +591,17 @@ let controlField = ref([
     ],
     tips: "时，进行严重级别的报警",
   },
-  ,
   {
     label: "警告限度",
     field: "warningLimits",
+    isExist: true,
     options: [],
     tips: "进行警告级别的报警",
   },
   {
     label: "严重限度",
     field: "severityLimits",
+    isExist: true,
     options: [],
     tips: "进行严重级别的报警",
   },
@@ -572,6 +654,120 @@ const handleChangeWarningSeverityLimits = ({ property, value }) => {
   form.value[property] = value.join(",");
 };
 
+/* --------表单校验规则 start------------ */
+// 验证数据上下限
+const validDataLimit = (index, type) => {
+  return (rule, value, callback) => {
+    if (controlField.value[index].isExist && (value === "" || value === null)) {
+      callback(
+        new Error("请填写" + controlField.value[index].label + "具体值")
+      );
+    } else {
+      callback();
+    }
+  };
+};
+
+// 验证字段范围不为空
+const validStatusRange = () => {
+  return (rule, value, callback) => {
+    if (form.value.statusRange.length === 0) {
+      callback(new Error("请填充具体的字段值"));
+    } else {
+      callback();
+    }
+  };
+};
+const formRules = ref({
+  type: [{ required: true, message: "请输入数据类型", trigger: "blur" }],
+  matchData: [{ required: true, message: "请输入点位名称", trigger: "blur" }],
+  statusField: [{ required: true, message: "请输入状态字段", trigger: "blur" }],
+  name: [{ required: true, message: "请输入数据名称", trigger: "blur" }],
+  translation: [{ required: true, message: "请输入名称翻译", trigger: "blur" }],
+  precision: [{ required: true, message: "请输入数据精度", trigger: "blur" }],
+  statusRange: [{ validator: validStatusRange(), trigger: "change" }],
+  defaultBit: [
+    { required: true, message: "请选择默认字段", trigger: "change" },
+  ],
+  collectInterval: [
+    { required: true, message: "请输入采集间隔", trigger: "blur" },
+  ],
+  dataLowerLimit: [
+    {
+      validator: validDataLimit(0, "validation"),
+      trigger: "change",
+    },
+  ],
+  dataUpperLimit: [
+    {
+      validator: validDataLimit(1, "validation"),
+      trigger: "change",
+    },
+  ],
+  criticalLowerLimit: [
+    {
+      validator: validDataLimit(2, "alarm"),
+      trigger: "change",
+    },
+  ],
+  warningLowerLimit: [
+    {
+      validator: validDataLimit(3, "alarm"),
+      trigger: "change",
+    },
+  ],
+  warningUpperLimit: [
+    {
+      validator: validDataLimit(4, "alarm"),
+      trigger: "change",
+    },
+  ],
+  criticalUpperLimit: [
+    {
+      validator: validDataLimit(5, "alarm"),
+      trigger: "change",
+    },
+  ],
+  warningLimits: [
+    {
+      validator: validDataLimit(6, "alarm"),
+      trigger: "change",
+    },
+  ],
+  severityLimits: [
+    {
+      validator: validDataLimit(7, "alarm"),
+      trigger: "change",
+    },
+  ],
+  statPeriod: [{ required: true, message: "请输入采集间隔", trigger: "blur" }],
+  alarmLevel: [{ required: true, message: "请选择报警等级", trigger: "blur" }],
+});
+
+//整体表单保存验证，选定模板后不作验证，自定义填写才验证
+const dataConfigFormValidate = async () => {
+  let validateFlag = true;
+  let msg = "";
+  if (form.value.dataTemplate != "custom") {
+    if (form.value.matchData == "" || form.value.matchData == null) {
+      validateFlag = false;
+      msg = "数据匹配不能为空！";
+    }
+  } else {
+    await formRef.value.validate((valid) => {
+      if (!valid) {
+        validateFlag = false;
+        msg = "请检查表单！";
+      }
+    });
+  }
+  return {
+    validateFlag,
+    msg,
+  };
+};
+/* --------表单校验规则 end------------ */
+
 watch(
   () => props.formData,
   (val) => {
@@ -580,6 +776,11 @@ watch(
     }
   }
 );
+
+defineExpose({
+  form,
+  validate: dataConfigFormValidate,
+});
 </script>
 
 <style lang="scss" scoped>

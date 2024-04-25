@@ -6,6 +6,13 @@
   "description": "机器人新页面inon",
   "glyphs": [
     {
+      "icon_id": "37365991",
+      "name": "添加",
+      "font_class": "wubian-add",
+      "unicode": "e749",
+      "unicode_decimal": 59209
+    },
+    {
       "icon_id": "40047017",
       "name": "166",
       "font_class": "a-166",

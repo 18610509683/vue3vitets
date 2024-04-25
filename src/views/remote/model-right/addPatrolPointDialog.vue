@@ -416,7 +416,7 @@ const activeCollapse = ref(["point-info", "location-pose"]);
 const props = defineProps({
   formData: {
     type: Object,
-    default: null,
+    default: {},
   },
 });
 
@@ -488,23 +488,23 @@ onMounted(() => {
   // // 观察器的配置（需要观察什么变动）
   // const config = { attributes: true, childList: true, subtree: true };
 
-  // // 当观察到变动时执行的回调函数
-  // const callback = function(mutationsList, observer) {
-  //   let dom=document.querySelector('#name3')
-  //   let rect=dom.getBoundingClientRect();
-  //   // console.log(rect)
-  //   tempTop.value=rect.top
-  //   proxy.$bus.emit('updateTop',rect.top)
-  // };
+// // 当观察到变动时执行的回调函数
+// const callback = function(mutationsList, observer) {
+//   let dom=document.querySelector('#name3')
+//   let rect=dom.getBoundingClientRect();
+//   // console.log(rect)
+//   tempTop.value=rect.top
+//   proxy.$bus.emit('updateTop',rect.top)
+// };
 
-  // // 创建一个观察器实例并传入回调函数
-  // const observer = new MutationObserver(callback);
+// // 创建一个观察器实例并传入回调函数
+// const observer = new MutationObserver(callback);
 
-  // // 开始观察目标节点
-  // observer.observe(dom, config);
+// // 开始观察目标节点
+// observer.observe(dom, config);
 
-  // // 以后，你可以停止观察
-  // // observer.disconnect();
+// // 以后，你可以停止观察
+// // observer.disconnect();
 });
 </script>
 <style scoped lang="less">
