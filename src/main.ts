@@ -110,3 +110,15 @@ app.component('Close', Close)
 
 app.use(router)
 app.mount("#app");
+
+const win: any = window
+
+if (process.env.NODE_ENV === 'development') {
+
+    if ('__VUE_DEVTOOLS_GLOBAL_HOOK__' in win) {
+
+        win.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app
+
+    }
+
+}
