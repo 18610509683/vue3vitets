@@ -27,8 +27,8 @@
         <el-collapse>
           <el-collapse-item name="放电监测">
             <template #title>放电监测</template>
-            <!-- <DataConfigForm ref="dataConfigFormRef"></DataConfigForm> -->
-            <MultipleForm ref="dataConfigFormRef">
+            <SingleForm ref="dataConfigFormRef"></SingleForm>
+            <!-- <MultipleForm ref="dataConfigFormRef">
               <template #custom="scope">
                 <el-form label-position="left">
                   <el-form-item label="测试">
@@ -40,7 +40,7 @@
                   </el-form-item>
                 </el-form>
               </template>
-            </MultipleForm>
+            </MultipleForm> -->
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -56,7 +56,7 @@
 import { getCurrentInstance, onMounted, ref } from "vue";
 import Echart from "@/components/Echart.vue";
 import { partailDischargeChart } from "../../js/echartsHandle";
-import DataConfigForm from "@/components/DataConfigForm/SingleForm.vue";
+import SingleForm from "@/components/DataConfigForm/SingleForm.vue";
 import MultipleForm from "@/components/DataConfigForm/MultipleForm.vue";
 import { ElMessage } from "element-plus";
 const { proxy } = getCurrentInstance();
