@@ -18,7 +18,8 @@
         <el-collapse>
           <el-collapse-item name="1">
             <template #title>表计配置</template>
-            <div style="display: flex; position: relative">
+            <MeterDataConfigForm></MeterDataConfigForm>
+            <!-- <div style="display: flex; position: relative">
               <div
                 style="
                   left: 20px;
@@ -35,17 +36,6 @@
               >
                 <div class="index" v-for="i in 80" :key="i">{{ i }}</div>
               </div>
-              <!-- <div
-                class="index-box"
-                v-for="i in 59"
-                :key="i"
-                :style="{ bottom: 510 - 50 * i + 'px' }"
-              >
-                <div class="index">{{ i }}</div>
-              </div> -->
-              <!-- <div class="index-box">
-                <div class="index">77</div>
-              </div> -->
               <el-form
                 :model="form"
                 label-width="80px"
@@ -101,7 +91,6 @@
                       >
                       </el-option>
                     </el-select>
-                    <!-- <div class="line"></div> -->
                     <el-select
                       class="select-type"
                       v-model="form.meterOptions"
@@ -138,7 +127,6 @@
                       >
                       </el-option>
                     </el-select>
-                    <!-- <div class="line"></div> -->
                     <el-select
                       class="select-type"
                       v-model="selectName"
@@ -174,7 +162,6 @@
                       >
                       </el-option>
                     </el-select>
-                    <!-- <div class="line"></div> -->
                     <el-select
                       class="select-type"
                       v-model="selectName"
@@ -215,7 +202,7 @@
                   </el-form-item>
                 </div>
               </el-form>
-            </div>
+            </div> -->
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -317,6 +304,7 @@ import { getCurrentInstance, initCustomFormatter, onMounted } from "vue";
 import { ref } from "vue";
 import { fabric } from "fabric";
 import { isWhiteSpaceLike } from "typescript";
+import MeterDataConfigForm from "./MeterDataConfigForm.vue"
 
 const { proxy } = getCurrentInstance();
 let meterTypeList = ref([

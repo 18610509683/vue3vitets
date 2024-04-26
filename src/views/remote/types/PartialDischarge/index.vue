@@ -27,8 +27,8 @@
         <el-collapse>
           <el-collapse-item name="放电监测">
             <template #title>放电监测</template>
-            <SingleForm ref="dataConfigFormRef"></SingleForm>
-            <!-- <MultipleForm ref="dataConfigFormRef">
+            <SingleForm ref="dataConfigFormRef" v-model:formData="form"></SingleForm>
+            <!-- <MultipleSingleForm ref="dataConfigFormRef">
               <template #custom="scope">
                 <el-form label-position="left">
                   <el-form-item label="测试">
@@ -40,7 +40,7 @@
                   </el-form-item>
                 </el-form>
               </template>
-            </MultipleForm> -->
+            </MultipleSingleForm> -->
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -57,19 +57,23 @@ import { getCurrentInstance, onMounted, ref } from "vue";
 import Echart from "@/components/Echart.vue";
 import { partailDischargeChart } from "../../js/echartsHandle";
 import SingleForm from "@/components/DataConfigForm/SingleForm.vue";
-import MultipleForm from "@/components/DataConfigForm/MultipleForm.vue";
+import MultipleSingleForm from "@/components/DataConfigForm/MultipleSingleForm.vue";
 import { ElMessage } from "element-plus";
+import { dataTypeOptions } from "@/components/DataConfigForm/js/dataTypeOptions";
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   publicData: {
     type: Object,
+
   },
 });
+let form=ref(JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)))
 
 let myLoading = ref(true);
 let option = ref(null);
 const dataConfigFormRef = ref();
 const cancelClick = () => {};
+
 const confirmClick = async () => {
   let { validateFlag, msg } = await dataConfigFormRef.value.validate();
   if (!validateFlag) {
