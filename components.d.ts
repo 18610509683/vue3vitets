@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CanvasDragZoom: typeof import('./src/components/CanvasDragZoom.vue')['default']
+    copy: typeof import('./src/components/DataConfigForm/SingleForm copy.vue')['default']
     Echart: typeof import('./src/components/Echart.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
@@ -37,10 +38,15 @@ declare module 'vue' {
     EmptyResult: typeof import('./src/components/emptyResult.vue')['default']
     ImgCanvas: typeof import('./src/components/imgCanvas.vue')['default']
     LightCornerBox: typeof import('./src/components/LightCornerBox/index.vue')['default']
+    MultipleCompositeForm: typeof import('./src/components/DataConfigForm/MultipleCompositeForm.vue')['default']
     MultipleForm: typeof import('./src/components/DataConfigForm/MultipleForm.vue')['default']
+    MultipleSingleForm: typeof import('./src/components/DataConfigForm/MultipleSingleForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SingleForm: typeof import('./src/components/DataConfigForm/SingleForm.vue')['default']
+    SingleForm1: typeof import('./src/components/DataConfigForm/SingleForm1.vue')['default']
+    SingleFormExpand: typeof import('./src/components/DataConfigForm/SingleFormExpand.vue')['default']
+    SingleFormOld: typeof import('./src/components/DataConfigForm/SingleFormOld.vue')['default']
     SwiperGroup: typeof import('./src/components/swiperGroup.vue')['default']
   }
 }

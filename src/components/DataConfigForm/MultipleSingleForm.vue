@@ -3,7 +3,8 @@
     <div
       class="tab-box"
       :style="{
-        '--p': (activeForm - 1) * 26 + activeForm * 17 + 'px',
+        '--p':
+          tabArr.findIndex((itm) => itm.id == activeForm.id) * 43 + 17 + 'px',
       }"
     >
       <div class="tab-box-item">
@@ -11,33 +12,23 @@
           v-for="(item, index) in tabArr"
           :class="[
             'circle flex align-center justify-center',
-            activeForm == item ? 'active' : '',
+            activeForm.id == item.id ? 'active' : '',
           ]"
-          @click="
-            () => {
-              activeForm = item;
-              console.log(formRefList[index].form);
-            }
-          "
+          @click="switchForm(item)"
         >
           {{ index + 1 }}
         </div>
         <div
           class="add-circle flex align-center justify-center"
-          @click="
-            () => {
-              tabArr.push(tabArr.length + 1);
-              activeForm = tabArr.length;
-            }
-          "
+          @click="addForm"
         >
           <i class="iconfont iconfont-wubian-add"></i>
         </div>
       </div>
     </div>
-    <div v-for="(item, index) in tabArr" v-show="activeForm == item">
+    <div v-for="(item, index) in tabArr" v-show="activeForm.id == item.id">
       <slot name="custom" :index="index"></slot>
-      <SingleForm :ref="setRef"></SingleForm>
+      <SingleForm :ref="setFormRef" v-model:formData="item.form"></SingleForm>
     </div>
   </div>
 </template>
@@ -45,29 +36,48 @@
 <script setup>
 import SingleForm from "./SingleForm";
 import { ref, onMounted, watch, computed } from "vue";
+import { dataTypeOptions } from "./js/dataTypeOptions";
+import dayjs from "dayjs";
 const multipleRef = ref();
-let tabArr = ref([1]);
-let activeForm = ref(1);
-let formRefList = ref([]);
-const setRef = (el) => {
-  if (!formRefList.value.includes(el)) {
-    formRefList.value.push(el);
-  }
+let tabArr = ref([
+  {
+    id: dayjs().valueOf().toString(),
+    form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
+  },
+]);
+let activeForm = ref(tabArr.value[0]);
+//添加表单
+const addForm = () => {
+  tabArr.value.push({
+    id: dayjs().valueOf().toString(),
+    form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
+  });
+  activeForm.value = tabArr.value[tabArr.value.length - 1];
 };
-let formArr = computed(() => {
-  return formRefList.value.map((item) => item.form) ?? null;
-});
+//切换表单
+const switchForm = (val) => {
+  let index = tabArr.value.findIndex((itm) => itm.id == activeForm.value.id);
+  activeForm.value = val;
+  console.log(activeForm.value);
+};
 //删除表单
 const deleteForm = (index) => {
   if (tabArr.value.length > 1) {
-    if (activeForm.value == tabArr.value[index]) {
-      activeForm.value = tabArr.value[index - 1];
-    }
+    activeForm.value = index
+      ? tabArr.value[index - 1]
+      : tabArr.value[index + 1];
     tabArr.value.splice(index, 1);
     formRefList.value.splice(index, 1);
   }
 };
+
 //多表单验证函数
+let formRefList = ref([]);
+const setFormRef = (el) => {
+  if (el && !formRefList.value.includes(el)) {
+    formRefList.value.push(el);
+  }
+};
 const multipleFormValidate = async () => {
   let validate = true;
   let msg = "";
@@ -87,10 +97,12 @@ watch(
   () => activeForm.value,
   (val) => {}
 );
-onMounted(() => {});
+onMounted(() => {
+  activeForm.value = tabArr.value[0];
+});
 defineExpose({
   validate: multipleFormValidate,
-  formArr,
+  //   formArr,
   deleteForm,
 });
 </script>

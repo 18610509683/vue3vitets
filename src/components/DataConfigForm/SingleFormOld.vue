@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
     <el-form
-      :model="props.formData"
+      :model="form"
       ref="formRef"
       :rules="formRules"
       label-position="left"
@@ -10,7 +10,7 @@
         <div class="mix-box w100" tabindex="1">
           <el-select
             class="pre-select"
-            v-model="props.formData.dataType"
+            v-model="form.dataType"
             placeholder="未选择模板"
             @change="dataTypeChangeHandle"
           >
@@ -21,7 +21,7 @@
             ></el-option>
           </el-select>
           <el-select
-            v-model="props.formData.dataTemplate"
+            v-model="form.dataTemplate"
             @change="dataTemplateChangeHandle"
           >
             <el-option label="不选择模板" value="custom"></el-option>
@@ -33,15 +33,15 @@
       </el-form-item>
       <el-form-item label="数据匹配" prop="matchData">
         <div class="mix-box w100" tabindex="1">
-          <el-select class="pre-select" v-model="props.formData.matchDataType">
+          <el-select class="pre-select" v-model="form.matchDataType">
             <el-option label="新增" value="1"></el-option>
             <el-option label="选择" value="2"></el-option>
           </el-select>
           <el-input
-            v-if="props.formData.matchDataType == '1'"
-            v-model="props.formData.matchData"
+            v-if="form.matchDataType == '1'"
+            v-model="form.matchData"
           ></el-input>
-          <el-select v-model="props.formData.matchData" v-else>
+          <el-select v-model="form.matchData" v-else>
             <el-option label="模板1" value="1"></el-option>
             <el-option label="模板2" value="2"></el-option>
             <el-option label="模板3" value="3"></el-option
@@ -66,24 +66,23 @@
         <el-form-item
           prop="unit"
           label="数据单位"
-          v-if="props.formData.hasOwnProperty('unit')"
+          v-if="form.hasOwnProperty('unit')"
         >
           <el-input
-            v-model="props.formData.unit"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model="form.unit"
+            v-if="form.dataTemplate == 'custom'"
           ></el-input>
           <div v-else class="read-only"></div>
         </el-form-item>
         <el-form-item
           label="默认位"
           v-if="
-            props.formData.hasOwnProperty('defaultBit') &&
-            props.formData.dataType == 'SWITCHING'
+            form.hasOwnProperty('defaultBit') && form.dataType == 'SWITCHING'
           "
         >
           <el-switch
-            v-if="props.formData.dataTemplate == 'custom'"
-            v-model="props.formData.defaultBit"
+            v-if="form.dataTemplate == 'custom'"
+            v-model="form.defaultBit"
             inline-prompt
             style="
               --el-switch-on-color: #07909e;
@@ -100,11 +99,11 @@
         <el-form-item
           label="状态字段"
           prop="statusField"
-          v-if="props.formData.hasOwnProperty('statusField')"
+          v-if="form.hasOwnProperty('statusField')"
         >
           <el-input
-            v-if="props.formData.dataTemplate == 'custom'"
-            v-model="props.formData.statusField"
+            v-if="form.dataTemplate == 'custom'"
+            v-model="form.statusField"
             maxlength="40"
             show-word-limit
           />
@@ -113,11 +112,11 @@
         <el-form-item
           label="名称翻译"
           prop="translation"
-          v-if="props.formData.hasOwnProperty('translation')"
+          v-if="form.hasOwnProperty('translation')"
         >
           <el-input
-            v-if="props.formData.dataTemplate == 'custom'"
-            v-model="props.formData.translation"
+            v-if="form.dataTemplate == 'custom'"
+            v-model="form.translation"
             maxlength="40"
             show-word-limit
           />
@@ -126,11 +125,11 @@
         <el-form-item
           label="字段范围"
           prop="statusRange"
-          v-if="props.formData.hasOwnProperty('statusRange')"
+          v-if="form.hasOwnProperty('statusRange')"
         >
           <div
             class="table-container w100"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-if="form.dataTemplate == 'custom'"
           >
             <div class="table-header w100 flex justify-start align-center">
               <div class="th table-cell">序号</div>
@@ -145,7 +144,7 @@
             <div class="table-body">
               <div
                 class="tbody-tr flex justify-start align-center"
-                v-for="(rangeItem, index) in props.formData.statusRange"
+                v-for="(rangeItem, index) in form.statusRange"
               >
                 <div class="index td" :title="index + 1">
                   {{ index + 1 }}
@@ -180,7 +179,7 @@
           >
             <div
               class="list-item w100 flex justify-start align-center"
-              v-for="(item, index) in props.formData.statusRange"
+              v-for="(item, index) in form.statusRange"
             >
               <div class="index list-item-property" :title="index + 1">
                 {{ index + 1 }}
@@ -198,39 +197,35 @@
         <el-form-item
           label="默认字段"
           v-if="
-            props.formData.hasOwnProperty('defaultBit') &&
-            props.formData.dataType == 'ENUMERATION'
+            form.hasOwnProperty('defaultBit') && form.dataType == 'ENUMERATION'
           "
           prop="defaultBit"
         >
           <el-select
             class="w100"
-            v-model="props.formData.defaultBit"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model="form.defaultBit"
+            v-if="form.dataTemplate == 'custom'"
             clearable
           >
             <el-option
-              v-for="tabItem in props.formData.statusRange"
+              v-for="tabItem in form.statusRange"
               :label="tabItem.name"
               :value="tabItem.name"
             />
           </el-select>
           <div class="value-tag h100" v-else>{{}}</div>
         </el-form-item>
-        <el-form-item
-          label="数据说明"
-          v-if="props.formData.hasOwnProperty('explain')"
-        >
+        <el-form-item label="数据说明" v-if="form.hasOwnProperty('explain')">
           <textarea
-            v-model="props.formData.explain"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model="form.explain"
+            v-if="form.dataTemplate == 'custom'"
             class="w100"
           ></textarea>
           <div v-else class="read-only" style="height: auto"></div>
         </el-form-item>
         <el-form-item label="数据验证">
           <el-switch
-            v-model="props.formData.isDataVerify"
+            v-model="form.isDataVerify"
             size="large"
             inline-prompt
             active-text="on"
@@ -246,23 +241,23 @@
         <el-form-item
           prop="precision"
           label="数据精度"
-          v-if="props.formData.hasOwnProperty('precision')"
+          v-if="form.hasOwnProperty('precision')"
         >
           <el-input-number
             :precision="2"
             :step="0.1"
-            v-model="props.formData.precision"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model="form.precision"
+            v-if="form.dataTemplate == 'custom'"
           ></el-input-number>
           <div v-else class="read-only"></div>
         </el-form-item>
         <el-form-item
           v-for="item in controlField.slice(0, 2)"
           :label="item.label"
-          v-show="props.formData.hasOwnProperty(item.field)"
+          v-show="form.hasOwnProperty(item.field)"
           :prop="item.field"
         >
-          <div class="row-box" v-if="props.formData.dataTemplate == 'custom'">
+          <div class="row-box" v-if="form.dataTemplate == 'custom'">
             <div class="flex">
               <el-select
                 v-model="item.isExist"
@@ -274,12 +269,9 @@
                   :label="item.label"
                 ></el-option>
               </el-select>
-              <el-input
-                v-if="item.isExist"
-                v-model="props.formData[item.field]"
-              >
+              <el-input v-if="item.isExist" v-model="form[item.field]">
                 <template #suffix>
-                  <span class="text-active">{{ props.formData.unit }}</span>
+                  <span class="text-active">{{ form.unit }}</span>
                 </template>
               </el-input>
             </div>
@@ -290,11 +282,11 @@
         <el-form-item
           label="采集间隔"
           prop="collectInterval"
-          v-if="props.formData.hasOwnProperty('collectInterval')"
+          v-if="form.hasOwnProperty('interval')"
         >
           <el-input
-            v-model="props.formData.collectInterval"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model="form.interval"
+            v-if="form.dataTemplate == 'custom'"
           >
             <template #suffix>
               <span class="text-active">{{ "s" }}</span>
@@ -305,12 +297,12 @@
         <el-form-item
           prop="statPeriod"
           label="统计周期"
-          v-if="props.formData.hasOwnProperty('statPeriod')"
+          v-if="form.hasOwnProperty('statPeriod')"
         >
           <el-input
             class="interval"
-            v-model.number="props.formData.statPeriod"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model.number="form.statPeriod"
+            v-if="form.dataTemplate == 'custom'"
           >
             <template #suffix>
               <span class="text-active">{{ "min" }}</span>
@@ -320,7 +312,7 @@
         </el-form-item>
         <el-form-item label="告警配置">
           <el-switch
-            v-model="props.formData.isAlarm"
+            v-model="form.isAlarm"
             size="large"
             inline-prompt
             active-text="on"
@@ -336,10 +328,10 @@
         <el-form-item
           v-for="item in controlField.slice(2, 6)"
           :label="item.label"
-          v-show="props.formData.hasOwnProperty(item.field)"
+          v-show="form.hasOwnProperty(item.field)"
           :prop="item.field"
         >
-          <div class="row-box" v-if="props.formData.dataTemplate == 'custom'">
+          <div class="row-box" v-if="form.dataTemplate == 'custom'">
             <div class="flex">
               <el-select
                 v-model="item.isExist"
@@ -351,12 +343,9 @@
                   :label="item.label"
                 ></el-option
               ></el-select>
-              <el-input
-                v-if="item.isExist"
-                v-model="props.formData[item.field]"
-              >
+              <el-input v-if="item.isExist" v-model="form[item.field]">
                 <template #suffix>
-                  <span class="text-active">{{ props.formData.unit }}</span>
+                  <span class="text-active">{{ form.unit }}</span>
                 </template>
               </el-input>
             </div>
@@ -364,13 +353,10 @@
           </div>
           <div v-else class="read-only"></div
         ></el-form-item>
-        <el-form-item
-          label="报警等级"
-          v-if="props.formData.hasOwnProperty('alarmLevel')"
-        >
+        <el-form-item label="报警等级" v-if="form.hasOwnProperty('alarmLevel')">
           <el-select
-            v-model="props.formData.alarmLevel"
-            v-if="props.formData.dataTemplate == 'custom'"
+            v-model="form.alarmLevel"
+            v-if="form.dataTemplate == 'custom'"
           >
           </el-select>
           <div v-else class="read-only"></div>
@@ -378,10 +364,10 @@
         <el-form-item
           v-for="item in controlField.slice(6)"
           :label="item.label"
-          v-show="props.formData.hasOwnProperty(item.field)"
+          v-show="form.hasOwnProperty(item.field)"
           :prop="item.field"
         >
-          <div v-if="props.formData.dataTemplate == 'custom'" class="row-box">
+          <div v-if="form.dataTemplate == 'custom'" class="row-box">
             <div class="flex">
               <span>当数据为</span>
               <el-select
@@ -400,13 +386,11 @@
                     })
                 "
                 :model-value="
-                  props.formData[item.field]
-                    ? props.for[item.field].split(',')
-                    : []
+                  form[item.field] ? form[item.field].split(',') : []
                 "
               >
                 <el-option
-                  v-for="tagItem in props.formData.statusRange"
+                  v-for="tagItem in form.statusRange"
                   :label="tagItem.name"
                   :value="tagItem.name"
                 />
@@ -425,34 +409,26 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { dataTypeOptions } from "./js/dataTypeOptions";
-const emits = defineEmits(["update:formData"]);
-const props = defineProps({
-  formData: {
-    type: Object,
-    default: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-  },
-});
 
 /* --------表单类型 start--------- */
-
 const formRef = ref();
+let form = ref(JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)));
 //切换数据类型，保留已填过的相同数据
 const dataTypeChangeHandle = (val) => {
   formRef.value.clearValidate();
-  let tempForm = JSON.parse(JSON.stringify(props.formData));
-  let updateForm = JSON.parse(
+  let tempForm = JSON.parse(JSON.stringify(form.value));
+  form.value = JSON.parse(
     JSON.stringify(
       dataTypeOptions.find((item) => item.type == val).formTemplate
     )
   );
   if (tempForm.dataTemplate == "custom") {
     for (let key in tempForm) {
-      if (updateForm.hasOwnProperty(key) && key !== "dataType") {
-        updateForm[key] = tempForm[key];
+      if (form.value.hasOwnProperty(key) && key !== "dataType") {
+        form.value[key] = tempForm[key];
       }
     }
   }
-  emits("update:formData", updateForm);
 };
 //切换数据模板
 const dataTemplateChangeHandle = (val) => {
@@ -464,7 +440,7 @@ const dataTemplateChangeHandle = (val) => {
 /* --------表单类型 end------------- */
 
 /* ------控制表单项 start-------- */
-let isShowDetail = ref(false); //是否展示模板详情
+let isShowDetail = ref(true); //是否展示模板详情
 let controlField = ref([
   {
     label: "数据下限",
@@ -542,9 +518,7 @@ let controlField = ref([
   },
 ]);
 const controlFieldChange = (val, field) => {
-  let obj = {};
-  obj[field] = val ? 0 : null;
-  emits("update:formData", { ...props.formData, ...obj });
+  form.value[field] = val ? 0 : null;
 };
 /* ------控制表单项 end---------- */
 /**
@@ -567,27 +541,15 @@ let statusRangeTablePropertyList = ref([
 ]);
 // 删除状态量字段范围表格行
 const handleDeleteStatusRangeTableRow = (index) => {
-  let statusRange = props.formData.statusRange;
-  emits("update:formData", {
-    ...props.formData,
-    statusRange: statusRange
-      .slice(0, index)
-      .contact(statusRange.slice(index + 1)),
-  });
+  form.value.statusRange.splice(index, 1);
 };
 
 // 新增状态量字段范围表格行
 const handleAddStatusRangeTableRow = () => {
-  emits("update:formData", {
-    ...props.formData,
-    statusRange: [
-      ...props.formData.statusRange,
-      {
-        name: "",
-        translation: "",
-        fields: "",
-      },
-    ],
+  form.value.statusRange.push({
+    name: "",
+    translation: "",
+    fields: "",
   });
 };
 
@@ -595,21 +557,18 @@ const handleAddStatusRangeTableRow = () => {
 const handleChangeWarningSeverityLimits = ({ property, value }) => {
   let oppositeProperty =
     property === "warningLimits" ? "severityLimits" : "warningLimits";
-  let statusList = props.formData[oppositeProperty]?.split(",");
+  let statusList = form.value[oppositeProperty].split(",");
   let intersect = Array.from(
-    new Set(statusList?.filter((x) => !value.includes(x)))
+    new Set(statusList.filter((x) => !value.includes(x)))
   );
-  let obj = {};
-  obj[oppositeProperty] = intersect.join(",");
-  obj[property] = value.join(",");
-  emits("update:formData", { ...props.formData, ...obj });
+  form.value[oppositeProperty] = intersect.join(",");
+  form.value[property] = value.join(",");
 };
 
 /* --------表单校验规则 start------------ */
 // 验证数据上下限
 const validDataLimit = (index, type) => {
   return (rule, value, callback) => {
-    console.log(value);
     if (controlField.value[index].isExist && (value === "" || value === null)) {
       callback(
         new Error("请填写" + controlField.value[index].label + "具体值")
@@ -623,7 +582,7 @@ const validDataLimit = (index, type) => {
 // 验证字段范围不为空
 const validStatusRange = () => {
   return (rule, value, callback) => {
-    if (props.formData.statusRange.length === 0) {
+    if (form.value.statusRange.length === 0) {
       callback(new Error("请填充具体的字段值"));
     } else {
       callback();
@@ -700,8 +659,8 @@ const formRules = ref({
 const dataConfigFormValidate = async () => {
   let validateFlag = true;
   let msg = "";
-  if (props.formData.dataTemplate != "custom") {
-    if (props.formData.matchData == "" || props.formData.matchData == null) {
+  if (form.value.dataTemplate != "custom") {
+    if (form.value.matchData == "" || form.value.matchData == null) {
       validateFlag = false;
       msg = "数据匹配不能为空！";
     }
@@ -720,7 +679,9 @@ const dataConfigFormValidate = async () => {
 };
 /* --------表单校验规则 end------------ */
 
+
 defineExpose({
+  form,
   validate: dataConfigFormValidate,
 });
 </script>
