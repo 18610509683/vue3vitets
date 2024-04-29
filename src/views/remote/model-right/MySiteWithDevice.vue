@@ -188,6 +188,7 @@ onBeforeUnmount(() => {
     .kr-select-dropdown,
     .device-tree-drop-down {
       z-index: 3;
+      left:-24px;
     }
     .tree-enter-to,
     .tree-leave,

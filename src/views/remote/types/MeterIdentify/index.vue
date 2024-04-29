@@ -18,7 +18,7 @@
         <el-collapse>
           <el-collapse-item name="1">
             <template #title>表计配置</template>
-            <MeterDataConfigForm></MeterDataConfigForm>
+            <MeterDataConfigForm ref="dataConfigFormRef"></MeterDataConfigForm>
             <!-- <div style="display: flex; position: relative">
               <div
                 style="
@@ -335,8 +335,11 @@ const props = defineProps({
     type: Object,
   },
 });
+const dataConfigFormRef=ref()
 const cancelClick = () => {};
-const confirmClick = () => {};
+const confirmClick = async() => {
+  await dataConfigFormRef.value.validate();
+};
 onMounted(() => {
   init();
   // initCanvas();

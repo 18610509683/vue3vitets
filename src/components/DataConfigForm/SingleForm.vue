@@ -609,7 +609,6 @@ const handleChangeWarningSeverityLimits = ({ property, value }) => {
 // 验证数据上下限
 const validDataLimit = (index, type) => {
   return (rule, value, callback) => {
-    console.log(value);
     if (controlField.value[index].isExist && (value === "" || value === null)) {
       callback(
         new Error("请填写" + controlField.value[index].label + "具体值")

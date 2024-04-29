@@ -29,7 +29,14 @@
     <div v-for="(item, index) in tabArr" v-show="activeForm.id == item.id">
       <el-form>
         <el-form-item label="识别对象">
-          <el-input></el-input>
+          <el-input>
+            <template #suffix>
+              <i
+                class="iconfont iconfont-shanchu"
+                @click="deleteForm(index)"
+              ></i>
+            </template>
+          </el-input>
         </el-form-item>
         <el-form-item label="区域标记">
           <el-input disabled>
@@ -65,7 +72,7 @@
           ></el-checkbox>
           <div class="flex align-center" v-show="itm.isEdit">
             行<el-input
-              v-model="itm.row"
+              v-model.number="itm.row"
               :style="{
                 width: '50px',
                 margin: '0 5px',
@@ -73,7 +80,7 @@
               @change="(val) => resetPointList(itm)"
             ></el-input
             >x 列<el-input
-              v-model="itm.column"
+              v-model.number="itm.column"
               @change="(val) => resetPointList(itm)"
               :style="{
                 width: '50px',
@@ -112,14 +119,15 @@
                 itm.configFormArr[jdx * itm.column + pdx] ? '' : 'not-exist',
               ]"
               v-for="(ptm, pdx) in Array.from({ length: itm.column })"
-              @click="clickOrSetPoint(itm, jdx * itm.column + pdx)"
+              @click="clickOrSetPoint(itm, jdx * itm.column + pdx, index, idx)"
             >
               {{ jdx * itm.column + pdx + 1 }}
             </div>
           </div>
         </div>
         <SingleForm
-          v-if="itm.isEdit && itm.row * itm.column"
+          v-if="itm.isEdit && itm.configFormArr[itm.activePointIndex]?.form"
+          :ref="(el) => setFormRef(el, index, idx)"
           v-model:formData="itm.configFormArr[itm.activePointIndex].form"
         ></SingleForm>
       </div>
@@ -149,12 +157,7 @@ let formGroup = [
     isEdit: false,
     pointMethod: null,
     activePointIndex: 0,
-    configFormArr: [
-      {
-        form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-        disabled: false,
-      },
-    ],
+    configFormArr: [],
   },
   {
     desc: "下侧指示灯组",
@@ -163,12 +166,7 @@ let formGroup = [
     isEdit: false,
     pointMethod: null,
     activePointIndex: 0,
-    configFormArr: [
-      {
-        form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-        disabled: false,
-      },
-    ],
+    configFormArr: [],
   },
   {
     desc: "左侧指示灯组",
@@ -177,12 +175,7 @@ let formGroup = [
     isEdit: false,
     pointMethod: null,
     activePointIndex: 0,
-    configFormArr: [
-      {
-        form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-        disabled: false,
-      },
-    ],
+    configFormArr: [],
   },
   {
     desc: "右侧指示灯组",
@@ -191,12 +184,7 @@ let formGroup = [
     isEdit: false,
     pointMethod: null,
     activePointIndex: 0,
-    configFormArr: [
-      {
-        form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-        disabled: false,
-      },
-    ],
+    configFormArr: [],
   },
 ];
 let tabArr = ref([
@@ -223,7 +211,7 @@ const resetPointList = (itm) => {
     itm.configFormArr = Array.from({ length: realLen }, (item, index) => ({
       form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
       disabled: false,
-      row: Math.floor(index / itm.column),
+      row: Math.floor(index / itm.column) + 1,
       column: (index + 1) % itm.column || Number(itm.column),
     }));
   } else if (realLen < itm.configFormArr.length) {
@@ -231,8 +219,9 @@ const resetPointList = (itm) => {
   }
 };
 //编辑点位状态（选中、禁用、置空）
-const clickOrSetPoint = (itm, index) => {
+const clickOrSetPoint = async(itm, index, tabIndex, formIndex) => {
   if (itm.activePointIndex == index && itm.pointMethod) {
+    //选中的点位不可以禁用或置空
     ElMessage.info("正在编辑的点位不可操作！");
     return;
   } else if (
@@ -240,12 +229,16 @@ const clickOrSetPoint = (itm, index) => {
     itm.configFormArr[index] &&
     !itm.configFormArr[index].disabled
   ) {
-    itm.activePointIndex = index;
+    let flag=await formValidateByIndex(itm.desc,itm.activePointIndex,tabIndex, formIndex);
+    if(flag){
+      itm.activePointIndex = index;
+    }
   } else if (itm.pointMethod == "forbidden") {
+    //禁用操作
     itm.configFormArr[index].disabled = !itm.configFormArr[index].disabled;
   } else if (itm.pointMethod == "nullable") {
+    //置空操作
     if (itm.configFormArr[index]) {
-      console.log(index);
       itm.configFormArr[index] = null;
     } else {
       itm.configFormArr[index] = {
@@ -261,7 +254,7 @@ const clickOrSetPoint = (itm, index) => {
 /* ------------创建点位 end-------------- */
 
 /* ------------tab start---------------- */
-//初始化配置表tab数量和数据
+//初始化配置表tab数量和数据(后续根据接口结构调整逻辑)
 const initTab = () => {
   tabArr.value = props.tabData.map((item, index) => ({
     id: dayjs().valueOf().toString(),
@@ -293,7 +286,7 @@ const deleteForm = (index) => {
 };
 /* ------------tab end---------------- */
 
-//多表单验证函数
+/* ------------表单验证 start------------ */
 let formRefList = ref([]);
 const setFormRef = (el, index) => {
   if (formRefList.value[index]) {
@@ -304,21 +297,35 @@ const setFormRef = (el, index) => {
     formRefList.value.push([el]);
   }
 };
-const multipleFormValidate = async () => {
-  let validate = true;
-  let msg = "";
-  for (let i = 0; i < formRefList.value.length; i++) {
-    let { validateFlag } = await formRefList.value[i].validate();
-    if (!validateFlag) {
-      validate = false;
-      msg += `请检查第${i + 1}个表单！<br/>`;
-    }
+//单表单验证函数
+const formValidateByIndex = async (title,pointIndex,tabIndex, formIndex) => {
+  console.log(formRefList.value[tabIndex][formIndex]);
+  let { validateFlag } = await formRefList.value[tabIndex][
+    formIndex
+  ].validate();
+  if(!validateFlag){
+    ElMessage.error(`请检查${title}的第${pointIndex+1}个点位的配置表单！`)
   }
-  return {
-    validateFlag: validate,
-    msg,
-  };
+  return validateFlag
 };
+//多表单验证函数
+const multipleFormValidate = async () => {
+  console.log(tabArr.value);
+  // let validate = true;
+  // let msg = "";
+  // for (let i = 0; i < formRefList.value.length; i++) {
+  //   let { validateFlag } = await formRefList.value[i].validate();
+  //   if (!validateFlag) {
+  //     validate = false;
+  //     msg += `请检查第${i + 1}个表单！<br/>`;
+  //   }
+  // }
+  // return {
+  //   validateFlag: validate,
+  //   msg,
+  // };
+};
+/* ------------表单验证 end------------ */
 watch(
   () => props.tabData,
   (val) => {
@@ -472,16 +479,16 @@ defineExpose({
       background: rgba(0, 255, 243, 0.2);
     }
     &.forbidden {
-      cursor:not-allowed;
+      cursor: not-allowed;
       color: #073141;
       background: #0a6169;
       border-color: transparent;
     }
     &.not-exist {
       border-color: #4d7b8e;
-      background:transparent;
+      background: transparent;
       color: #4d7b8e;
-      cursor:not-allowed;
+      cursor: not-allowed;
     }
   }
 }
