@@ -54,7 +54,15 @@
           class="w100 flex align-center justify-between"
           style="padding-left: 0.52vw"
         >
-          <el-checkbox v-model="itm.isEdit" :label="itm.desc"></el-checkbox>
+          <el-checkbox
+            v-model="itm.isEdit"
+            :label="itm.desc"
+            @change="
+              () => {
+                itm.row = itm.column = 0;
+              }
+            "
+          ></el-checkbox>
           <div class="flex align-center" v-show="itm.isEdit">
             行<el-input
               v-model="itm.row"
@@ -62,29 +70,52 @@
                 width: '50px',
                 margin: '0 5px',
               }"
-              @change="resetPoint"
+              @change="(val) => resetPointList(itm)"
             ></el-input
             >x 列<el-input
               v-model="itm.column"
-              @change="resetPoint"
+              @change="(val) => resetPointList(itm)"
               :style="{
                 width: '50px',
                 margin: '0 5px',
               }"
             ></el-input>
-            <i class="iconfont-add-rectangle iconfont mx-5px"></i>
-            <i class="iconfont iconfont-bianji-01 mx-5px"></i>
+            <i
+              :class="[
+                'iconfont-add-rectangle iconfont mx-5px',
+                itm.pointMethod == 'forbidden' ? 'iconfont-active' : '',
+              ]"
+              @click="pointHandle(itm, 'forbidden')"
+            ></i>
+            <i
+              :class="[
+                'iconfont iconfont-bianji-01 mx-5px',
+                itm.pointMethod == 'nullable' ? 'iconfont-active' : '',
+              ]"
+              @click="pointHandle(itm, 'nullable')"
+            ></i>
           </div>
         </div>
-        <div style="padding-left: 0.52vw" class="flex justify-start">
+        <div style="padding-left: 0.52vw" class="w100">
           <div
-            :class="[
-              'point-tab flex align-center justify-center',
-              itm.activePointIndex == jdx ? 'active' : '',
-            ]"
-            v-for="(jtm, jdx) in Array.from({ length: itm.row * itm.column })"
+            class="w100 flex justify-start my-10px"
+            v-if="itm.row * itm.column > 0"
+            v-for="(jtm, jdx) in Array.from({ length: itm.row })"
           >
-            {{ jdx + 1 }}
+            <div
+              :class="[
+                'point-tab flex align-center justify-center mr-10px',
+                itm.activePointIndex == jdx * itm.column + pdx ? 'active' : '',
+                itm.configFormArr[jdx * itm.column + pdx]?.disabled
+                  ? 'forbidden'
+                  : '',
+                itm.configFormArr[jdx * itm.column + pdx] ? '' : 'not-exist',
+              ]"
+              v-for="(ptm, pdx) in Array.from({ length: itm.column })"
+              @click="clickOrSetPoint(itm, jdx * itm.column + pdx)"
+            >
+              {{ jdx * itm.column + pdx + 1 }}
+            </div>
           </div>
         </div>
         <SingleForm
@@ -98,14 +129,11 @@
 
 <script setup>
 import SingleForm from "@/components/DataConfigForm/SingleForm.vue";
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed, nextTick } from "vue";
 import { dataTypeOptions } from "@/components/DataConfigForm/js/dataTypeOptions";
+import { ElMessage } from "element-plus";
 import dayjs from "dayjs";
 const props = defineProps({
-  formCount: {
-    type: Number,
-    default: 2,
-  },
   tabData: {
     type: Array,
     default: null,
@@ -113,71 +141,13 @@ const props = defineProps({
 });
 let test = ref();
 const multipleRef = ref();
-let tabArr = ref([
-  {
-    id: dayjs().valueOf().toString(),
-    formArr: [
-      {
-        desc: "上侧指示灯组",
-        column: 0,
-        row: 0,
-        isEdit: false,
-        activePointIndex: 0,
-        configFormArr: [
-          {
-            form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-            disabled: false,
-          },
-        ],
-      },
-      {
-        desc: "下侧指示灯组",
-        column: 0,
-        row: 0,
-        isEdit: false,
-        activePointIndex: 0,
-        configFormArr: [
-          {
-            form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-            disabled: false,
-          },
-        ],
-      },
-      {
-        desc: "左侧指示灯组",
-        column: 0,
-        row: 0,
-        isEdit: false,
-        activePointIndex: 0,
-        configFormArr: [
-          {
-            form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-            disabled: false,
-          },
-        ],
-      },
-      {
-        desc: "右侧指示灯组",
-        column: 0,
-        row: 0,
-        isEdit: false,
-        activePointIndex: 0,
-        configFormArr: [
-          {
-            form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
-            disabled: false,
-          },
-        ],
-      },
-    ],
-  },
-]);
 let formGroup = [
   {
     desc: "上侧指示灯组",
     column: 0,
     row: 0,
     isEdit: false,
+    pointMethod: null,
     activePointIndex: 0,
     configFormArr: [
       {
@@ -191,6 +161,7 @@ let formGroup = [
     column: 0,
     row: 0,
     isEdit: false,
+    pointMethod: null,
     activePointIndex: 0,
     configFormArr: [
       {
@@ -204,6 +175,7 @@ let formGroup = [
     column: 0,
     row: 0,
     isEdit: false,
+    pointMethod: null,
     activePointIndex: 0,
     configFormArr: [
       {
@@ -217,6 +189,7 @@ let formGroup = [
     column: 0,
     row: 0,
     isEdit: false,
+    pointMethod: null,
     activePointIndex: 0,
     configFormArr: [
       {
@@ -226,10 +199,69 @@ let formGroup = [
     ],
   },
 ];
+let tabArr = ref([
+  {
+    id: dayjs().valueOf().toString(),
+    formArr: JSON.parse(JSON.stringify(formGroup)),
+  },
+]);
 let activeForm = ref(tabArr.value[0]);
-const restPoint=()=>{
-  
-}
+/* ------------创建点位 start-------------- */
+let pointMethod = ref();
+//开启、关闭置空、禁用功能
+const pointHandle = (itm, type) => {
+  if (itm.pointMethod == type) {
+    itm.pointMethod = null;
+  } else {
+    itm.pointMethod = type;
+  }
+};
+//设置点位列表
+const resetPointList = (itm) => {
+  let realLen = itm.column * itm.row;
+  if (realLen > itm.configFormArr.length) {
+    itm.configFormArr = Array.from({ length: realLen }, (item, index) => ({
+      form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
+      disabled: false,
+      row: Math.floor(index / itm.column),
+      column: (index + 1) % itm.column || Number(itm.column),
+    }));
+  } else if (realLen < itm.configFormArr.length) {
+    itm.configFormArr.splice(realLen);
+  }
+};
+//编辑点位状态（选中、禁用、置空）
+const clickOrSetPoint = (itm, index) => {
+  if (itm.activePointIndex == index && itm.pointMethod) {
+    ElMessage.info("正在编辑的点位不可操作！");
+    return;
+  } else if (
+    !itm.pointMethod &&
+    itm.configFormArr[index] &&
+    !itm.configFormArr[index].disabled
+  ) {
+    itm.activePointIndex = index;
+  } else if (itm.pointMethod == "forbidden") {
+    itm.configFormArr[index].disabled = !itm.configFormArr[index].disabled;
+  } else if (itm.pointMethod == "nullable") {
+    if (itm.configFormArr[index]) {
+      console.log(index);
+      itm.configFormArr[index] = null;
+    } else {
+      itm.configFormArr[index] = {
+        form: JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate)),
+        disabled: false,
+        row: Math.floor(index / itm.column),
+        column: (index + 1) % itm.column || Number(itm.column),
+      };
+    }
+  }
+};
+
+/* ------------创建点位 end-------------- */
+
+/* ------------tab start---------------- */
+//初始化配置表tab数量和数据
 const initTab = () => {
   tabArr.value = props.tabData.map((item, index) => ({
     id: dayjs().valueOf().toString(),
@@ -240,9 +272,7 @@ const initTab = () => {
 const addForm = () => {
   tabArr.value.push({
     id: dayjs().valueOf().toString(),
-    formArr: Array.from({ length: props.formCount }, () =>
-      JSON.parse(JSON.stringify(dataTypeOptions[0].formTemplate))
-    ),
+    formArr: JSON.parse(JSON.stringify(formGroup)),
   });
   activeForm.value = tabArr.value[tabArr.value.length - 1];
 };
@@ -250,7 +280,6 @@ const addForm = () => {
 const switchForm = (val) => {
   let index = tabArr.value.findIndex((itm) => itm.id == activeForm.value.id);
   activeForm.value = val;
-  console.log(activeForm.value);
 };
 //删除表单
 const deleteForm = (index) => {
@@ -262,6 +291,7 @@ const deleteForm = (index) => {
     formRefList.value.splice(index, 1);
   }
 };
+/* ------------tab end---------------- */
 
 //多表单验证函数
 let formRefList = ref([]);
@@ -430,23 +460,28 @@ defineExpose({
     height: 2.963vh;
     width: 2.963vh;
     border-radius: 2px;
-    margin-right: 0.2604vw;
     cursor: pointer;
     color: rgba(0, 255, 243, 0.5);
+    i.active {
+      color: #00fff3;
+    }
     &.active,
     &:hover {
       border-color: #00fff3;
       color: #00fff3;
       background: rgba(0, 255, 243, 0.2);
     }
-    &.disabled {
+    &.forbidden {
+      cursor:not-allowed;
       color: #073141;
       background: #0a6169;
       border-color: transparent;
     }
     &.not-exist {
       border-color: #4d7b8e;
+      background:transparent;
       color: #4d7b8e;
+      cursor:not-allowed;
     }
   }
 }
