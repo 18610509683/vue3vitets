@@ -52,14 +52,14 @@
             </div>
           </template>
           <template #swd>
-            <div class="drawer-header flex align-center">
+            <div class="drawer-header flex align-center" style="padding-right: 0.1vw;">
               <div class="flex-1 h100">
                 <MySiteWithDevice
                   :is-adaption="true"
                   :adaption-dom="'.model-right'"
                 ></MySiteWithDevice>
               </div>
-              <i class="iconfont iconfont-close font-14"></i>
+              <i class="iconfont iconfont-close font-11-vw primary" @click="handlerClose"></i>
             </div>
           </template>
           <!-- 右侧头部公共部分 -->
@@ -93,9 +93,10 @@ import EnvironmentWatch from "./types/EnvironmentWatch/index";
 import MeterIdentify from "./types/MeterIdentify/index";
 import PartialDischarge from "./types/PartialDischarge/index";
 import KeepWatch from "./types/KeepWatch/index";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 let formData = ref({});
 formData.value = route.query.actionType
   ? route.query
@@ -152,8 +153,12 @@ const updateForm = (data) => {
 };
 
 // 切换站点或监测设备清空值
-const clearForm = ()=>{
+const clearForm = () => {
   formData.value = {}
+}
+
+const handlerClose = () => {
+  router.push('/remote');
 }
 </script>
 
