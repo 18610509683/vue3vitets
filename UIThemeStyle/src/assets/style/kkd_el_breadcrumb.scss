@@ -1,0 +1,9 @@
+.el-breadcrumb__inner a, .el-breadcrumb__inner.is-link,.el-breadcrumb__inner,.el-breadcrumb__separator{
+  color: var(--kkd_white_50p_color);
+}
+.el-breadcrumb__inner a:hover, .el-breadcrumb__inner.is-link:hover,.el-breadcrumb__inner:hover{
+  color: var(--kkd_main_color);
+}
+.el-breadcrumb__item:last-child .el-breadcrumb__inner, .el-breadcrumb__item:last-child .el-breadcrumb__inner a, .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover, .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover{
+  color:var(--kkd_white_color);
+}

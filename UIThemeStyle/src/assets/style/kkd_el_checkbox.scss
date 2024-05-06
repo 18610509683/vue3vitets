@@ -1,0 +1,9 @@
+.el-checkbox{
+  //--el-checkbox-checked-bg-color:var(--kkd_main_color)
+  --el-checkbox-disabled-input-fill:none;
+  --el-checkbox-bg-color:none;
+  --el-checkbox-disabled-border-color:rgba(65, 106, 123, 0.80);
+}
+.el-cascader-node.in-active-path, .el-cascader-node.is-active, .el-cascader-node.is-selectable.in-checked-path{
+  font-weight: normal;
+}

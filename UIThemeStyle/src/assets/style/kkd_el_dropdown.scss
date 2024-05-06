@@ -1,0 +1,13 @@
+.el-dropdown-menu{
+  background-color: var(--kkd_drop_panel_bg_color);
+}
+.el-dropdown-menu__item{
+  color: var(--kkd_white_color);
+}
+.el-dropdown-menu__item:not(.is-disabled):focus{
+  background-color: var(--kkd_main_color);
+  color: var(--kkd_white_color);
+}
+.el-dropdown__popper.el-popper{
+  border: 1px solid var(--kkd_main_color);
+}

@@ -1,3 +1,23 @@
-.el-year-table td .cell,.el-month-table td .cell,.el-date-table td .el-date-table-cell .el-date-table-cell__text,.el-date-table th{
-  color: var(--kkd_white_color);
+.el-table{
+  --el-table-header-bg-color:var(--kkd_main_5p_color);
+  --el-table-border:solid 1px var(--kkd_main_20p_color);
+  background-color:var(--kkd_main_5p_color);
+  --el-table-current-row-bg-color:var(--kkd_main_20p_color);
+  tr{
+    background-color: var(--kkd_main_5p_color);
+  }
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td.el-table__cell{
+  background-color: var(--kkd_main_20p_color);
+}
+.el-table--border .el-table__inner-wrapper::after, .el-table--border::after, .el-table--border::before, .el-table__inner-wrapper::before{
+  background-color: var(--kkd_main_20p_color);
+}
+.el-table td.el-table__cell div{
+  &:empty{
+    content: '';
+    width: 12px;
+    height: 3px;
+    background-color: rgba(255,255,255,.5);
+  }
 }

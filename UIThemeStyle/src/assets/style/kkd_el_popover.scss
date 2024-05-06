@@ -1,0 +1,49 @@
+.el-popover.el-popper{
+  background-color: var(--kkd_drop_panel_bg_color);
+  color: var(--kkd_white_color);
+}
+.el-popover{
+  --el-popover-border-color:var(--kkd_main_color);
+}
+.kkd_el_popover_confirm{
+  position: relative;
+  height: 170px;
+  .kkd_el_popover_title{
+    font-size: 16px;
+    color: var(--kkd_white_color);
+    display: flex;
+    align-items: center;
+    .el-icon{
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      >svg{
+        width: inherit;
+        height: inherit;
+        >path{
+          color: #FFCC4C;
+        }
+      }
+    }
+  }
+  .kkd_el_popover_description{
+    color: var(--kkd_white_80p_color);
+    padding: 12px 32px 0 40px;
+    font-size: 14px;
+  }
+  .kkd_el_popover_button_group{
+    font-size: 16px;
+    color: var(--kkd_white_color);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    &_cancel{
+      background: none;
+      border-color: var(--kkd_main_80p_color);
+    }
+    &_confirm{
+
+    }
+  }
+}

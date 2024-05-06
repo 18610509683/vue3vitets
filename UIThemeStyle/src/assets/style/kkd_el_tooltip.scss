@@ -1,0 +1,8 @@
+.el-popper.is-dark {
+  background: #0C6C79;
+  border: 1px solid var(--kkd_main_color);
+}
+.el-popper.is-dark .el-popper__arrow::before{
+  background: #0C6C79;
+  border: 1px solid var(--kkd_main_color);
+}

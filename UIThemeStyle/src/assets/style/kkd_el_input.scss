@@ -1,7 +1,7 @@
 .el-input{
   //min-width: 200px;
   //width: 560px;
-  height: 34px;
+  //height: 34px;
   --el-input-border-color:var(--kkd_main_50p_color);
   --el-input-focus-border-color:var(--kkd_main_50p_color);
   --el-input-hover-border-color:var(--kkd_main_color);
@@ -59,6 +59,9 @@
 }
 .el-input-number__increase, .el-input-number__decrease{
   color: var(--kkd_main_50p_color);
+  .el-icon > svg > path{
+    color: var(--kkd_main_color);
+  }
 }
 
 //textarea

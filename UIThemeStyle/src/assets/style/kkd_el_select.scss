@@ -47,3 +47,10 @@
 //  --el-tag-bg-color:var(--kkd_main_10p_color);
 //  --el-tag-text-color:var(--kkd_white_color);
 //}
+
+.el-select__tags .el-tag--info {
+  background-color: var(--kkd_main_20p_color);
+}
+.el-select__input{
+  color: var(--kkd_white_color);
+}

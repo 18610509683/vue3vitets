@@ -1,0 +1,9 @@
+.el-tree{
+  background: none;
+  --el-tree-node-hover-bg-color: var(--kkd_main_20p_color);
+  --el-tree-text-color: var(--el-text-color-regular);
+  --el-tree-expand-icon-color: var(--el-text-color-placeholder);
+}
+.el-tree-node__content .el-checkbox.is-disabled + .el-tree-node__label{
+  color:rgba(65, 106, 123, 0.80);
+}

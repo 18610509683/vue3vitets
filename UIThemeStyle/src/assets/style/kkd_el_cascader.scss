@@ -1,0 +1,12 @@
+.el-cascader{
+  --el-cascader-tag-background:var(--kkd_main_20p_color);
+}
+.el-cascader-panel{
+  --el-cascader-node-background-hover:var(--kkd_main_10p_color);
+}
+.el-cascader__dropdown.el-popper{
+  background-color: var(--kkd_drop_panel_bg_color);
+}
+.el-cascader-node.in-active-path .el-icon svg path{ color: var(--kkd_main_color)}
+.el-cascader .el-input .el-input__suffix-inner .el-icon svg path{color: var(--kkd_main_color)}
+.el-cascader__tags .el-tag .el-tag__close svg path{color: var(--kkd_main_color)}

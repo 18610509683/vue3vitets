@@ -1,7 +1,36 @@
-//.el-tag.el-tag--info{
-//  --el-tag-bg-color:var(--kkd_main_10p_color);
-//  --el-tag-text-color:var(--kkd_white_color);
-//}
-.el-tag{
-  --el-fill-color:var(--kkd_main_50p_color);
+.el-tag.el-tag--primary {
+  --el-tag-bg-color: var(--kkd_main_10p_color);
+  --el-tag-border-color: var(--kkd_main_50p_color);
+  --el-tag-hover-color:var(--kkd_main_50p_color);
 }
+.el-tag.el-tag--primary:hover{
+  background-color: var(--kkd_main_30p_color);
+}
+.el-check-tag.is-checked{
+  background-color: var(--kkd_main_50p_color);
+  color: var(--kkd_white_color);
+}
+.el-check-tag{
+  background-color: var(--kkd_main_10p_color);
+  color: var(--kkd_white_color);
+}.el-check-tag:hover{
+   background-color: var(--kkd_main_30p_color);
+   color: var(--kkd_white_color);
+ }
+.el-check-tag.is-checked:hover{
+  background-color: var(--kkd_main_color);
+  color: var(--kkd_white_color);
+}
+.el-tag.el-tag--warning {
+  --el-tag-bg-color: rgba(252, 144, 40, 10%);
+  --el-tag-border-color: rgba(252, 144, 40, 1);
+  --el-tag-hover-color:rgba(252, 144, 40, 50%);
+}
+
+
+.el-tag.el-tag--danger {
+  --el-tag-bg-color: rgba(255, 63, 63, 10%);
+  --el-tag-border-color: rgba(255, 63, 63, 1);
+  --el-tag-hover-color:rgba(255, 63, 63, 50%);
+}
+
